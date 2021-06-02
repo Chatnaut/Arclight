@@ -25,7 +25,7 @@
 
 [18.10.09] - 09.OCT.2018
 *Renamed the software from OpenVM Dashboard to VM Dashboard
-*Changed github repository to https://github.com/VMDashboard/vmdashboard.git
+*Changed github repository to https://github.com/arclight/arclight.git
 *Added support for VM Dashboard on RedHat/CentOS
 *Improved XML Definitions of VMs
 *Fixed login redirect link on /pages/vnc.php to direct to correct url

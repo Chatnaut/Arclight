@@ -26,21 +26,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 require('config.php');
 
 // Creating table if necessary to store setttings
-$sql = "CREATE TABLE IF NOT EXISTS vmdashboard_config ( name VARCHAR(255), value VARCHAR(255), userid int );";
+$sql = "CREATE TABLE IF NOT EXISTS arclight_config ( name VARCHAR(255), value VARCHAR(255), userid int );";
 $result = $conn->query($sql);
 
 if (isset($_SESSION['cert_path'])) {
   //Capturing the POST Data
   $cert_path = $_SESSION['cert_path'];
 
-  $sql = "SELECT name FROM vmdashboard_config WHERE name = 'cert_path';";
+  $sql = "SELECT name FROM arclight_config WHERE name = 'cert_path';";
   $result = $conn->query($sql);
 
   if (mysqli_num_rows($result) == 0 ) {
-    $sql = "INSERT INTO vmdashboard_config (name, value) VALUES ('cert_path', '$cert_path');";
+    $sql = "INSERT INTO arclight_config (name, value) VALUES ('cert_path', '$cert_path');";
     $result = $conn->query($sql);
   } else {
-    $sql = "UPDATE vmdashboard_config SET value = '$cert_path' WHERE name = 'cert_path';";
+    $sql = "UPDATE arclight_config SET value = '$cert_path' WHERE name = 'cert_path';";
     $result = $conn->query($sql);
   }
 
@@ -53,14 +53,14 @@ if (isset($_SESSION['themeColorChange'])) {
   $themeColorChange = $_SESSION['themeColorChange'];
   $userid = $_SESSION['userid'];
 
-  $sql = "SELECT name FROM vmdashboard_config WHERE name = 'theme_color' AND userid = '$userid';";
+  $sql = "SELECT name FROM arclight_config WHERE name = 'theme_color' AND userid = '$userid';";
   $result = $conn->query($sql);
 
   if (mysqli_num_rows($result) == 0 ) {
-    $sql = "INSERT INTO vmdashboard_config (name, value, userid) VALUES ('theme_color', '$themeColorChange', '$userid');";
+    $sql = "INSERT INTO arclight_config (name, value, userid) VALUES ('theme_color', '$themeColorChange', '$userid');";
     $result = $conn->query($sql);
   } else {
-    $sql = "UPDATE vmdashboard_config SET value = '$themeColorChange' WHERE name = 'theme_color' AND userid = '$userid';";
+    $sql = "UPDATE arclight_config SET value = '$themeColorChange' WHERE name = 'theme_color' AND userid = '$userid';";
     $result = $conn->query($sql);
   }
 
@@ -73,14 +73,14 @@ if (isset($_SESSION['language'])) {
   $language = $_SESSION['language'];
   $userid = $_SESSION['userid'];
 
-  $sql = "SELECT name FROM vmdashboard_config WHERE name = 'language' AND userid = '$userid';";
+  $sql = "SELECT name FROM arclight_config WHERE name = 'language' AND userid = '$userid';";
   $result = $conn->query($sql);
 
   if (mysqli_num_rows($result) == 0 ) {
-    $sql = "INSERT INTO vmdashboard_config (name, value, userid) VALUES ('language', '$language', '$userid');";
+    $sql = "INSERT INTO arclight_config (name, value, userid) VALUES ('language', '$language', '$userid');";
     $result = $conn->query($sql);
   } else {
-    $sql = "UPDATE vmdashboard_config SET value = '$language' WHERE name = 'language' AND userid = '$userid';";
+    $sql = "UPDATE arclight_config SET value = '$language' WHERE name = 'language' AND userid = '$userid';";
     $result = $conn->query($sql);
   }
 
@@ -101,7 +101,7 @@ if ($_SESSION['password'] === $_SESSION['confirm_password'] && $_SESSION['passwo
   $hash = password_hash($password, PASSWORD_BCRYPT);
 
   // Adding the user
-  $sql = "UPDATE vmdashboard_users SET password='$hash' WHERE userid ='$userid'";
+  $sql = "UPDATE arclight_users SET password='$hash' WHERE userid ='$userid'";
     // Executing the SQL statement
     if ($conn->query($sql) === TRUE) {
       //Unset the SESSION variables
@@ -112,7 +112,7 @@ if ($_SESSION['password'] === $_SESSION['confirm_password'] && $_SESSION['passwo
   
 
   //Get the current noVNC cert path to use as placeholder for textbox
-  $sql = "SELECT value FROM vmdashboard_config WHERE name = 'cert_path' LIMIT 1;";
+  $sql = "SELECT value FROM arclight_config WHERE name = 'cert_path' LIMIT 1;";
   $result = $conn->query($sql);
   if (mysqli_num_rows($result) != 0 ) {
     while ($row = $result->fetch_assoc()) {

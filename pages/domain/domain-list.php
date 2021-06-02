@@ -72,7 +72,7 @@
   if ($action == "create-domain") {
     $domain_type = $_SESSION['domain_type']; //hard coded as "kvm" for now
     $domain_name = $_SESSION['domain_name']; //sanatized name for virtual machine
-    $description = "Created by vmdashboard.org"; //plug for software that helped put virtual machine together
+    $description = "powered by arclight"; //plug for software that helped put virtual machine together
     $memory_unit = $_SESSION['memory_unit']; //either MiB or GiB
     $memory = $_SESSION['memory']; //whatever the user sets
     $vcpu = $_SESSION['vcpu']; //whatever the user sets, defaults to 1

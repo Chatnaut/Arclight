@@ -16,7 +16,7 @@
     $password = $_POST['password'];
 
     // Creating the SQL statement
-    $sql = "SELECT password, userid FROM vmdashboard_users WHERE username = '$username' LIMIT 1;";
+    $sql = "SELECT password, userid FROM arclight_users WHERE username = '$username' LIMIT 1;";
 
     // Executing the SQL statement
     $result = $conn->query($sql);
@@ -33,7 +33,7 @@
       $_SESSION['username'] = $username;
       $_SESSION['userid'] = $userid; //used to set items such as themeColor in index.php
 
-      $arrayLatest = file('https://vmdashboard.org/version.php'); //Check for a newer version of OpenVM
+      $arrayLatest = file('https://arclight.org/version.php'); //Check for a newer version of OpenVM
       $arrayExisting = file('config/version.php'); //Check the existing version of OpenVM
       $latestExploded = explode('.', $arrayLatest[1]); //Seperate Major.Minor.Patch
       $existingExploded = explode('.', $arrayExisting[1]); //Seperate Major.Minor.Patch
@@ -47,7 +47,7 @@
       }
 
       //Setting the user's theme color choice
-      $sql = "SELECT value, userid FROM vmdashboard_config WHERE name = 'theme_color';";
+      $sql = "SELECT value, userid FROM arclight_config WHERE name = 'theme_color';";
       $result = $conn->query($sql);
       // Extracting the record
       if (mysqli_num_rows($result) != 0 ) {
@@ -61,7 +61,7 @@
       }
 
       //Setting the user's language choice
-      $sql = "SELECT value, userid FROM vmdashboard_config WHERE name = 'language';";
+      $sql = "SELECT value, userid FROM arclight_config WHERE name = 'language';";
       $result = $conn->query($sql);
       // Extracting the record
       if (mysqli_num_rows($result) != 0 ) {
@@ -101,7 +101,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../assets/img/favicon.png">
 
-    <title>VM Dashboard - Login Page</title>
+    <title>Arclight Dashboard - Login Page</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../dist/css/bootstrap.min.css" rel="stylesheet">
@@ -114,7 +114,7 @@
     <form class="form-signin" method="post" action="">
       <div class="text-center mb-4">
         <img class="mb-4" src="../assets/img/squarelogo.png" alt="" width="100" height="100">
-        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <h1 class="h3 mb-3 font-weight-normal">Sign in to Arclight web console</h1>
       </div>
 
       <div class="form-label-group">
@@ -132,7 +132,7 @@
       <p class="mt-5 mb-3 text-muted text-center">&copy; 
         <script>
           document.write(new Date().getFullYear())
-        </script>, VMDashboard.org
+        </script>, chatnaut cloud
       </p>
     </form>
   </body>

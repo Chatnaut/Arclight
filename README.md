@@ -1,8 +1,8 @@
 VM Dashboard is a web-based front end for libvirt based KVM virtual machines.
 
-Setup instructions for Ubuntu and CentOS are available at https://vmdashboard.org/download
+Setup instructions for Ubuntu and CentOS are available at https://arclight.org/download
 
-New to the software? Screenshots can be viewed at https://vmdashboard.org/screenshots
+New to the software? Screenshots can be viewed at https://arclight.org/screenshots
 
 
 
@@ -32,29 +32,29 @@ Change your directory location to the root directory of your web server. The def
 cd /var/www/html
 
 Now download the latest version of VM Dashboard to the web root directory.
-sudo wget https://github.com/VMDashboard/vmdashboard/archive/v19.01.03.tar.gz
+sudo wget https://github.com/arclight/arclight/archive/v19.01.03.tar.gz
 
 Extract the downloaded package.
 sudo tar -xzf v19.01.03.tar.gz
 
 Rename the extracted directory
-sudo mv vmdashboard-19.01.03 vmdashboard
+sudo mv arclight-19.01.03 arclight
 
-Change the ownership of the vmdashboard directory to the web server user (www-data).
-sudo chown -R www-data:www-data /var/www/html/vmdashboard
+Change the ownership of the arclight directory to the web server user (www-data).
+sudo chown -R www-data:www-data /var/www/html/arclight
 Creating a database
 
 We will need a MySQL database for VM Dashboard to work with. To log into MySQL use the following command:
 sudo mysql -u root
 
-Once logged in, create a new database. I will name it vmdashboard.
-CREATE DATABASE vmdashboard;
+Once logged in, create a new database. I will name it arclight.
+CREATE DATABASE arclight;
 
-Now create a user for VM Dashboard to use. You could use the root user and password, but that is never advised. I will create a new user named vmdashboard. Be sure to change the password value.
-CREATE USER 'vmdashboard'@'localhost' IDENTIFIED BY 'password';
+Now create a user for VM Dashboard to use. You could use the root user and password, but that is never advised. I will create a new user named arclight. Be sure to change the password value.
+CREATE USER 'arclight'@'localhost' IDENTIFIED BY 'password';
 
 Change the permissions of the new user to have full access to the database tables.
-GRANT ALL PRIVILEGES ON vmdashboard.* to 'vmdashboard'@'localhost';
+GRANT ALL PRIVILEGES ON arclight.* to 'arclight'@'localhost';
 
 The new privileges should be applied, but sometimes you will need to flush the privileges so that they can be reloaded into the MySQL database. To do this use the following command:
 FLUSH PRIVILEGES;
@@ -66,4 +66,4 @@ Connecting to VM Dashboard
 You will need to restart your server before you can use the VM Dashboard software. This way the server restarts with all the necessary hypervisor software loaded and the user groups applied.
 sudo reboot
 
-Once rebooted, use a web browser to navigate to your server’s IP address or domain name. Add /vmdashboard to the end of the URL. For example: http://192.168.1.2/vmdashboard
+Once rebooted, use a web browser to navigate to your server’s IP address or domain name. Add /arclight to the end of the URL. For example: http://192.168.1.2/arclight

@@ -38,7 +38,7 @@
       $error = "Unable to connect to database";
     } else {
       //Creating the SQL for the users tables
-      $sql = "CREATE TABLE vmdashboard_users (
+      $sql = "CREATE TABLE arclight_users (
         userid INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         username varchar(255),
         email varchar(255),
@@ -56,7 +56,7 @@
         $hash = password_hash($password, PASSWORD_BCRYPT);
 
         // Create the SQL to add the user
-        $sql = "INSERT INTO vmdashboard_users (username, password)
+        $sql = "INSERT INTO arclight_users (username, password)
           VALUES ('$username', '$hash');";
 
         //Test the SQL statement for adding the admin user
@@ -104,7 +104,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../assets/img/favicon.png">
 
-    <title>VMDashboard - Configuration Setup</title>
+    <title>arclight - Configuration Setup</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
@@ -144,7 +144,7 @@
       </div>
 
       <div class="form-label-group">
-        <input type="text" name="db_name" id="inputDatabaseName" class="form-control" placeholder="vmdashboard"  required autofocus>
+        <input type="text" name="db_name" id="inputDatabaseName" class="form-control" placeholder="arclight"  required autofocus>
         <label for="inputDatabaseName">Database Name</label>
       </div>
 
@@ -168,7 +168,7 @@
       <p class="mt-5 mb-3 text-muted text-center">&copy; 
         <script>
           document.write(new Date().getFullYear())
-        </script>, VMDashboard.org
+        </script>, arclight.org
       </p>
     </form>
   </body>

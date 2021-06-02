@@ -112,7 +112,6 @@ if ($ci['uri'])
                       }
                       $ut = Uptime();
                       echo "<strong> Uptime:</strong> $ut[0] Days $ut[1] Hours $ut[2] Minutes $ut[3] Seconds <br>";
-                      
                         echo "<strong>" . $lang['host'] . ":</strong> $hn <br />";
                         echo "<strong>" . $lang['hardware_vendor'] . ":</strong> $vendor <br />";
                         echo "<strong>" . $lang['product'] . ":</strong> $product_name <br />";
@@ -124,7 +123,6 @@ if ($ci['uri'])
                       }
                     }
                   }
-                  
                 ?>
               </div>
               <div class="card-footer">
@@ -173,7 +171,6 @@ if ($ci['uri'])
                 echo "<strong>" . $lang['free_memory'] . ":</strong> " . number_format(($mem_stats['free'] / 1048576), 2, '.', ' ') . " GB <br>";
                 echo "<strong>" . $lang['buffered_memory'] . ":</strong> " . number_format(($mem_stats['buffers'] / 1048576), 2, '.', ' ') . " GB <br>";
                 echo "<strong>" . $lang['cached_memory'] . ":</strong> " . number_format(($mem_stats['cached'] / 1048576), 2, '.', ' ') . " GB <br>";
-                
                 ?>
               </div>
               <div class="card-footer">

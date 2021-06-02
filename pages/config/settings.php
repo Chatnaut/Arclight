@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 require('config.php');
 // Creating table if necessary to store setttings
-$sql = "CREATE TABLE IF NOT EXISTS vmdashboard_config ( name VARCHAR(255), value VARCHAR(255), userid int );";
+$sql = "CREATE TABLE IF NOT EXISTS arclight_config ( name VARCHAR(255), value VARCHAR(255), userid int );";
 $result = $conn->query($sql);
 
 //If the SSL Cert File Path has been changed change it now
@@ -40,14 +40,14 @@ if (isset($_SESSION['cert_path'])) {
   $cert_path = $_SESSION['cert_path'];
   unset($_SESSION['cert_path']);
 
-  $sql = "SELECT name FROM vmdashboard_config WHERE name = 'cert_path';";
+  $sql = "SELECT name FROM arclight_config WHERE name = 'cert_path';";
   $result = $conn->query($sql);
 
   if (mysqli_num_rows($result) == 0 ) {
-    $sql = "INSERT INTO vmdashboard_config (name, value) VALUES ('cert_path', '$cert_path');";
+    $sql = "INSERT INTO arclight_config (name, value) VALUES ('cert_path', '$cert_path');";
     $result = $conn->query($sql);
   } else {
-    $sql = "UPDATE vmdashboard_config SET value = '$cert_path' WHERE name = 'cert_path';";
+    $sql = "UPDATE arclight_config SET value = '$cert_path' WHERE name = 'cert_path';";
     $result = $conn->query($sql);
   }
 }
@@ -57,21 +57,21 @@ if (isset($_SESSION['key_path'])) {
   $key_path = $_SESSION['key_path'];
   unset($_SESSION['key_path']);
 
-  $sql = "SELECT name FROM vmdashboard_config WHERE name = 'key_path';";
+  $sql = "SELECT name FROM arclight_config WHERE name = 'key_path';";
   $result = $conn->query($sql);
 
   if (mysqli_num_rows($result) == 0 ) {
-    $sql = "INSERT INTO vmdashboard_config (name, value) VALUES ('key_path', '$key_path');";
+    $sql = "INSERT INTO arclight_config (name, value) VALUES ('key_path', '$key_path');";
     $result = $conn->query($sql);
   } else {
-    $sql = "UPDATE vmdashboard_config SET value = '$key_path' WHERE name = 'key_path';";
+    $sql = "UPDATE arclight_config SET value = '$key_path' WHERE name = 'key_path';";
     $result = $conn->query($sql);
   }
 }
 
 
 //Get the current noVNC cert path to use as placeholder for textbox
-$sql = "SELECT value FROM vmdashboard_config WHERE name = 'cert_path' LIMIT 1;";
+$sql = "SELECT value FROM arclight_config WHERE name = 'cert_path' LIMIT 1;";
 $result = $conn->query($sql);
 if (mysqli_num_rows($result) != 0 ) {
   while ($row = $result->fetch_assoc()) {
@@ -82,7 +82,7 @@ if (mysqli_num_rows($result) != 0 ) {
 }
 
 //Get the current noVNC key path to use as placeholder for textbox
-$sql = "SELECT value FROM vmdashboard_config WHERE name = 'key_path' LIMIT 1;";
+$sql = "SELECT value FROM arclight_config WHERE name = 'key_path' LIMIT 1;";
 $result = $conn->query($sql);
 if (mysqli_num_rows($result) != 0 ) {
   while ($row = $result->fetch_assoc()) {

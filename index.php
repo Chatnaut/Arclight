@@ -17,21 +17,21 @@ if (file_exists($path)) {
   //Change name of tables if still using openvm
   $sql = "select * from openvm_users;"; //check to see if openvm_users table exits
   $openvm_result = $conn->query($sql);
-  //if openvm_users table exists and has any values, rename the tables to vmdashboard
+  //if openvm_users table exists and has any values, rename the tables to arclight
   if (mysqli_num_rows($openvm_result) != 0 ) {
-    $sql = "RENAME TABLE openvm_users TO vmdashboard_users";
+    $sql = "RENAME TABLE openvm_users TO arclight_users";
     $rename_result = $conn->query($sql);
   }
   $sql = "select * from openvm_config;"; //check to see if openvm_users table exits
   $openvm_result = $conn->query($sql);
-  //if openvm_users table exists and has any values, rename the tables to vmdashboard
+  //if openvm_users table exists and has any values, rename the tables to arclight
   if (mysqli_num_rows($openvm_result) != 0 ) {
-    $sql = "RENAME TABLE openvm_config TO vmdashboard_config";
+    $sql = "RENAME TABLE openvm_config TO arclight_config";
     $rename_result = $conn->query($sql);
   }
 
-  //Create the vmdashboard_events table
-  $sql = "CREATE TABLE IF NOT EXISTS vmdashboard_events (
+  //Create the arclight_events table
+  $sql = "CREATE TABLE IF NOT EXISTS arclight_events (
     eventid INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     description varchar(255),
     host_uuid varchar(255),
@@ -41,7 +41,7 @@ if (file_exists($path)) {
   $event_result = $conn->query($sql);
 
   //Setting the SSL Certificate file path
-  $sql = "SELECT value FROM vmdashboard_config WHERE name = 'cert_path' LIMIT 1;";
+  $sql = "SELECT value FROM arclight_config WHERE name = 'cert_path' LIMIT 1;";
   $result = $conn->query($sql);
   // Extracting the record
   if (mysqli_num_rows($result) != 0 ) {
@@ -56,7 +56,7 @@ if (file_exists($path)) {
   }
 
   //Setting the SSL Certificate file path
-  $sql = "SELECT value FROM vmdashboard_config WHERE name = 'key_path' LIMIT 1;";
+  $sql = "SELECT value FROM arclight_config WHERE name = 'key_path' LIMIT 1;";
   $result = $conn->query($sql);
   // Extracting the record
   if (mysqli_num_rows($result) != 0 ) {

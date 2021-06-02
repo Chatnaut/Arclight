@@ -315,7 +315,7 @@ class Libvirt {
             $tmp = libvirt_domain_get_network_info($dom, $macs[$i]);
             if ($tmp)
                 //$ret[] = $tmp;
-                //Added for VMDashboard because it is not working correctly
+                //Added for arclight because it is not working correctly
                 $ret[] = array(
                 							'mac' => $macs[$i],
                 							'network' => $tmp[$i],
@@ -439,7 +439,7 @@ class Libvirt {
     function list_domain_snapshots($domain) {
       $tmp = libvirt_list_domain_snapshots($domain);
       return ($tmp) ? $tmp : $this->_set_last_error();
-    } //Added for VMDashboard
+    } //Added for arclight
 
     function get_storagepool_res($res) {
         if ($res == false)
@@ -509,30 +509,30 @@ class Libvirt {
     function storagepool_define_xml($xml) {
       $ret = libvirt_storagepool_define_xml($this->conn, $xml);
       return ($ret) ? $ret : $this->_set_last_error();
-    } //Added for VMDashboard
+    } //Added for arclight
 
    
     function storagepool_undefine($res) {
       $ret = libvirt_storagepool_undefine($res);
       return ($ret) ? $ret : $this->_set_last_error();
-    } //Added for VMDashboard
+    } //Added for arclight
 
 
     function storagepool_destroy($res) {
       $ret = libvirt_storagepool_destroy($res);
       return ($ret) ? $ret : $this->_set_last_error();
-    } //Added for VMDashboard
+    } //Added for arclight
 
 
     function storagepool_create($res) {
       $ret = libvirt_storagepool_create($res);
       return ($ret) ? $ret : $this->_set_last_error();
-    } //Added for VMDashboard
+    } //Added for arclight
 
     function storagepool_refresh($res) {
       $ret = libvirt_storagepool_refresh($res);
       return ($ret) ? $ret : $this->_set_last_error();
-    } //Added for VMDashboard
+    } //Added for arclight
 
 
     function storagevolume_delete($path) {
@@ -631,7 +631,7 @@ class Libvirt {
 
         $tmp = libvirt_storagevolume_create_xml_from($pool, $xml, $original_volume);
         return ($tmp) ? $tmp : $this->_set_last_error();
-    } //Added for VMDashboard
+    } //Added for arclight
 
 
 
@@ -696,14 +696,14 @@ class Libvirt {
     function network_define_xml($xml) {
       $tmp = libvirt_network_define_xml($this->conn, $xml);
       return ($tmp) ? $tmp : $this->_set_last_error();
-    } //Added for VMDashboard
+    } //Added for arclight
 
 
     function network_undefine($network) {
       $net = libvirt_network_get($this->conn, $network);
       $tmp = libvirt_network_undefine($net);
       return ($tmp) ? $tmp : $this->_set_last_error();
-    } //Added for VMDashboard
+    } //Added for arclight
 
 
     function translate_storagepool_state($state) {
@@ -970,7 +970,7 @@ class Libvirt {
 
         $tmp = libvirt_domain_suspend($dom);
         return ($tmp) ? $tmp : $this->_set_last_error();
-    } //Added for VMDashboard
+    } //Added for arclight
 
     function domain_resume($domain) {
         $dom = $this->get_domain_object($domain);
@@ -979,7 +979,7 @@ class Libvirt {
 
         $tmp = libvirt_domain_resume($dom);
         return ($tmp) ? $tmp : $this->_set_last_error();
-    } //Added for VMDashboard
+    } //Added for arclight
 
 
     function domain_update_device($domain, $xml, $flags=false) {
@@ -989,7 +989,7 @@ class Libvirt {
 
         $tmp = libvirt_domain_update_device($res, $xml);
         return ($tmp) ? $tmp : $this->_set_last_error();
-    } //Added for VMDashboard
+    } //Added for arclight
 
 
 
@@ -1018,7 +1018,7 @@ class Libvirt {
 
         $tmp = libvirt_domain_snapshot_create($dom);
         return ($tmp) ? $tmp : $this->_set_last_error();
-    } //Added for VMDashboard
+    } //Added for arclight
 
     function domain_undefine($domain) {
         $dom = $this->get_domain_object($domain);
