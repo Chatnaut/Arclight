@@ -1,0 +1,13 @@
+[Unit]
+Description=Restore NVIDIA mdev devices
+After=nvidia-vgpu-mgr.service
+ConditionPathExists=/etc/nvidia-mdev-devices.conf
+
+[Service]
+Type=oneshot
+#ExecStartPre=/usr/bin/test ! -d /sys/class/mdev_bus/
+ExecStart=/usr/bin/nvidia-dev-ctl.py --wait --delay=1 --trials=60 restore -i /etc/nvidia-mdev-devices.conf
+# Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
