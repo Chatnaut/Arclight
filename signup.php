@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
         $password = $_POST['password']; //do not need to sanitize because it will be hashed
         $cpassword = $_POST["cpassword"];
         // $exists = false;
-//check whether this username exists
+        //check whether this username exists
         $existSql = "SELECT * FROM `arclight_users` WHERE username = '$username'";
         $result = mysqli_query($conn, $existSql);
         $numExistsRows = mysqli_num_rows($result);
