@@ -119,6 +119,13 @@ $host_os = $os_info['name'];
                                 Monitoring
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../gpu/gpubinder.php">
+                                <span data-feather="link-2"></span>
+                                GPU
+                            </a>
+                        </li>
+                        
                     </ul>
                 </li>
             </ul>

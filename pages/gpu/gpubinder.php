@@ -20,6 +20,10 @@ require('../footer.php');
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 <?php if($_SESSION['themeColor'] == "dark-edition") { echo "main-dark"; } ?> ">
 
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
+        <h3 class="h3">GPU</h3>
+      </div>
+
       <form action="" method="POST">
         <div class="content">
           <div class="row">
@@ -43,7 +47,7 @@ require('../footer.php');
                     $result = shell_exec('cd /var/www/html/arclight/gpubinder && ./nvidia-dev-ctl.py list-pci -o table');
 
                       echo "<tr>" .
-                        "<pre><td><strong>{$result}</strong></td></pre>" .
+                        "<td><pre>{$result}</pre></td>" .
                         "</tr>";
                     
                     echo "</tbody></table>";
@@ -51,7 +55,6 @@ require('../footer.php');
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
@@ -65,9 +68,6 @@ require('../footer.php');
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 <?php if($_SESSION['themeColor'] == "dark-edition") { echo "main-dark"; } ?> ">
 
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
-        <h3 class="h3">GPU</h3>
-      </div>
 
       <form action="" method="POST">
         <div class="content">
@@ -92,7 +92,7 @@ require('../footer.php');
                     $result = shell_exec('cd /var/www/html/arclight/gpubinder && ./nvidia-dev-ctl.py list-mdev --output-all');
 
                       echo "<tr>" .
-                        "<pre><td><strong>{$result}</strong></td></pre>" .
+                        "<td><pre>{$result}</pre></td>" .
                         "</tr>";
                     
                     echo "</tbody></table>";
@@ -100,7 +100,6 @@ require('../footer.php');
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
