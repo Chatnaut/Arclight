@@ -81,42 +81,42 @@
     if ($action == 'domain-start') {
     $notification = $lv->domain_start($domName) ? "" : 'Error while starting domain: '.$lv->get_last_error();
     $description = ($notification) ? $notification : "guest powered on";
-    $sql = "INSERT INTO vmdashboard_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
+    $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
     $sql_action = $conn->query($sql);
     }
 
     if ($action == 'domain-pause') {
     $notification = $lv->domain_suspend($domName) ? "" : 'Error while pausing domain: '.$lv->get_last_error();
     $description = ($notification) ? $notification : "guest paused";
-    $sql = "INSERT INTO vmdashboard_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
+    $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
     $sql_action = $conn->query($sql);
     }
 
     if ($action == 'domain-resume') {
     $notification = $lv->domain_resume($domName) ? "" : 'Error while resuming domain: '.$lv->get_last_error();
     $description = ($notification) ? $notification : "guest resumed";
-    $sql = "INSERT INTO vmdashboard_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
+    $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
     $sql_action = $conn->query($sql);
     }
 
     if ($action == 'domain-stop') {
     $notification = $lv->domain_shutdown($domName) ? "" : 'Error while stopping domain: '.$lv->get_last_error();
     $description = ($notification) ? $notification : "shutdown command sent";
-    $sql = "INSERT INTO vmdashboard_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
+    $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
     $sql_action = $conn->query($sql);
     }
 
     if ($action == 'domain-destroy') {
     $notification = $lv->domain_destroy($domName) ? "" : 'Error while destroying domain: '.$lv->get_last_error();
     $description = ($notification) ? $notification : "guest powered off";
-    $sql = "INSERT INTO vmdashboard_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
+    $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
     $sql_action = $conn->query($sql);
     }
 
     if ($action == 'domain-delete') {
     $notification = $lv->domain_undefine($domName) ? "" : 'Error while deleting domain: '.$lv->get_last_error();
     $description = ($notification) ? $notification : "guest deleted";
-    $sql = "INSERT INTO vmdashboard_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
+    $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
     $sql_action = $conn->query($sql);
     if (!$lv->domain_get_name_by_uuid($uuid))
         header('Location: domain-list.php');
@@ -134,7 +134,7 @@
           $newXML = str_replace('<?xml version="1.0"?>', '', $newXML);
           $notification = $lv->domain_change_xml($domName, $newXML) ? "" : 'Cannot remove disk: '.$lv->get_last_error();
           $description = ($notification) ? $notification : "removed storage volume";
-          $sql = "INSERT INTO vmdashboard_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
+          $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
           $sql_action = $conn->query($sql);
       }
     }
@@ -221,7 +221,7 @@
             $driver = $driver_type;
             $notification = $lv->domain_disk_add($dom, $img, $dev, $typ, $driver) ? "" : "Cannot add volume to the guest: ".$lv->get_last_error();
             $description = ($notification) ? $notification : "added storage volume";
-            $sql = "INSERT INTO vmdashboard_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
+            $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
             $sql_action = $conn->query($sql);
         }
     
@@ -229,7 +229,7 @@
         if ($source_file != "new") {
             $notification = $lv->domain_disk_add($dom, $source_file, $target_dev, $target_bus, $driver_type) ? "" : "Cannot add volume to the guest: ".$lv->get_last_error();
             $description = ($notification) ? $notification : "added storage volume";
-            $sql = "INSERT INTO vmdashboard_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
+            $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
             $sql_action = $conn->query($sql);
         }
     }
@@ -298,7 +298,7 @@
 
       $notification = $lv->domain_change_xml($domName, $newXML) ? "" : "Cannot add ISO to the guest: ".$lv->get_last_error();
       $description = ($notification) ? $notification : "added optical storage";
-      $sql = "INSERT INTO vmdashboard_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
+      $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
       $sql_action = $conn->query($sql);
         
     }
@@ -316,7 +316,7 @@
           $newXML = str_replace('<?xml version="1.0"?>', '', $newXML);
           $notification = $lv->domain_change_xml($domName, $newXML) ? "" : 'Cannot remove network interface: '.$lv->get_last_error();
           $description = ($notification) ? $notification : "removed network interface";
-          $sql = "INSERT INTO vmdashboard_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
+          $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
           $sql_action = $conn->query($sql);
       }
     }
@@ -328,7 +328,7 @@
       
       $notification = $lv->domain_nic_add($domName, $mac_address, $source_network, $model_type) ? "" : "Cannot add network to the guest: ".$lv->get_last_error();
       $description = ($notification) ? $notification : "added network interface";
-      $sql = "INSERT INTO vmdashboard_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
+      $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
       $sql_action = $conn->query($sql);
     
     }
@@ -338,7 +338,7 @@
     if ($action == 'domain-snapshot-create') {
     $notification = $lv->domain_snapshot_create($domName) ? "Snapshot for $domName successfully created" : 'Error while taking snapshot of domain: '.$lv->get_last_error();
     $description = ($notification) ? $notification : "created snapshot";
-    $sql = "INSERT INTO vmdashboard_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
+    $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
     $sql_action = $conn->query($sql);
     }
 
@@ -346,7 +346,7 @@
     $snapshot = $_SESSION['snapshot'];
     $notification = $lv->domain_snapshot_delete($domName, $snapshot) ? "" : 'Error while deleting snapshot of domain: '.$lv->get_last_error();
     $description = ($notification) ? $notification : "deleted snapshot";
-    $sql = "INSERT INTO vmdashboard_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
+    $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
     $sql_action = $conn->query($sql);
     }
 
@@ -354,7 +354,7 @@
     $snapshot = $_SESSION['snapshot'];
     $notification = $lv->domain_snapshot_revert($domName, $snapshot) ? "Snapshot $snapshot for $domName successfully applied" : 'Error while reverting snapshot of domain: '.$lv->get_last_error();
     $description = ($notification) ? $notification : "reverted to previous snapshot";
-    $sql = "INSERT INTO vmdashboard_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
+    $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
     $sql_action = $conn->query($sql);
     }
 
@@ -374,7 +374,7 @@
         $notification = $lv->domain_change_xml($domName, $xml) ? "XML for $domName has been updated" : 'Error changing domain XML: '.$lv->get_last_error();
         $domName = $lv->domain_get_name_by_uuid($uuid); //If the name is changed in XML will need to get it again
         $description = $notification;
-        $sql = "INSERT INTO vmdashboard_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
+        $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
         $sql_action = $conn->query($sql);
 
     }
@@ -386,7 +386,7 @@
         $notification = $lv->domain_set_autostart($dom, $val) ? "" : 'Error changing domain autostart: '.$lv->get_last_error();
         $autostart = ($lv->domain_get_autostart($dom)) ? "yes" : "no"; //Check status again to display status in general informaion
         $description = ($notification) ? $notification : "autostart value changed";
-        $sql = "INSERT INTO vmdashboard_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
+        $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
         $sql_action = $conn->query($sql);
     }
 
@@ -566,7 +566,7 @@
                                     "</thead>" .
                                     "<tbody>";
 
-                                $sql = "SELECT * FROM vmdashboard_events WHERE domain_uuid = '$uuid' ORDER BY eventid DESC LIMIT 3";
+                                $sql = "SELECT * FROM arclight_events WHERE domain_uuid = '$uuid' ORDER BY eventid DESC LIMIT 3";
                                 $result = $conn->query($sql);
                               
                                 foreach($result as $row){
