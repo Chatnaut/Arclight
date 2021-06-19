@@ -1,4 +1,4 @@
-<!-- Installation of Arclight Web Console********************************************************************************** -->
+<!-- Installation of Arclight Web Console FOR UBUNTU 18.04****************************************************************** -->
 
 Arclight Dashboard is a web-based front end for libvirt based KVM virtual machines.
 
@@ -28,7 +28,7 @@ Now download the latest version of Arclight Dashboard to the web root directory.
 #sudo wget https://github.com/Chatnaut/Arclight/archive/refs/heads/version2.zip
 
 Extract the downloaded package.
-#unzip version2.zip
+#sudo tar -xzf arclight.tar.gz
 
 Rename the extracted directory
 #sudo mv version2 arclight
@@ -63,6 +63,89 @@ Restart Apache #/etc/init.d/apache2 restart
 Once rebooted, use a web browser to navigate to your server’s IP address or domain name. Add /arclight to the end of the URL. For example: http://192.168.1.2/arclight
 
 
+
+<!-- Installation of Arclight Web Console FOR CENTOS 7 minimal****************************************************************** -->
+
+This guide follows a fresh installation of the CentOS 7 minimal server. Before installing packages be sure to update repository information using the following command:
+yum update -y
+Installing the necessary packages
+
+On the CentOS server, install the QEMU + KVM hypervisor  using the following command:
+yum install qemu-kvm libvirt -y
+
+The PHP Libvirt extension is located in the Enterprise Linux repository. To setup this repository use the following command:
+yum install epel-release -y
+
+Install the web server, database, and necessary PHP packages to your server. Use the following command:
+yum install httpd mariadb-server mariadb php php-mysql php-xml php-libvirt -y
+
+You will need to start and enable the Apache web server and Maria database. To do this use the following commands:
+systemctl start mariadb
+systemctl enable mariadb
+systemctl start httpd
+systemctl enable httpd
+Configuring files and permissions
+
+To use VNC to connect into your virtual machines, you will need to edit the /etc/libvirt/qemu.conf file. Be sure to allow listening on IP address 0.0.0.0 by uncommenting the line #vnc_listen = “0.0.0.0” and saving the file.(If nano is not installed you can install it with yum install nano, or just simply use vi instead of nano).
+nano /etc/libvirt/qemu.conf
+
+The web server user account on CentOS is called apache. This account will need to have permissions to work with libvirt. We can do this by adding the apache user to the libvirt group.  To do this, use the following command:
+usermod -a -G libvirt apache
+
+Change your directory location to the root directory of your web server. The default location is /var/www/html/ in Ubuntu.
+cd /var/www/html
+
+The minimal installation of CentOS does not come with wget to download files. You will also need git to perform software updates. Install the, using the following command:
+yum install wget git -y
+
+Now download the latest version of VM Dashboard to the web root directory.
+wget https://github.com/arclight/arclight/archive/v19.01.03.tar.gz
+
+Extract the downloaded package.
+sudo tar -xzf v19.01.03.tar.gz
+
+Rename the extracted directory
+sudo mv arclight-19.01.03 arclight
+
+Change the ownership of the arclight directory to the web server user (www-data).
+chown -R apache:apache /var/www/html/arclight
+
+In order for PHP to be able to save configuration files we will need to run the following command:
+chcon -t httpd_sys_rw_content_t /var/www/html/arclight/ -R
+
+The CentOS firewall will block incoming http and https traffic. Also the VNC connection uses port 6080. To allow the web traffic use the following commands:
+firewall-cmd --permanent --add-service=http
+firewall-cmd --permanent --add-service=https
+firewall-cmd --permanent --add-port=6080/tcp
+systemctl restart firewalld
+
+SeLinux will block the qemu connection through the web browser. Modify the /etc/sysconfig/selinux file. The default value of the SELINUX=enforcing. Change it to SELINUX=permissive.
+nano /etc/sysconfig/selinux
+Creating a database
+
+We will need a MySQL database for VM Dashboard to work with. To log into MySQL use the following command:
+mysql -u root
+
+You will be prompted for your the password that was setup for the root user on MySQL. Once logged in, create a new database. I will name it arclight.
+CREATE DATABASE arclight;
+
+Now create a user for VM Dashboard to use. You could use the root user and password, but that is never advised. I will create a new user named vmdashbaord. Be sure to change the password.
+CREATE USER 'arclight'@'localhost' IDENTIFIED BY 'password';
+
+Change the permissions of the new user to have full access to the database tables.
+GRANT ALL PRIVILEGES ON arclight.* to 'arclight'@'localhost';
+
+The new privileges should be applied, but sometimes you will need to flush the privileges so that they can be reloaded into the MySQL database. To do this use the following command:
+FLUSH PRIVILEGES;
+
+To exit MySQL, type quit or use the EXIT; statement.
+EXIT;
+Connecting to VM Dashboard
+
+You will need to restart your server before you can use the VM Dashboard software. This way the server restarts with all the necessary hypervisor software loaded and the user groups applied.
+sudo reboot
+
+Once rebooted, use a web browser to navigate to your server’s IP address or domain name. Add /arclight to the end of the URL. For example: http://192.168.1.2/arclight
 
 
 <!-- Installation of PHPmyadmin to see Databases:********************************************************** -->
