@@ -10,7 +10,7 @@ if (!isset($_SESSION['username'])){
 }
 
 $protocol = isset($_SERVER['HTTPS']) ? "https://" : "http://";
-$url = $protocol . $_SERVER['SERVER_NAME'];
+$url = $protocol . $_SERVER['HTTP_HOST'];
 $token = $_GET['token'];
 ?>
 
@@ -22,7 +22,7 @@ $token = $_GET['token'];
     <link rel="icon" type="image/png" href="../assets/img/favicon.png">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>
-      Arclight Dashboard
+    Arclight Dashboard
     </title>
   </head>
 
