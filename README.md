@@ -59,6 +59,7 @@ Connecting to Arclight Dashboard
 You will need to restart your server before you can use the hypervisor. This way the server restarts with all the necessary hypervisor software loaded and the user groups applied.
 Restart Mysql  #service mysql restart
 Restart Apache #/etc/init.d/apache2 restart
+               #sudo service apache2 restart
 
 Once rebooted, use a web browser to navigate to your server’s IP address or domain name. Add /arclight to the end of the URL. For example: http://192.168.1.2/arclight
 
