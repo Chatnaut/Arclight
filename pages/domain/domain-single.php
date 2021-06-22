@@ -65,7 +65,7 @@
     $domName = $lv->domain_get_name_by_uuid($uuid);
     $dom = $lv->get_domain_object($domName);
     $protocol = isset($_SERVER['HTTPS']) ? "https://" : "http://";
-    $url = $protocol . $_SERVER['SERVER_NAME'];
+    $url = $protocol . $_SERVER['HTTP_HOST'];
     $page = basename($_SERVER['PHP_SELF']);
     $action = $_SESSION['action'];
     $domXML = new SimpleXMLElement($lv->domain_get_xml($domName));

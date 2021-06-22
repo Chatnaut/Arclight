@@ -26,7 +26,7 @@
       $_SESSION['uuid'] = $_GET['uuid'];
       $_SESSION['action'] = $_GET['action'];
 
-      //----General Section----//
+          //----General Section----//
       $_SESSION['domain_type'] = "kvm"; //set to "kvm" as this is the only supported type at this time
       $_SESSION['domain_name'] = clean_input($_GET['domain_name']); //removes spaces and sanitizes
       $_SESSION['memory_unit'] = $_GET['memory_unit']; //choice of "MiB" or "GiB"
@@ -72,7 +72,7 @@
   if ($action == "create-domain") {
     $domain_type = $_SESSION['domain_type']; //hard coded as "kvm" for now
     $domain_name = $_SESSION['domain_name']; //sanatized name for virtual machine
-    $description = "powered by arclight"; //plug for software that helped put virtual machine together
+    $description = "Created by arclight.org"; //plug for software that helped put virtual machine together
     $memory_unit = $_SESSION['memory_unit']; //either MiB or GiB
     $memory = $_SESSION['memory']; //whatever the user sets
     $vcpu = $_SESSION['vcpu']; //whatever the user sets, defaults to 1
@@ -307,7 +307,7 @@
       
     $new_vm = $lv->domain_define($xml); //Define the new virtual machine using libvirt, based off the XML information  
     if (!$new_vm){
-      $notification = "Error creating virtual machine: " . $lv->get_last_error(); //let the user know if there is an error
+      $notification = "Error creating domain: " . $lv->get_last_error(); //let the user know if there is an error
       $notification = filter_var($notification,FILTER_SANITIZE_SPECIAL_CHARS); //Error message will contain special characters
     }
   
