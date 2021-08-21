@@ -44,7 +44,7 @@ require('../footer.php');
                       <tbody>
                     <!-- start project list -->
                     <?php
-                    $result = shell_exec('cd /var/www/html/arclight/gpubinder && ./nvidia-dev-ctl.py list-pci -o table');
+                    $result = shell_exec('cd /var/www/html/gpubinder && ./nvidia-dev-ctl.py list-pci -o table');
 
                       echo "<tr>" .
                         "<td><pre>{$result}</pre></td>" .
@@ -89,7 +89,7 @@ require('../footer.php');
                       <tbody>
                     <!-- start project list -->
                     <?php
-                    $result = shell_exec('cd /var/www/html/arclight/gpubinder && ./nvidia-dev-ctl.py list-mdev --output-all');
+                    $result = shell_exec('cd /var/www/html/gpubinder && ./nvidia-dev-ctl.py list-mdev --output-all');
 
                       echo "<tr>" .
                         "<td><pre>{$result}</pre></td>" .
@@ -107,7 +107,5 @@ require('../footer.php');
     </main>
   </div> 
 </div> <!-- end content of virtual GPUs-->
-
-
 
 
