@@ -24,6 +24,7 @@ if (isset($_POST['action'])) {
   $_SESSION['action'] = $_POST['action'];
   $_SESSION['pciaddr'] = clean_input($_POST['pciaddr']);
   $_SESSION['mdevtype'] = clean_input($_POST['mdevtype']);
+  unset($_POST);
   header("Location: ".$_SERVER['PHP_SELF']);
   exit;
 }
