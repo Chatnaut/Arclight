@@ -1486,7 +1486,7 @@ class DevCtl:
             dev_fname = None
             with tempfile.NamedTemporaryFile(suffix=".xml", mode="w+t", delete=False) as tmp_dev:
                 dev_xml = """
-<hostdev mode='subsystem' type='mdev' managed='no' model='vfio-pci''>
+<hostdev mode='subsystem' type='mdev' managed='no' model='vfio-pci'>
       <source>
             <address uuid='{}'/>
       </source>
