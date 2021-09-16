@@ -104,7 +104,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../assets/img/favicon.png">
 
-    <title>arclight - Configuration Setup</title>
+    <title>Arclight - Configuration Setup</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
@@ -168,7 +168,7 @@
       <p class="mt-5 mb-3 text-muted text-center">&copy; 
         <script>
           document.write(new Date().getFullYear())
-        </script>, arclight.org
+        </script>, Arclight
       </p>
     </form>
   </body>
