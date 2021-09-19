@@ -206,16 +206,12 @@ input[type=submit]:hover {
                 }
             ?>
       </select>
-
-
-
         <select name="optionalargument">  
-        <!-- <select class="form-select" id="selectmdev" name="selectmdev"> -->
-        <!-- <option value = "" selected> Arguments </option>  -->
-        <option value="">None</option> 
-        <option value="--hotplug">Hotplug</option>
-        <option value="--restart">Restart</option>
-        <option value="-n">Dry Run</option>
+          <!-- <select class="form-select" id="selectmdev" name="selectmdev"> -->
+          <!-- <option value = "" selected> Arguments </option>  -->
+          <option value="">None</option> 
+          <option value="--hotplug">Hotplug</option>
+          <option value="--restart">Restart</option>
         </select> 
       <!-- <div class="selectIcon">  
         <svg focusable="false" viewBox="0 0 104 128" width="25" height="35" class="icon">  
@@ -224,7 +220,7 @@ input[type=submit]:hover {
           </path>  
         </svg>  
       </div>   -->
-      <br> <br> <input type = "submit" name = "submit" value = "submit">  
+      <br> <br> <input type = "submit" name = "submit" value = "Attach">  
     </form>  
     <?php  
         if(isset($_POST['submit'])){  
@@ -244,6 +240,5 @@ input[type=submit]:hover {
         
         
     ?>  
-   </div>  
   </body>  
 </html> 
