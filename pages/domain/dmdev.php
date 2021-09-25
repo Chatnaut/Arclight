@@ -34,7 +34,7 @@ $userid = $_SESSION['userid']; //grab the $uuid variable from $_POST, only used 
 
 // <!-------------------------------------Detach MDEV GPU------------------------------------->
 
-$sql = "SELECT createdmdev FROM arclight_vgpu WHERE action = 'createmdev' AND userid = '$userid';";
+$sql = "SELECT mdevtype, mdevuuid FROM arclight_vgpu WHERE action = 'createmdev' AND userid = '$userid';";
 $dsql = "SELECT domain_name FROM arclight_vm WHERE userid = '$userid';";
 
 $result = $conn->query($sql);
@@ -180,7 +180,7 @@ input[type=submit]:hover {
                 $i=0;
                 while($DB_ROW = mysqli_fetch_array($result)) {
                 ?>
-            <option value="<?php echo $DB_ROW["createdmdev"];?>"><?php echo $DB_ROW["mdevtype"];?>  (<?php echo $DB_ROW["createdmdev"];?>)</option>
+            <option value="<?php echo $DB_ROW["mdevuuid"];?>"><?php echo $DB_ROW["mdevtype"];?>  (<?php echo $DB_ROW["mdevuuid"];?>)</option>
     <?php
         $i++;
         }
@@ -239,7 +239,7 @@ input[type=submit]:hover {
 
             echo 'MDEV with UUID: '  . $selecteduuid; 
             echo "<br>";
-            echo 'was succesfully detached from '  . $domainname;
+            echo 'was succesfully detached from  '  . $domainname;
        } else {
             echo 'No value selected';
         }
