@@ -58,7 +58,7 @@ userid INT,
 domain_name varchar(255),
 action varchar(255),
 mdevtype varchar(255),
-createdmdev varchar(255),
+mdevuuid varchar(255),
 UUID varchar(255),
 dt DATETIME)";
 $tablesql = mysqli_query($conn, $sql);
@@ -86,7 +86,7 @@ if ($action == "createmdev"){
 
 
 if ($createdmdev){
-  $sql = "INSERT INTO arclight_vgpu (userid, action, mdevtype, createdmdev, dt) VALUES('$userid', '$action', '$mdevtype', '$createdmdev', current_timestamp());"; 
+  $sql = "INSERT INTO arclight_vgpu (userid, action, mdevtype, mdevuuid, dt) VALUES('$userid', '$action', '$mdevtype', '$createdmdev', current_timestamp());"; 
   $inserttablesql = mysqli_query($conn, $sql);
 
   if(!$inserttablesql)
@@ -99,35 +99,12 @@ if ($createdmdev){
 
 }
 }
-// usage: nvidia-dev-ctl.py attach-mdev [-h] [--virsh-trials N]
-// [--virsh-delay SECONDS] [-c URL]
-// [--hotplug] [--restart] [-n]
-// UUID, DOMAIN
-// --hotplug 
-// --restart 
-// -n, --dry-run 
-// if ($action == "attachmdev"){
-// $result = shell_exec('cd /var/www/html/arclight/gpubinder && ./nvidia-dev-ctl.py attach-mdev $uuid $domainname');
 
-// }
 
 ?>
 <!-------------------------------------CREATE MDEV GPU------------------------------------->
 
 <form class="row gx-3 gy-2 align-items-center" id="create-mdev" name="create-mdev" role="form" action="" method="post" >
-  <!-- <div class="col-sm-3">
-    <label class="visually-hidden" for="specificSizeInputName">PCI Address</label>
-    <input type="text" class="form-control" id="pciadd" name="pciadd" placeholder="PCI Address">
-  </div>
-  <div class="col-sm-3">
-    <label class="visually-hidden" for="optionalarguments">Optional Arguments</label>
-    <select class="form-select" id="optionalarguments" name="optionalarguments">
-      <option selected>Choose...</option>
-      <option value="1">Hotplug</option>
-      <option value="2">Restart</option>
-      <option value="3">Dry Run</option>
-    </select>
-  </div> -->
   <div class="col-sm-3">
     <label class="visually-hidden" for="pciaddr">PCI Address</label>
     <input type="text" class="form-control" id="pciaddr" name="pciaddr" placeholder="PCI Address">
@@ -146,87 +123,13 @@ if ($createdmdev){
 <!--usage: nvidia-dev-ctl.py attach-mdev [-h] [--virsh-trials N]
                                      [--virsh-delay SECONDS] [-c URL]
                                      [--hotplug] [--restart] [-n]
-                                     UUID DOMAIN
-
-positional arguments:
-  UUID                  UUID of the mdev device to attach
-  DOMAIN                domain name, id or uuid
-
-optional arguments:
-  -h, --help            show this help message and exit
-  --virsh-trials N      number of trials if waiting for virsh
-  --virsh-delay SECONDS
-                        delay time in seconds between trials if waiting for
-                        virsh
-  -c URL, --connection URL
-                        virsh connection URL
-  --hotplug             affect the running domain and keep changes after
-                        reboot
-  --restart             shutdown and reboot the domain after the changes are
-                        made
-  -n, --dry-run         Do everything except actually make changes -->
-
-<?php
-
-if ($action == "attachmdev"){ 
-  $UUID = $_SESSION['UUID'];
-  $domain_name = $_SESSION['domain_name'];
-  $optionalarguments = $_SESSION['optionalarguments'];
-  $UUID = $_SESSION['UUID'];
-
-
-  $attachmdev = shell_exec("cd /var/www/html/arclight/gpubinder && sudo ./nvidia-dev-ctl.py attach-mdev '".$optionalarguments."' '".$UUID."' '".$domain_name."'");
-
-  if ($attachmdev){
-
-    $sql = "INSERT INTO arclight_vgpu (userid, domain_name, action, UUID, dt) VALUES('$userid', '$domain_name', '$action', '$UUID', current_timestamp());"; 
-    $inserttable2sql = mysqli_query($conn, $sql);
-  
-    if(!$inserttable2sql)
-      {
-        // //     echo "Inserted into databse";
-        // }
-        // else{
-          echo("Error description: " . mysqli_error($conn));
-      }
-  
-  }
-  }
-  ?>
-<form class="row gx-3 gy-2 align-items-center" id="attachmdev" name="attachmdev" role="form" action="" method="post">
-  <div class="col-sm-3">
-    <label class="visually-hidden" for="UUID">UUID</label>
-    <input type="text" class="form-control" id="UUID" name="UUID" placeholder="UUID">
-  </div>
-  <div class="col-sm-3">
-    <label class="visually-hidden" for="domain_name">Domain</label>
-    <input type="text" class="form-control" id="domain_name" name="domain_name" placeholder="Domain Name">
-  </div>
-  <div class="col-sm-3">
-    <label class="visually-hidden" for="optionalarguments">Optional Arguments</label>
-    <select class="form-select" id="optionalarguments" name="optionalarguments">
-      <option selected>Choose...</option>
-      <option value="">None</option>
-      <option value="--hotplug">Hotplug</option>
-      <option value="--restart">Restart</option>
-      <option value="-n">Dry Run</option>
-    </select>
-  </div>
-  <!-- <input type="hidden" name="action" value="attachmdev"> -->
-  <div class="col-auto">
-    <button type="Attach" class="btn btn-primary">Attach Virtual GPU</button>
-  </div>
-</form>
-
-
-
-
+                                     UUID DOMAIN -->
 
 
 
 <!-------------------------------------Remove MDEV GPU------------------------------------->
 <?php
-$sql = "SELECT createdmdev, mdevtype FROM arclight_vgpu WHERE action = 'createmdev' AND userid = '$userid';";
+$sql = "SELECT mdevuuid, mdevtype FROM arclight_vgpu WHERE action = 'createmdev' AND userid = '$userid';";
 $result = $conn->query($sql);
 
 // if ($action == "removemdev"){ 
@@ -370,7 +273,7 @@ input[type=submit]:hover {
 $i=0;
 while($DB_ROW = mysqli_fetch_array($result)) {
     ?>
-        <option value="<?php echo $DB_ROW["createdmdev"];?>"><?php echo $DB_ROW["mdevtype"];?>  (<?php echo $DB_ROW["createdmdev"];?>)</option>
+        <option value="<?php echo $DB_ROW["mdevuuid"];?>"><?php echo $DB_ROW["mdevtype"];?>  (<?php echo $DB_ROW["mdevuuid"];?>)</option>
       <?php
 $i++;
 }
@@ -396,7 +299,7 @@ $i++;
             $selected = clean_input($_POST['removemdev']);
             $removeddmdev = shell_exec("cd /var/www/html/arclight/gpubinder && sudo ./nvidia-dev-ctl.py remove-mdev '".$selected."'");
 
-        $rsql = "DELETE FROM arclight_vgpu WHERE createdmdev = '$selected';";
+        $rsql = "DELETE FROM arclight_vgpu WHERE mdevuuid = '$selected';";
         $result = $conn->query($rsql);
 
         echo 'Removed MDEV ID:'  . $selected;
