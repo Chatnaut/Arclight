@@ -216,7 +216,7 @@ $i++;
 
           }
          else {
-        echo 'Please select the value.'  . $selected;
+        echo 'No value selected.'  . $selected;
         }
 
       }
