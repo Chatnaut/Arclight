@@ -34,7 +34,7 @@ $userid = $_SESSION['userid']; //grab the $uuid variable from $_POST, only used 
 
 // <!-------------------------------------attach MDEV GPU------------------------------------->
 
-$sql = "SELECT createdmdev FROM arclight_vgpu WHERE action = 'createmdev' AND userid = '$userid';";
+$sql = "SELECT mdevtype, mdevuuid FROM arclight_vgpu WHERE action = 'createmdev' AND userid = '$userid';";
 $dsql = "SELECT domain_name FROM arclight_vm WHERE userid = '$userid';";
 
 $result = $conn->query($sql);
@@ -175,7 +175,7 @@ input[type=submit]:hover {
                 $i=0;
                 while($DB_ROW = mysqli_fetch_array($result)) {
                 ?>
-            <option value="<?php echo $DB_ROW["createdmdev"];?>"><?php echo $DB_ROW["mdevtype"];?>  (<?php echo $DB_ROW["createdmdev"];?>)</option>
+            <option value="<?php echo $DB_ROW["mdevuuid"];?>"><?php echo $DB_ROW["mdevtype"];?>  (<?php echo $DB_ROW["mdevuuid"];?>)</option>
     <?php
         $i++;
         }
@@ -227,17 +227,24 @@ input[type=submit]:hover {
             if(!empty($_POST['uuid'])) {  
             $selecteduuid = clean_input($_POST['uuid']);
             $optionalarguments = clean_input($_POST['optionalargument']);
+            $mdevtype = clean_input($_POST['mdevtype']);
+            $action = 'attachmdev';
             $domainname = clean_input($_POST['domainname']);
             $attachmdev = shell_exec("cd /var/www/html/arclight/gpubinder && sudo ./nvidia-dev-ctl.py attach-mdev '".$optionalarguments."' '".$selecteduuid."' '".$domainname."'");
 
+            $sql = "INSERT INTO arclight_vgpu (userid, action, domain_name, mdevtype, mdevuuid, dt) VALUES('$userid', '$action', '$domainname', '$mdevtype', '$selecteduuid', current_timestamp());"; 
+            $inserttablesql = mysqli_query($conn, $sql);
             echo 'MDEV with UUID:'  . $selecteduuid; 
             echo "<br>";
             echo 'Attached to:'  . $domainname;
+            unset($_POST);
+            header("Location: ".$_SERVER['PHP_SELF']);
+            exit;
        } else {
             echo 'Please select any value.';
         }
      } 
-        
+
         
     ?>  
   </body>  
