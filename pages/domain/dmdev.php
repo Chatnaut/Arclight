@@ -33,12 +33,16 @@ $userid = $_SESSION['userid']; //grab the $uuid variable from $_POST, only used 
 
 
 // <!-------------------------------------Detach MDEV GPU------------------------------------->
+$ids = $_GET['id'];
+$showquery = "SELECT * from arclight_vgpu WHERE sno={$ids} AND action = 'attachmdev' AND userid = '$userid'";
+$showdata = mysqli_query($conn,$showquery);
+$arrdata = mysqli_fetch_array($showdata);
 
-$sql = "SELECT mdevtype, mdevuuid FROM arclight_vgpu WHERE action = 'createmdev' AND userid = '$userid';";
-$dsql = "SELECT domain_name FROM arclight_vm WHERE userid = '$userid';";
+// $sql = "SELECT mdevtype, mdevuuid FROM arclight_vgpu WHERE action = 'createmdev' AND userid = '$userid';";
+// $dsql = "SELECT domain_name FROM arclight_vm WHERE userid = '$userid';";
 
-$result = $conn->query($sql);
-$dresult = $conn->query($dsql);
+// $result = $conn->query($sql);
+// $dresult = $conn->query($dsql);
 
 
 ?>
@@ -169,47 +173,14 @@ input[type=submit]:hover {
                                      
 <body>
   <div class="container mt-5">  
-<?php
-    if (mysqli_num_rows($result) > 0) {
-?>
     <form action="" method="post">  
       <select name="uuid">  
         <!-- <select class="form-select" id="selectmdev" name="selectmdev"> -->
-        <option value = "" selected> MDEV UUID </option>  
-                <?php
-                $i=0;
-                while($DB_ROW = mysqli_fetch_array($result)) {
-                ?>
-            <option value="<?php echo $DB_ROW["mdevuuid"];?>"><?php echo $DB_ROW["mdevtype"];?>  (<?php echo $DB_ROW["mdevuuid"];?>)</option>
-    <?php
-        $i++;
-        }
-            }
-            else{
-                echo "No device found";
-         }
-    ?>
-        </select> 
+            <option value="<?php echo $arrdata['mdevuuid']; ?>"><?php echo $arrdata['mdevtype']; ?>  (<?php echo $arrdata['mdevuuid']; ?>)</option>
 
-        <?php
-        if (mysqli_num_rows($dresult) > 0) {
-?>
+        </select> 
       <select name="domainname">  
-        <!-- <select class="form-select" id="selectmdev" name="selectmdev"> -->
-        <option value = "" selected> VM Name or UUID</option>  
-                <?php
-                $i=0;
-                while($DB_ROW = mysqli_fetch_array($dresult)) {
-                ?>
-            <option value="<?php echo $DB_ROW["domain_name"];?>"><?php echo $DB_ROW["domain_name"];?></option>
-            <?php
-                $i++;
-                }     
-              }  
-                else{
-                        echo "No VM's found";
-                }
-            ?>
+            <option value="<?php echo $arrdata['domain_name']; ?>"><?php echo $arrdata['domain_name']; ?></option>
       </select>
 
 
