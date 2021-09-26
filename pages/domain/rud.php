@@ -218,22 +218,42 @@ $(document).ready(function(){
                 //    include '../../assets/css/rud.css';
                    require('../config/config.php');
                    $userid = $_SESSION['userid'];
-                   $selectquery = "SELECT * FROM arclight_vgpu WHERE action = 'attachmdev' AND userid = '$userid';";
+                   $selectquery = "SELECT * FROM arclight_vgpu WHERE userid = '$userid';";
                    $query = mysqli_query($conn, $selectquery);
-                   $nums = mysqli_num_rows($query);
-                   
+
                    while($res = mysqli_fetch_array($query)){
                         ?>
                     
                     <tr>
                         <td><?php echo $res['mdevuuid']; ?></td>
-                        <td><?php echo $res['action']; ?></td>                        
+                            <td>
+                            <?php
+                        if ($res['action'] == 'attachmdev'){
+                            ?>
+                            <span class="status text-success">&bull;</span> Attached
+                            <?php 
+                         }  else if ($res['action'] == ('createmdev')||('detachmdev')){
+                            ?>
+                                <span class="status text-warning">&bull;</span> Idle
+                            <?php 
+                         }  else {
+                            ?>
+                                <span class="status text-danger">&bull;</span> Error</td>                        
+                            <?php
+                         }  ?>
+
                         <td><?php echo $res['domain_name']; ?></td>
-                        <!-- <td><span class="status text-success">&bull;</span> Active</td>
-                        <td>
-                            <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
-                            <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
-                        </td> -->
+                        <td> 
+                            <?php if ($res['action'] == 'attachmdev'){ ?>
+                            <!-- Redirecting customers directly to detach and remove page actions by using their ids via GET -->
+                            <a href="dmdev.php?id=<?php echo $res['sno']; ?>" class="settings" title="Detach" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
+                            <?php } ?>
+
+                            <?php if ($res['action'] == ('createmdev')||('detachmdev')){ ?>
+                            <a href="#" class="delete" title="Suspend" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
+                            <?php } ?>
+
+                        </td> 
                     </tr>
                    <?php
                     }
