@@ -99,7 +99,7 @@ cd /var/www/html
 The minimal installation of CentOS does not come with wget to download files. You will also need git to perform software updates. Install the, using the following command:
 yum install wget git -y
 
-Now download the latest version of VM Dashboard to the web root directory.
+Now download the latest version of Arclight Dashboard to the web root directory.
 wget https://github.com/arclight/arclight/archive/v19.01.03.tar.gz
 
 Extract the downloaded package.
@@ -124,13 +124,13 @@ SeLinux will block the qemu connection through the web browser. Modify the /etc/
 nano /etc/sysconfig/selinux
 Creating a database
 
-We will need a MySQL database for VM Dashboard to work with. To log into MySQL use the following command:
+We will need a MySQL database for Arclight Dashboard to work with. To log into MySQL use the following command:
 mysql -u root
 
 You will be prompted for your the password that was setup for the root user on MySQL. Once logged in, create a new database. I will name it arclight.
 CREATE DATABASE arclight;
 
-Now create a user for VM Dashboard to use. You could use the root user and password, but that is never advised. I will create a new user named vmdashbaord. Be sure to change the password.
+Now create a user for Arclight Dashboard to use. You could use the root user and password, but that is never advised. I will create a new user named vmdashbaord. Be sure to change the password.
 CREATE USER 'arclight'@'localhost' IDENTIFIED BY 'password';
 
 Change the permissions of the new user to have full access to the database tables.
@@ -141,9 +141,9 @@ FLUSH PRIVILEGES;
 
 To exit MySQL, type quit or use the EXIT; statement.
 EXIT;
-Connecting to VM Dashboard
+Connecting to Arclight Dashboard
 
-You will need to restart your server before you can use the VM Dashboard software. This way the server restarts with all the necessary hypervisor software loaded and the user groups applied.
+You will need to restart your server before you can use the Arclight Dashboard software. This way the server restarts with all the necessary hypervisor software loaded and the user groups applied.
 sudo reboot
 
 Once rebooted, use a web browser to navigate to your server’s IP address or domain name. Add /arclight to the end of the URL. For example: http://192.168.1.2/arclight
@@ -262,7 +262,7 @@ To automate the Let’s Encrypt certificate using Apache we will need to install
 To create the SSL Certificate and Apache configuration file run the following command, changing your domain name. You will be asked for an email address and you will be given an option to either redirect all traffic to the HTTPS protocol or not.
 #sudo certbot --apache -d server1.arclight.org
 
-Now login to your VM Dashboard. Go to the settings page and add the location of the Let’s Encrypt certificate file and key file and submit your changes. Below is the location created for server1.arclight.org
+Now login to your Arclight Dashboard. Go to the settings page and add the location of the Let’s Encrypt certificate file and key file and submit your changes. Below is the location created for server1.arclight.org
 
 Certificate file: /etc/letsencrypt/live/server1.arclight.org/fullchain.pem
 Key file: /etc/letsencrypt/live/server1.arclight.org/privkey.pem
