@@ -20,17 +20,10 @@
     return $data;
   }
 
-
-
 require('../header.php');
 require('../config/config.php');
 
 $userid = $_SESSION['userid']; //grab the $uuid variable from $_POST, only used for actions below
-
-//Creating user's databse table
-
-
-
 
 // <!-------------------------------------Detach MDEV GPU------------------------------------->
 $ids = $_GET['id'];
@@ -176,14 +169,11 @@ input[type=submit]:hover {
     <form action="" method="post">  
       <select name="uuid">  
         <!-- <select class="form-select" id="selectmdev" name="selectmdev"> -->
-            <option value="<?php echo $arrdata['mdevuuid']; ?>"><?php echo $arrdata['mdevtype']; ?>  (<?php echo $arrdata['mdevuuid']; ?>)</option>
-
+            <option value="<?php echo $arrdata['mdevuuid']; ?>"><?php echo $arrdata['mdevtype']; ?> (<?php echo $arrdata['mdevuuid']; ?>)</option>
         </select> 
       <select name="domainname">  
             <option value="<?php echo $arrdata['domain_name']; ?>"><?php echo $arrdata['domain_name']; ?></option>
       </select>
-
-
 
         <select name="optionalargument">  
         <option value = "" selected> Arguments </option> 
@@ -208,6 +198,8 @@ input[type=submit]:hover {
             $domainname = clean_input($_POST['domainname']);
             $dettachmdev = shell_exec("cd /var/www/html/arclight/gpubinder && sudo ./nvidia-dev-ctl.py detach-mdev '".$optionalarguments."' '".$selecteduuid."' '".$domainname."'");
 
+            $sql = "UPDATE arclight_vgpu SET domain_name = '', action = 'createmdev' WHERE action = 'attachmdev' AND userid = '$userid';";
+            $result = $conn->query($sql);
             echo 'MDEV with UUID: '  . $selecteduuid; 
             echo "<br>";
             echo 'was succesfully detached from  '  . $domainname;
