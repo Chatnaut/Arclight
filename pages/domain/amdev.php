@@ -20,27 +20,24 @@
     return $data;
   }
 
-
-
 require('../header.php');
 require('../config/config.php');
 
 $userid = $_SESSION['userid']; //grab the $uuid variable from $_POST, only used for actions below
 
-//Creating user's databse table
-
 
 
 
 // <!-------------------------------------attach MDEV GPU------------------------------------->
+$ids = $_GET['id'];
+$showquery = "SELECT * from arclight_vgpu WHERE sno={$ids} AND action = 'createmdev' AND userid = '$userid'";
+$showdata = mysqli_query($conn,$showquery);
+$arrdata = mysqli_fetch_array($showdata);
 
-$sql = "SELECT mdevtype, mdevuuid FROM arclight_vgpu WHERE action = 'createmdev' AND userid = '$userid';";
+// $sql = "SELECT mdevtype, mdevuuid FROM arclight_vgpu WHERE action = 'createmdev' AND userid = '$userid';";
 $dsql = "SELECT domain_name FROM arclight_vm WHERE userid = '$userid';";
-
-$result = $conn->query($sql);
+// $result = $conn->query($sql);
 $dresult = $conn->query($dsql);
-
-
 ?>
 
 <html lang="en">  
@@ -164,26 +161,9 @@ input[type=submit]:hover {
 
 <body>
   <div class="container mt-5">  
-<?php
-    if (mysqli_num_rows($result) > 0) {
-?>
     <form action="" method="post">  
       <select name="uuid">  
-        <!-- <select class="form-select" id="selectmdev" name="selectmdev"> -->
-        <option value = "" selected> MDEV UUID </option>  
-                <?php
-                $i=0;
-                while($DB_ROW = mysqli_fetch_array($result)) {
-                ?>
-            <option value="<?php echo $DB_ROW["mdevuuid"];?>"><?php echo $DB_ROW["mdevtype"];?>  (<?php echo $DB_ROW["mdevuuid"];?>)</option>
-    <?php
-        $i++;
-        }
-            }
-            else{
-                echo "No device found";
-         }
-    ?>
+        <option value="<?php echo $arrdata['mdevuuid']; ?>"><?php echo $arrdata['mdevtype']; ?>  (<?php echo $arrdata['mdevuuid']; ?>)</option>
         </select> 
 
         <?php
@@ -232,7 +212,9 @@ input[type=submit]:hover {
             $domainname = clean_input($_POST['domainname']);
             $attachmdev = shell_exec("cd /var/www/html/arclight/gpubinder && sudo ./nvidia-dev-ctl.py attach-mdev '".$optionalarguments."' '".$selecteduuid."' '".$domainname."'");
 
-            $sql = "INSERT INTO arclight_vgpu (userid, action, domain_name, mdevtype, mdevuuid, dt) VALUES('$userid', '$action', '$domainname', '$mdevtype', '$selecteduuid', current_timestamp());"; 
+            // $sql = "INSERT INTO arclight_vgpu (userid, action, domain_name, mdevtype, mdevuuid, dt) VALUES('$userid', '$action', '$domainname', '$mdevtype', '$selecteduuid', current_timestamp());"; 
+            $sql = "UPDATE arclight_vgpu SET domain_name = '$domainname', action = 'attachmdev' WHERE action = 'createmdev' AND userid = '$userid';";
+
             $inserttablesql = mysqli_query($conn, $sql);
             echo 'MDEV with UUID:'  . $selecteduuid; 
             echo "<br>";
