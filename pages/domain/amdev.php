@@ -210,24 +210,47 @@ input[type=submit]:hover {
             $mdevtype = clean_input($_POST['mdevtype']);
             $action = 'attachmdev';
             $domainname = clean_input($_POST['domainname']);
-            $attachmdev = shell_exec("cd /var/www/html/arclight/gpubinder && sudo ./nvidia-dev-ctl.py attach-mdev '".$optionalarguments."' '".$selecteduuid."' '".$domainname."'");
+            $attachmdev = exec("cd /var/www/html/arclight/gpubinder && sudo ./nvidia-dev-ctl.py attach-mdev '".$optionalarguments."' '".$selecteduuid."' '".$domainname."'", $output, $return_var);
+            // var_dump($return_var);
+            // echo "return_var is: $return_var" . "\n";
+            // var_dump($output);
+            echo '<pre>'; print_r($output); echo '</pre>';
+            
+            if (empty($return_var)){
 
-            // $sql = "INSERT INTO arclight_vgpu (userid, action, domain_name, mdevtype, mdevuuid, dt) VALUES('$userid', '$action', '$domainname', '$mdevtype', '$selecteduuid', current_timestamp());"; 
-            $sql = "UPDATE arclight_vgpu SET domain_name = '$domainname', action = 'attachmdev' WHERE action = 'createmdev' AND userid = '$userid';";
+              $sql = "UPDATE arclight_vgpu SET domain_name = '$domainname', action = 'attachmdev' WHERE action = 'createmdev' AND userid = '$userid'";
 
             $inserttablesql = mysqli_query($conn, $sql);
+            
             echo 'MDEV with UUID:'  . $selecteduuid; 
             echo "<br>";
             echo 'Attached to:'  . $domainname;
-            unset($_POST);
-            header("Location: ".$_SERVER['PHP_SELF']);
-            exit;
-       } else {
+             
+            }else {
+              echo "Exception Error";
+            }
+          }
+
+        else {
             echo 'Please select any value.';
         }
      } 
+
+    
 
         
     ?>  
   </body>  
 </html> 
+
+<!-- Basic execution from a PHP script
+
+There are four (!) PHP functions which purpose is to run an external command and return output:
+
+    exec() accepts command as input and returns the last line from the result of the command. Optionally, it can fill a provided array with every line of the output and also assign the return code to the variable. On failure, the function returns false.
+
+    passthru() executes a command and passes the raw output directly to the browser. The PHP documentation recommends it in case if binary output has to be sent without interference.
+
+    shell_exec() executes a command and returns the complete output as a string. It does not provide the exit code. The function return value is confusing because it can be null both if an error occured or if the command produced no output.
+
+    system() acts like passthru(), but it also returns the last line of the output. This function works well only with text output. -->
