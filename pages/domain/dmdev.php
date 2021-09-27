@@ -196,14 +196,20 @@ input[type=submit]:hover {
             $selecteduuid = clean_input($_POST['uuid']);
             $optionalarguments = clean_input($_POST['optionalargument']);
             $domainname = clean_input($_POST['domainname']);
-            $dettachmdev = shell_exec("cd /var/www/html/arclight/gpubinder && sudo ./nvidia-dev-ctl.py detach-mdev '".$optionalarguments."' '".$selecteduuid."' '".$domainname."'");
+            $dettachmdev = exec("cd /var/www/html/arclight/gpubinder && sudo ./nvidia-dev-ctl.py detach-mdev '".$optionalarguments."' '".$selecteduuid."' '".$domainname."'", $output, $return_var);
 
+            if (empty($return_var)){
             $sql = "UPDATE arclight_vgpu SET domain_name = '', action = 'createmdev' WHERE action = 'attachmdev' AND userid = '$userid';";
             $result = $conn->query($sql);
             echo 'MDEV with UUID: '  . $selecteduuid; 
             echo "<br>";
             echo 'was succesfully detached from  '  . $domainname;
-       } else {
+             
+            }else {
+              echo "Exception Error";
+            }
+          }
+          else{
             echo 'No value selected';
         }
      } 
