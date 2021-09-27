@@ -1,10 +1,10 @@
-VM Dashboard is licensed using the GNU GENERAL PUBLIC LICENSE, listed below.
+Arclight Dashboard is licensed using the GNU GENERAL PUBLIC LICENSE, listed below.
 
 Also the included apps may have there own license. 
 The noVNC app located in the apps/noVNC directory is licensed under Mozilla Public License 2.0. 
 The password_compat application located in the apps/password_compat_vm directory is MIT licensed.
 
-VM Dashboard uses bootstrap for the theme layout. This licensed under MIT.
+Arclight Dashboard uses bootstrap for the theme layout. This licensed under MIT.
 
 
 
