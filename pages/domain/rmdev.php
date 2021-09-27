@@ -164,22 +164,24 @@ input[type=submit]:hover {
     </form>  
     <?php  
         if(isset($_POST['submit'])){  
-        if(!empty($_POST['removemdev'])) {  
+          if(!empty($_POST['removemdev'])) {  
             // $selected = $_POST['removemdev'];  
             $selected = clean_input($_POST['removemdev']);
-            $removeddmdev = shell_exec("cd /var/www/html/arclight/gpubinder && sudo ./nvidia-dev-ctl.py remove-mdev '".$selected."'");
+            $removeddmdev = shell_exec("cd /var/www/html/arclight/gpubinder && sudo ./nvidia-dev-ctl.py remove-mdev '".$selected."'", $output, $return_var);
 
-        $rsql = "DELETE FROM arclight_vgpu WHERE mdevuuid = '$selected';";
-        $result = $conn->query($rsql);
+            if (empty($return_var)){
+              $rsql = "DELETE FROM arclight_vgpu WHERE mdevuuid = '$selected';";
+              $result = $conn->query($rsql);
 
-        echo 'Removed MDEV ID:'  . $selected;
-
-    }
-     else {
-        echo 'Please select the value.'  . $selected;
-    }
-
-        } 
+              echo 'Removed MDEV ID:'  . $selected;
+            } else {
+              echo "Exception Error";
+            }
+          }
+          else{
+            echo 'No value selected';
+        }
+     }
         
         
     ?>   
