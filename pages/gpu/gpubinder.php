@@ -158,7 +158,8 @@ if (isset($_POST['action'])) {
                                   <table class="table table-striped table-hover">
                                       <thead>
                                           <tr>
-                                              <th>Mdev UUID</th>
+                                              <th>MDEV UUID</th>
+                                              <th>MDEV Type</th>
                                               <th>Action</th>						
                                               <th>VM</th>
                                           </tr>
@@ -175,6 +176,8 @@ if (isset($_POST['action'])) {
                                           
                                           <tr>
                                               <td><?php echo $res['mdevuuid']; ?></td>
+                                              <td><?php echo $res['mdevtype']; ?></td>
+
                                                   <td>
                                                   <?php
                                               if ($res['action'] == 'attachmdev'){
@@ -198,10 +201,14 @@ if (isset($_POST['action'])) {
                                                   <a href="../domain/dmdev.php?id=<?php echo $res['sno']; ?>" class="settings" title="Detach" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
                                                   <?php } ?>
 
-                                                  <?php if ($res['action'] == ('createmdev')||('detachmdev')){ ?>
-                                                  <a href="#" class="delete" title="Suspend" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
+                                                  <?php if ($res['action'] == 'createmdev'){ ?>
+                                                  <a href="../domain/amdev.php?id=<?php echo $res['sno']; ?>" class="settings" title="Attach" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
+
+                                                  <a href="../domain/rmdev.php?id=<?php echo $res['sno']; ?>" class="delete" title="Suspend" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
                                                   <?php } ?>
                                                 </td> 
+                                                
+
                                           </tr>
                                         <?php } ?>
                                       </tbody>
