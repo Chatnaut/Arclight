@@ -214,7 +214,7 @@ input[type=submit]:hover {
             // var_dump($return_var);
             // echo "return_var is: $return_var" . "\n";
             // var_dump($output);
-            echo '<pre>'; print_r($output); echo '</pre>';
+            // echo '<pre>'; print_r($output); echo '</pre>';
             
             if (empty($return_var)){
 
