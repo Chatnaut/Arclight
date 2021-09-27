@@ -167,7 +167,7 @@ input[type=submit]:hover {
           if(!empty($_POST['removemdev'])) {  
             // $selected = $_POST['removemdev'];  
             $selected = clean_input($_POST['removemdev']);
-            $removeddmdev = shell_exec("cd /var/www/html/arclight/gpubinder && sudo ./nvidia-dev-ctl.py remove-mdev '".$selected."'", $output, $return_var);
+            $removeddmdev = exec("cd /var/www/html/arclight/gpubinder && sudo ./nvidia-dev-ctl.py remove-mdev '".$selected."'", $output, $return_var);
 
             if (empty($return_var)){
               $rsql = "DELETE FROM arclight_vgpu WHERE mdevuuid = '$selected';";
