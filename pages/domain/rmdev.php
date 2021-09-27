@@ -20,42 +20,21 @@ if (!isset($_SESSION['username'])){
     return $data;
   }
 
-// if (isset($_POST['action'])) {
-//   $_SESSION['action'] = $_POST['action'];
-//   unset($_POST);
-//   header("Location: ".$_SERVER['PHP_SELF']);
-//   exit;
-// }
 require('../config/config.php');
 require('../header.php');
 $userid = $_SESSION['userid'];
 
-$sql = "SELECT createdmdev, mdevtype FROM arclight_vgpu WHERE action = 'createmdev' AND userid = '$userid';";
-$result = $conn->query($sql);
-
-// if ($action == "removemdev"){ 
-//   $selectmdev = $_SESSION['selectmdev'];
-//   echo $selectmdev;
-
-  // $removedmdev = shell_exec("cd /var/www/html/arclight/gpubinder && sudo ./nvidia-dev-ctl.py remove-mdev '".$optionalarguments."'");
-  // if(!$removemdev)
-  // {
-  //   // //     echo "Inserted into databse";
-  //   // }
-  //   // else{
-  //       }
-  
-
+$ids = $_GET['id'];
+$showquery = "SELECT * from arclight_vgpu WHERE sno={$ids} AND action = 'createmdev' AND userid = '$userid'";
+$showdata  = mysqli_query($conn, $showquery);
+$arrdata = mysqli_fetch_array($showdata);
 ?>
-
-
-
 
 <html lang="en">  
 <head>  
   <meta charset="utf-8">  
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">  
-  <title> PHP Select Dropdown Example </title>  
+  <!-- <title> PHP Select Dropdown Example </title>   -->
   <style>  
     .container {  
       max-width: 400px;  
@@ -91,7 +70,7 @@ $result = $conn->query($sql);
       select::-ms-expand {  
       display: none;  
     }  
-    .selectIcon {  
+    /* .selectIcon {  
       top: 7px;  
       right: 15px;  
       width: 30px;  
@@ -100,11 +79,11 @@ $result = $conn->query($sql);
       pointer-events: none;  
       position: absolute;  
       transition: background-color 0.3s ease, border-color 0.3s ease;  
-    }  
-    .selectIcon svg.icon {  
+    }   */
+    /* .selectIcon svg.icon {  
       transition: fill 0.3s ease;  
       fill: white;  
-    }  
+    }   */
     select:hover {  
       color: #000000;  
       background-color: white;  
@@ -168,60 +147,42 @@ input[type=submit]:hover {
   color: #1A33FF;  
 }  
   </style>  
-</head>  
-<body>  
+ 
   <div class="container mt-5">  
-  <h1> Example </h1>  
-  <h2> PHP Select Dropdown Example </h2>  
-<?php
-    if (mysqli_num_rows($result) > 0) {
-?>
     <form action="" method="post">  
       <select name="removemdev">  
-    <!-- <select class="form-select" id="selectmdev" name="selectmdev"> -->
-        <option value = "" selected> Select option </option>  
-    <?php
-$i=0;
-while($DB_ROW = mysqli_fetch_array($result)) {
-    ?>
-        <option value="<?php echo $DB_ROW["createdmdev"];?>"><?php echo $DB_ROW["mdevtype"];?>  (<?php echo $DB_ROW["createdmdev"];?>)</option>
-      <?php
-$i++;
-}
-    }
-    else{
-        echo "No device found";
-}
-?>
+        <option value="<?php echo $arrdata['mdevuuid']; ?>"><?php echo $arrdata['mdevtype']; ?>  (<?php echo $arrdata['mdevuuid']; ?>)</option>
     </select> 
-      <div class="selectIcon">  
+      <!-- <div class="selectIcon">  
         <svg focusable="false" viewBox="0 0 104 128" width="25" height="35" class="icon">  
           <path  
             d="m2e1 95a9 9 0 0 1 -9 9 9 9 0 0 1 -9 -9 9 9 0 0 1 9 -9 9 9 0 0 1 9 9zm0-3e1a9 9 0 0 1 -9 9 9 9 0 0 1 -9 -9 9 9 0 0 1 9 -9 9 9 0 0 1 9 9zm0-3e1a9 9 0 0 1 -9 9 9 9 0 0 1 -9 -9 9 9 0 0 1 9 -9 9 9 0 0 1 9 9zm14 55h68v1e1h-68zm0-3e1h68v1e1h-68zm0-3e1h68v1e1h-68z">  
           </path>  
         </svg>  
-      </div>  
+      </div>   -->
       <br> <br> <input type = "submit" name = "submit" value = "submit">  
     </form>  
     <?php  
         if(isset($_POST['submit'])){  
-          if(!empty($_POST['removemdev'])) {  
+        if(!empty($_POST['removemdev'])) {  
             // $selected = $_POST['removemdev'];  
             $selected = clean_input($_POST['removemdev']);
             $removeddmdev = shell_exec("cd /var/www/html/arclight/gpubinder && sudo ./nvidia-dev-ctl.py remove-mdev '".$selected."'");
 
-            $rsql = "DELETE FROM arclight_vgpu WHERE createdmdev = '$selected';";
-            $result = $conn->query($rsql);
+        $rsql = "DELETE FROM arclight_vgpu WHERE mdevuuid = '$selected';";
+        $result = $conn->query($rsql);
 
+        echo 'Removed MDEV ID:'  . $selected;
 
-          }
-         else {
-        echo 'No value selected.'  . $selected;
-        }
+    }
+     else {
+        echo 'Please select the value.'  . $selected;
+    }
 
-      }
-       
-    ?>  
+        } 
+        
+        
+    ?>   
   </div>  
 </body>  
 </html> 
