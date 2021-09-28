@@ -22,39 +22,40 @@
   
   // We are now going to grab any GET/POST data and put in in SESSION data, then clear it.
   // This will prevent duplicating actions when page is reloaded.
-  if (isset($_POST['action'])) {
-      $_SESSION['uuid'] = $_POST['uuid'];
-      $_SESSION['action'] = $_POST['action'];
-      //----General Section----//
+  if (isset($_GET['action'])) {
+      $_SESSION['uuid'] = $_GET['uuid'];
+      $_SESSION['action'] = $_GET['action'];
+
+          //----General Section----//
       $_SESSION['domain_type'] = "kvm"; //set to "kvm" as this is the only supported type at this time
-      $_SESSION['domain_name'] = clean_input($_POST['domain_name']); //removes spaces and sanitizes
-      $_SESSION['memory_unit'] = $_POST['memory_unit']; //choice of "MiB" or "GiB"
-      $_SESSION['memory'] = $_POST['memory']; //number input, still need to sanitze for number and verify it is not zero
-      $_SESSION['vcpu'] = $_POST['vcpu']; //number input, still need to sanitze for number and verify it is not zero, also may need to set limit to host CPU#
+      $_SESSION['domain_name'] = clean_input($_GET['domain_name']); //removes spaces and sanitizes
+      $_SESSION['memory_unit'] = $_GET['memory_unit']; //choice of "MiB" or "GiB"
+      $_SESSION['memory'] = $_GET['memory']; //number input, still need to sanitze for number and verify it is not zero
+      $_SESSION['vcpu'] = $_GET['vcpu']; //number input, still need to sanitze for number and verify it is not zero, also may need to set limit to host CPU#
       $_SESSION['clock_offset'] = "localtime"; //set to localtime
-      $_SESSION['os_platform'] = $_POST['os_platform']; //Used to determine what goes in XML. Ex. Windows VMs need extra options
+      $_SESSION['os_platform'] = $_GET['os_platform']; //Used to determine what goes in XML. Ex. Windows VMs need extra options
       
       //----Storage Volume Section----//
-      $_SESSION['source_file_volume'] = $_POST['source_file_volume']; //This will be the volume image that the user selects
-      $_SESSION['volume_image_name'] = clean_input($_POST['new_volume_name']); //This is used when a new volume must be created
-      $_SESSION['volume_capacity'] = $_POST['new_volume_size']; //in Gigabytes
-      $_SESSION['volume_size'] = $_POST['new_volume_size']; //in Gigabytes, set to the same size as capacity
-      $_SESSION['driver_type'] = $_POST['new_driver_type']; //qcow2 or raw
-      $_SESSION['target_bus'] = $_POST['new_target_bus']; //virtia, sata, scsi
-      $_SESSION['storage_pool'] = $_POST['storage_pool']; //Where the storage volume will be created
-      $_SESSION['existing_driver_type'] = $_POST['existing_driver_type']; //qcow2 or raw for existing storage
-      $_SESSION['existing_target_bus'] = $_POST['existing_target_bus']; //virtio, ide, sata, or scsi for existing storage
+      $_SESSION['source_file_volume'] = $_GET['source_file_volume']; //This will be the volume image that the user selects
+      $_SESSION['volume_image_name'] = clean_input($_GET['new_volume_name']); //This is used when a new volume must be created
+      $_SESSION['volume_capacity'] = $_GET['new_volume_size']; //in Gigabytes
+      $_SESSION['volume_size'] = $_GET['new_volume_size']; //in Gigabytes, set to the same size as capacity
+      $_SESSION['driver_type'] = $_GET['new_driver_type']; //qcow2 or raw
+      $_SESSION['target_bus'] = $_GET['new_target_bus']; //virtia, sata, scsi
+      $_SESSION['storage_pool'] = $_GET['storage_pool']; //Where the storage volume will be created
+      $_SESSION['existing_driver_type'] = $_GET['existing_driver_type']; //qcow2 or raw for existing storage
+      $_SESSION['existing_target_bus'] = $_GET['existing_target_bus']; //virtio, ide, sata, or scsi for existing storage
       
       //----Optical Storage Section----//
-      $_SESSION['source_file_cd'] = $_POST['source_file_cd']; //file location is ISO file for booting
+      $_SESSION['source_file_cd'] = $_GET['source_file_cd']; //file location is ISO file for booting
       
       //----Network Section----//
-      $_SESSION['mac_address'] = clean_input($_POST['mac_address']); //mac address for network device
-      $_SESSION['model_type'] = $_POST['model_type']; //virtio, e1000, etc
-      $_SESSION['source_network'] = $_POST['source_network']; //default or any created network bridge
+      $_SESSION['mac_address'] = clean_input($_GET['mac_address']); //mac address for network device
+      $_SESSION['model_type'] = $_GET['model_type']; //virtio, e1000, etc
+      $_SESSION['source_network'] = $_GET['source_network']; //default or any created network bridge
 
       //----Create from XML----//
-      $_SESSION['xml'] = $_POST['xml'];
+      $_SESSION['xml'] = $_GET['xml'];
 
       header("Location: ".$_SERVER['PHP_SELF']);
       exit;
@@ -62,16 +63,13 @@
      
   require('../header.php');
   
-  $uuid = $_SESSION['uuid']; //grab the $uuid variable from $_POST, only used for actions below
+  $uuid = $_SESSION['uuid']; //grab the $uuid variable from $_GET, only used for actions below
   $action = $_SESSION['action']; //grab the $action variable from $_SESSION
   unset($_SESSION['action']); //Unset the Action Variable to prevent repeats of action on page reload
   $domName = $lv->domain_get_name_by_uuid($uuid); //get the name of virtual machine with $uuid is present
   $dom = $lv->get_domain_object($domName); //gets the resource id for a domain
 
   if ($action == "create-domain") {
-
-
-    //--------------------- SET VARIABLES ---------------------//
     $domain_type = $_SESSION['domain_type']; //hard coded as "kvm" for now
     $domain_name = $_SESSION['domain_name']; //sanatized name for virtual machine
     $description = "powered by arclight"; //plug for software that helped put virtual machine together
@@ -80,14 +78,6 @@
     $vcpu = $_SESSION['vcpu']; //whatever the user sets, defaults to 1
     $clock_offset = $_SESSION['clock_offset']; //hard coded as "localtime" for now
     $os_platform = $_SESSION['os_platform']; //determines if bios features need to be set, needed for Windows 
-
-    //user events and domain info
-    $userid = $_SESSION['userid'];
-    $currenttime = date("Y-m-d H:i:s");
-    $domain_uuid = $_POST['uuid'];
-    $hostXML = new SimpleXMLElement($lv->get_node_device_xml("computer", false));
-    $host_uuid = $hostXML->capability->hardware->uuid;
- 
     //--------------------- CREATE VIRTUAL MACHINE SECTION ---------------------//
     $vm_xml = "
       <domain type='$domain_type'>
@@ -159,9 +149,7 @@
     if (!$new_vm){
       $notification = 'Error creating domain: '.$lv->get_last_error(); //let the user know if there is an error
     }
-
-
-    
+  
     //--------------------- STORAGE VOLUME SECTION ---------------------//
     $storage_pool = $_SESSION['storage_pool']; //"default" storage pool is default choice
     $volume_image_name = $_SESSION['volume_image_name']; //Sanitized disk name, should end in .qcow2 or .img
@@ -312,88 +300,88 @@
     if (!$add_nat_network){
       $notification = $notification . " Error adding NAT network to virtual machine: ".$lv->get_last_error();
     }
-   //Creating user's databse table
-    require('../config/config.php');
-    $sql = "CREATE TABLE IF NOT EXISTS arclight_vm (
-      sno INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-      userid INT,
-      uuid varchar(255),
-      action varchar(255),
-      dom varchar(255),
-      domname varchar(255),
-      username varchar(255),
-      domain_type varchar(255),
-      domain_name varchar(255),
-      clock_offset varchar(255),
-      os_platform varchar(255),
-      vcpu INT,
-      memory INT,
-      memory_unit varchar(255),
-      source_file_volume varchar(255),
-      volume_image_name varchar(255),
-      volume_capacity INT,
-      volume_size INT,
-      driver_type varchar(255),
-      target_bus varchar(255),
-      storage_pool varchar(255),
-      existing_driver_type varchar(255),
-      source_file_cd varchar(255),
-      mac_address TEXT,
-      model_type varchar(255),
-      source_network varchar(255),
-      xml_data TEXT,
-      dt DATETIME)";
-    $tablesql = mysqli_query($conn, $sql);
+   //Creating user's databse table ************************************************************************************************
+   require('../config/config.php');
+   $sql = "CREATE TABLE IF NOT EXISTS arclight_vm (
+     sno INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+     userid INT,
+     uuid varchar(255),
+     action varchar(255),
+     dom varchar(255),
+     domname varchar(255),
+     username varchar(255),
+     domain_type varchar(255),
+     domain_name varchar(255),
+     clock_offset varchar(255),
+     os_platform varchar(255),
+     vcpu INT,
+     memory INT,
+     memory_unit varchar(255),
+     source_file_volume varchar(255),
+     volume_image_name varchar(255),
+     volume_capacity INT,
+     volume_size INT,
+     driver_type varchar(255),
+     target_bus varchar(255),
+     storage_pool varchar(255),
+     existing_driver_type varchar(255),
+     source_file_cd varchar(255),
+     mac_address TEXT,
+     model_type varchar(255),
+     source_network varchar(255),
+     xml_data TEXT,
+     dt DATETIME)";
+   $tablesql = mysqli_query($conn, $sql);
+ 
+   //Set variables
+
+   // $uuid = $_POST['uuid'];
+   // $dom = $lv->get_domain_object($domName);
+   $userid = $_SESSION['userid'];
+   $currenttime = date("Y-m-d H:i:s");
+   $domName = $lv->domain_get_name_by_uuid($uuid);
+   $domain_uuid = $_POST['uuid'];
+   $hostXML = new SimpleXMLElement($lv->get_node_device_xml("computer", false));
+   $host_uuid = $hostXML->capability->hardware->uuid;
+   $username = $_SESSION['username'];
+
+   $description = ($notification) ? $notification : "domain created";
+   $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
+   $sql_action = $conn->query($sql);
+
+     
+ //  $sql = 'SELECT * FROM arclight_vm';
+ //  $tablesql = mysqli_query($conn, $sql);
+ // $sql = "SELECT userid FROM arclight_events WHERE userid = '$userid';";
+
+ if($conn->query($sql) === TRUE) {
+   $sql = "INSERT INTO arclight_vm (userid, uuid, action, dom, domName, username, domain_type, domain_name, clock_offset, os_platform, vcpu, memory, memory_unit, source_file_volume, volume_image_name, volume_capacity, volume_size, driver_type, target_bus, storage_pool, existing_driver_type,source_file_cd, mac_address, model_type, source_network, xml_data, dt) VALUES('$userid', '$uuid', '$action', '$dom', '$domName', '$username', '$domain_type', '$domain_name', '$clock_offset', '$os_platform', '$vcpu', '$memory', '$memory_unit', '$source_file_volume', '$volume_image_name', '$volume_capacity', '$volume_size', '$driver_type', '$target_bus', '$storage_pool', '$existing_driver_type', '$source_file_cd' , '$mac_address', '$model_type', '$source_network', '$xml_data', current_timestamp());"; 
+   $inserttablesql = mysqli_query($conn, $sql);
   
-    //Set variables
-
-    // $uuid = $_POST['uuid'];
-    // $dom = $lv->get_domain_object($domName);
-    $userid = $_SESSION['userid'];
-    $currenttime = date("Y-m-d H:i:s");
-    $domName = $lv->domain_get_name_by_uuid($uuid);
-    $domain_uuid = $_POST['uuid'];
-    $hostXML = new SimpleXMLElement($lv->get_node_device_xml("computer", false));
-    $host_uuid = $hostXML->capability->hardware->uuid;
-    $username = $_SESSION['username'];
-
-    $description = ($notification) ? $notification : "domain created";
-    $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
-    $sql_action = $conn->query($sql);
-
-      
-  //  $sql = 'SELECT * FROM arclight_vm';
-  //  $tablesql = mysqli_query($conn, $sql);
-  // $sql = "SELECT userid FROM arclight_events WHERE userid = '$userid';";
-
-  if($conn->query($sql) === TRUE) {
-    $sql = "INSERT INTO arclight_vm (userid, uuid, action, dom, domName, username, domain_type, domain_name, clock_offset, os_platform, vcpu, memory, memory_unit, source_file_volume, volume_image_name, volume_capacity, volume_size, driver_type, target_bus, storage_pool, existing_driver_type,source_file_cd, mac_address, model_type, source_network, xml_data, dt) VALUES('$userid', '$uuid', '$action', '$dom', '$domName', '$username', '$domain_type', '$domain_name', '$clock_offset', '$os_platform', '$vcpu', '$memory', '$memory_unit', '$source_file_volume', '$volume_image_name', '$volume_capacity', '$volume_size', '$driver_type', '$target_bus', '$storage_pool', '$existing_driver_type', '$source_file_cd' , '$mac_address', '$model_type', '$source_network', '$xml_data', current_timestamp());"; 
-    $inserttablesql = mysqli_query($conn, $sql);
-   
-    if(!$tablesql)
-    {
-  // //     echo "Inserted into databse";
-  // }
-  // else{
-    echo("Error description: " . mysqli_error($conn));
-  }
+   if(!$tablesql)
+   {
+ // //     echo "Inserted into databse";
+ // }
+ // else{
+   echo("Error description: " . mysqli_error($conn));
+ }
 }
-  
+ 
 }
-  
+// *********************************************************************************************
 
   if ($action == "create-xml") {
     $xml = $_SESSION['xml'];
       
     $new_vm = $lv->domain_define($xml); //Define the new virtual machine using libvirt, based off the XML information  
     if (!$new_vm){
-      $notification = "Error creating virtual machine: " . $lv->get_last_error(); //let the user know if there is an error
+      $notification = "Error creating domain: " . $lv->get_last_error(); //let the user know if there is an error
       $notification = filter_var($notification,FILTER_SANITIZE_SPECIAL_CHARS); //Error message will contain special characters
     }
   
     //Return back to the domain-single page if successful
     if (!$notification){
-      header('Location: domain-list-user.php');
+      header('Location: domain-list.php');
       exit;
     }
   
@@ -501,8 +489,21 @@
                     </thead>
                     <tbody>
                       <?php
-                        $doms = $lv->get_domains();
-                        foreach ($doms as $name) {
+                      $userid = $_SESSION['userid'];
+
+                      $sql = "SELECT domain_name FROM arclight_vm WHERE userid = '$userid'";
+                      $vmquery = mysqli_query($conn, $sql);
+
+                      while($array = mysqli_fetch_row($vmquery)){
+                          
+                        //     Associative Array, e.g. array["key"]
+                        //     Indexed Array, e.g. array[0]
+
+                        // Use mysqli_fetch_assoc if you want associative array
+
+                        // Use mysqli_fetch_row if you want indexed array
+
+                        foreach($array as $name){
                           $dom = $lv->get_domain_object($name);
                           $uuid = libvirt_domain_get_uuid_string($dom);
                           $active = $lv->domain_is_active($dom);
@@ -561,6 +562,7 @@
                           echo "</td>";
                           echo "</tr>";
                         }
+                      }
                       ?>
                     </tbody>
                   </table>
@@ -588,7 +590,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
 			</div>
-			<form id="createDomainForm" name="createDomain" role="form" action="" method="post">
+			<form id="createDomainForm" name="createDomain" role="form" action="">
 				<div class="modal-body">	          
           <div class="row">
             <label class="col-3 col-form-label text-right">Domain Name: </label>
