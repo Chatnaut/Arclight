@@ -18,7 +18,7 @@
   }
 
 if ($_SERVER["REQUEST_METHOD"]=="POST") {
-    include 'partials/_dbconnect.php';
+    include 'pages/config/config.php';
 
 
         $username = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
@@ -98,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
 
       <div class="form-label-group">
         <input type="password" name="cpassword" id="inputPassword" class="form-control" placeholder="Password" required>
-        <label for="inputPassword">Confirm your password</label>
+        <label for="inputPassword">Confirm password</label>
       </div>
 
 
