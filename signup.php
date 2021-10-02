@@ -97,7 +97,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
       </div>
 
       <div class="form-label-group">
-        <input type="cpassword" name="cpassword" id="inputPassword" class="form-control" placeholder="Password" required>
+        <input type="password" name="cpassword" id="inputPassword" class="form-control" placeholder="Password" required>
         <label for="inputPassword">Confirm your password</label>
       </div>
 
