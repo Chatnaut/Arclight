@@ -18,40 +18,39 @@
   }
 
 if ($_SERVER["REQUEST_METHOD"]=="POST") {
-    include 'pages/config/config.php';
+      include 'pages/config/config.php';
 
-
-        $username = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
-        $password = $_POST['password']; //do not need to sanitize because it will be hashed
-        $cpassword = $_POST["cpassword"];
-        // $exists = false;
-        //check whether this username exists
-        $existSql = "SELECT * FROM `arclight_users` WHERE username = '$username'";
-        $result = mysqli_query($conn, $existSql);
-        $numExistsRows = mysqli_num_rows($result);
-        if($numExistsRows >0){
-          // $exists = true;
-          $showError = "Username already exists";
-        }
-        else{
+      $username = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
+      $password = $_POST['password']; //do not need to sanitize because it will be hashed
+      $cpassword = $_POST["cpassword"];
+      // $exists = false;
+      //check whether this username exists
+      $existSql = "SELECT * FROM `arclight_users` WHERE username = '$username'";
+      $result = mysqli_query($conn, $existSql);
+      $numExistsRows = mysqli_num_rows($result);
+      if($numExistsRows >0){
+        // $exists = true;
+        $showError = "Username already exists";
+      }
+      else{
           // $exists = false;
         
         if(($password == $cpassword) ){
-        $hash  = password_hash($password, PASSWORD_DEFAULT);
-      
-        $sql = "INSERT INTO arclight_users (username, password)
-          VALUES ('$username', '$hash');";
-                  $result = mysqli_query($conn, $sql);
-                  if($result){
-                      $showAlert = true;
-                      header('Location: pages/login.php');
-                  }
-             }
-                  else{
-                      $showError = "Passwords don't match";
-                  }
-           }
+          $hash  = password_hash($password, PASSWORD_DEFAULT);
+        
+          $sql = "INSERT INTO arclight_users (username, password)
+            VALUES ('$username', '$hash');";
+            $result = mysqli_query($conn, $sql);
+            if($result){
+                $showAlert = true;
+                header('Location: pages/login.php');
+            }
           }
+            else{
+                $showError = "Passwords don't match";
+            }
+       }
+    }
 
  ?>
 
