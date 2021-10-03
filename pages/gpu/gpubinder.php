@@ -80,8 +80,8 @@ if (isset($_POST['action'])) {
         </div>
       </form>
     </main>
-  </div> 
-</div> <!-- end content of physical GPUs-->
+  <!-- </div> 
+</div> end content of physical GPUs -->
 
 
 
@@ -104,7 +104,7 @@ if (isset($_POST['action'])) {
                   <div class="table-responsive">
                     <table class="table">
                       <thead class="text-none">
-                        <th>Virtual GPUs [mdev]</th>
+                        <th>Virtual GPUs [MDEV]</th>
                       </thead>
                       <tbody>
                     <!-- start project list -->
@@ -125,8 +125,114 @@ if (isset($_POST['action'])) {
         </div>
       </form>
     </main>
-  </div> 
-</div> <!-- end content of virtual GPUs-->
+  <!-- </div> 
+</div> end content of virtual GPUs -->
+
+
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 <?php if($_SESSION['themeColor'] == "dark-edition") { echo "main-dark"; } ?> ">
+
+
+      <form action="" method="POST">
+        <div class="content">
+          <div class="row">
+
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+
+              <div class="card <?php if($_SESSION['themeColor'] == "dark-edition") { echo "card-dark"; } ?>">
+                <div class="card-header">
+                  <span class="card-title"></span>
+                </div>
+                <div class="card-body">
+
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead class="text-none">
+                        <th>Create vGPU</th>
+                        </thead>
+                        <tbody>
+
+                          <!-- start project list -->
+                          <?php                                                 
+                            $userid = $_SESSION['userid']; //grab the $uuid variable from $_POST, only used for actions below
+                            $action = $_SESSION['action']; //grab the $action variable from $_SESSION
+                            unset($_SESSION['action']); //Unset the Action Variable to prevent repeats of action on page reload
+                            
+                            //Creating user's databse table
+                            require('../config/config.php');
+                            $sql = "CREATE TABLE IF NOT EXISTS arclight_vgpu (
+                            sno INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                            userid INT,
+                            domain_name varchar(255),
+                            action varchar(255),
+                            mdevtype varchar(255),
+                            mdevuuid varchar(255),
+                            UUID varchar(255),
+                            dt DATETIME)";
+                            $tablesql = mysqli_query($conn, $sql);
+                                  
+                            // -------------------------------------CREATE MDEV GPU-------------------------------------
+                            // usage: nvidia-dev-ctl.py create-mdev [-n] PCI_ADDRESS, MDEV_TYPE_OR_NAME
+                            
+                            if ($action == "createmdev"){ 
+                              $pciaddr = $_SESSION['pciaddr'];
+                              $mdevtype = $_SESSION['mdevtype'];
+                            
+                            
+                              $createddmdev = shell_exec("cd /var/www/html/arclight/gpubinder && sudo ./nvidia-dev-ctl.py create-mdev '".$pciaddr."' '".$mdevtype."'");
+                              $createdmdev = chop($createddmdev); //chop() function removes whitespaces or other predefined characters from the right end of a string. 
+                              
+                              // if variable $createdmdev gives permission error
+                              // 1.Edit your sudoers file
+                              // nano /etc/sudoers
+                            
+                              // 2.Put this line
+                              // www-data ALL=(ALL) NOPASSWD: ALL
+                              // ----------------------------------------------------------------------------------------
+                            
+                            
+                              if ($createdmdev){
+                                $sql = "INSERT INTO arclight_vgpu (userid, action, mdevtype, mdevuuid, dt) VALUES('$userid', '$action', '$mdevtype', '$createdmdev', current_timestamp());"; 
+                                $inserttablesql = mysqli_query($conn, $sql);
+                              
+                                if(!$inserttablesql)
+                                  {
+                                    // //     echo "Inserted into databse";
+                                    // }
+                                    // else{
+                                      echo("Error description: " . mysqli_error($conn));
+                                  }
+                              
+                              }
+                            }    
+                            echo "</tbody></table>";
+                                              
+                          ?>
+                          <!-------------------------------------CREATE MDEV GPU------------------------------------->
+                          
+                          <form class="row gx-3 gy-2 align-items-center" id="create-mdev" name="create-mdev" role="form" action="" method="post" >
+                            <div class="col-sm-3">
+                              <label class="visually-hidden" for="pciaddr">PCI Address</label>
+                              <input type="text" class="form-control" id="pciaddr" name="pciaddr" placeholder="PCI Address">
+                            </div>
+                            <div class="col-sm-3">
+                              <label class="visually-hidden" for="mdevtype">Mdev Type</label>
+                              <input type="text" class="form-control" id="mdevtype" name="mdevtype" placeholder="Mdevtype">
+                            </div>
+                                    <input type="hidden" name="action" value="createmdev">
+                            <div class="col-auto">
+                              <button type="Create" class="btn btn-primary">Create Virtual GPU</button>
+                            </div>
+                          </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </main>
+  <!-- </div> 
+</div> end content of Creating virtual GPUs -->
 
 
 
@@ -147,7 +253,7 @@ if (isset($_POST['action'])) {
                   <div class="table-responsive">
                     <table class="table">
                       <thead class="text-none">
-                        <th>Management</th>
+                        <th>Profile Management</th>
 
                         <!-- start project list include '../domain/rud.php-->
                         <div class="container-xl">
@@ -197,7 +303,7 @@ if (isset($_POST['action'])) {
                                               <td><?php echo $res['domain_name']; ?></td>
                                               <td> 
                                                   <?php if ($res['action'] == 'attachmdev'){ ?>
-                                                  <!-- Redirecting customers directly to detach and remove page actions by using their ids via GET -->
+                                                  <!-- Redirecting customers directly to detach and remove page actions by their ids via GET -->
                                                   <a href="../domain/dmdev.php?id=<?php echo $res['sno']; ?>" class="settings" title="Detach" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
                                                   <?php } ?>
 
@@ -219,10 +325,10 @@ if (isset($_POST['action'])) {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+          <!-- </div>
+        </div> -->
       </form>
     </main>
-  </div> 
-</div> <!-- end content of GPU Manager-->
+  <!-- </div> 
+</div> end content of GPU Manager -->
 
