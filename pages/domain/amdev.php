@@ -21,6 +21,8 @@
   }
 
 require('../header.php');
+require('../navbar.php');
+require('../footer.php');
 require('../config/config.php');
 
 $userid = $_SESSION['userid']; //grab the $uuid variable from $_POST, only used for actions below
@@ -40,11 +42,11 @@ $dsql = "SELECT domain_name FROM arclight_vm WHERE userid = '$userid';";
 $dresult = $conn->query($dsql);
 ?>
 
-<html lang="en">  
+<!-- <html lang="en">  
 <head>  
   <meta charset="utf-8">  
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
-  <title> PHP Select Dropdown Example </title>
+  <title> PHP Select Dropdown Example </title> -->
   <style>  
     .container {  
       max-width: 400px;  
@@ -157,9 +159,9 @@ input[type=submit]:hover {
   color: #1A33FF;  
 }  
   </style>  
-</head>  
+<!-- </head>  
 
-<body>
+<body> -->
   <div class="container mt-5">  
     <form action="" method="post">  
       <select name="uuid">  
@@ -225,7 +227,6 @@ input[type=submit]:hover {
             echo 'MDEV with UUID:'  . $selecteduuid; 
             echo "<br>";
             echo 'Attached to:'  . $domainname;
-             
             }else {
               echo "Exception Error";
             }
@@ -234,14 +235,15 @@ input[type=submit]:hover {
         else {
             echo 'Please select any value.';
         }
+        
      } 
 
-    
+
 
         
     ?>  
-  </body>  
-</html> 
+  <!-- </body>  
+</html>  -->
 
 <!-- Basic execution from a PHP script
 

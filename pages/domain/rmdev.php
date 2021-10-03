@@ -22,6 +22,8 @@ if (!isset($_SESSION['username'])){
 
 require('../config/config.php');
 require('../header.php');
+require('../navbar.php');
+require('../footer.php');
 $userid = $_SESSION['userid'];
 
 $ids = $_GET['id'];
@@ -30,11 +32,11 @@ $showdata  = mysqli_query($conn, $showquery);
 $arrdata = mysqli_fetch_array($showdata);
 ?>
 
-<html lang="en">  
+<!-- <html lang="en">  
 <head>  
   <meta charset="utf-8">  
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">  
-  <!-- <title> PHP Select Dropdown Example </title>   -->
+  <title> PHP Select Dropdown Example </title>   -->
   <style>  
     .container {  
       max-width: 400px;  
@@ -160,7 +162,7 @@ input[type=submit]:hover {
           </path>  
         </svg>  
       </div>   -->
-      <br> <br> <input type = "submit" name = "submit" value = "submit">  
+      <br> <br> <input type = "submit" name = "submit" value = "Suspend">  
     </form>  
     <?php  
         if(isset($_POST['submit'])){  
@@ -186,5 +188,5 @@ input[type=submit]:hover {
         
     ?>   
   </div>  
-</body>  
-</html> 
+<!-- </body>  
+</html>  -->

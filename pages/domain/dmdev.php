@@ -21,6 +21,8 @@
   }
 
 require('../header.php');
+require('../navbar.php');
+require('../footer.php');
 require('../config/config.php');
 
 $userid = $_SESSION['userid']; //grab the $uuid variable from $_POST, only used for actions below
@@ -40,11 +42,11 @@ $arrdata = mysqli_fetch_array($showdata);
 
 ?>
 
-<html lang="en">  
+<!-- <html lang="en">  
 <head>  
   <meta charset="utf-8">  
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
-  <!-- <title> PHP Select Dropdown Example </title> -->
+  <title> PHP Select Dropdown Example </title> -->
   <style>  
     .container {  
       max-width: 400px;  
@@ -176,10 +178,10 @@ input[type=submit]:hover {
       </select>
 
         <select name="optionalargument">  
-        <option value = "" selected> Arguments </option> 
+        <!-- <option value = "" selected> Arguments </option>  -->
+        <option value="">None</option>
         <option value="--hotplug">Hotplug</option>
         <option value="--restart">Restart</option>
-        <option value="-n">Dry Run</option>
         </select> 
       <!-- <div class="selectIcon">  
         <svg focusable="false" viewBox="0 0 104 128" width="25" height="35" class="icon">  
@@ -217,5 +219,5 @@ input[type=submit]:hover {
         
     ?>  
    </div>  
-  </body>  
-</html> 
+  <!-- </body>  
+</html>  -->
