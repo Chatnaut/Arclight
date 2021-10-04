@@ -42,6 +42,15 @@ $host_os = $os_info['name'];
                     echo "<a class=\"nav-link\" href=\"../config/update.php\">Update</a>";
                 }
             ?>
+
+        <li class="nav-item dropdown">
+             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                Manage<span class="caret"></span>
+             </a>
+             <div class="dropdown-menu position-absolute dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{{ route('logout') }}" >Account</a>
+                <a class="dropdown-item" href="{{ route('logout') }}" >Logout</a>
+             </div>
         </li>
 
         <li class="nav-item">
@@ -55,6 +64,7 @@ $host_os = $os_info['name'];
         <li class="nav-item">
           <a class="nav-link" href="../../index.php?action=logout">Sign out</a>
         </li>
+
 
       </ul>
     </nav>
