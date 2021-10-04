@@ -147,7 +147,7 @@ if (isset($_POST['action'])) {
                   <div class="table-responsive">
                     <table class="table">
                       <thead class="text-none">
-                        <th>Create vGPU</th>
+                        <th>Create MDEV</th>
                         </thead>
                         <tbody>
 
