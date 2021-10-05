@@ -38,7 +38,10 @@ if (file_exists($path)) {
     domain_uuid varchar(255),
     userid INT,
     date datetime)";
-  $event_result = $conn->query($sql);
+    $rsql = "ALTER TABLE arclight_users ADD COLUMN roles VARCHAR(50)";
+    $event_result = $conn->query($sql);
+    $rolequery = $conn->query($rsql);
+
 
   //Setting the SSL Certificate file path
   $sql = "SELECT value FROM arclight_config WHERE name = 'cert_path' LIMIT 1;";
@@ -92,12 +95,19 @@ if (isset($_SESSION['username'])) {
   if ($lv->connect("qemu:///system") == false)
     die('<html><body>Cannot open connection to hypervisor. Please check to make sure that the Qemu service is running.</body></html>');
   //Check if storage pools exist, if not send the user there. This is used mostly on new install
-  $pools = $lv->get_storagepools();
+    $pools = $lv->get_storagepools();
   if (empty($pools)) {
     header('Location: pages/storage/storage-pools.php');
-  } else {
+  } else if ('arclight' === $_SESSION['username']){
+    $_SESSION['roles'] = "Enterprise";                   //redirect to 
     header('Location: pages/domain/domain-list.php');
   }
+  else{
+    $_SESSION['roles'] = "Admin";
+    header('Location: pages/domain/domain-list-user.php');
+  }
+
+  
 
 //If user is not logged in check to make sure that the config.php setup file is created. If it does send them to login
 } elseif (file_exists($path)) {
@@ -107,5 +117,18 @@ if (isset($_SESSION['username'])) {
 } else {
 header('Location: pages/config/setup-configuration.php');
 }
+
+
+  if(isset($_SESSION['roles'])){
+    $roleset = $_SESSION['roles'];
+    $userid = $_SESSION['userid'];
+    // $sql = "INSERT INTO arclight_users (roles) VALUES ('$roleset')"; 
+    $sql = "UPDATE arclight_users SET roles = '$roleset'  WHERE  userid = '$userid'";
+    $inserttrole = mysqli_query($conn, $sql);
+  } 
+  else {
+    echo "That Wasn't Supposed To Happen";
+  }
+
 
 ?>
