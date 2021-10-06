@@ -49,7 +49,10 @@ $host_os = $os_info['name'];
              </a>
              <div class="dropdown-menu position-absolute dropdown-menu-right" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="{{ route('logout') }}" >Account</a>
+                <a class="dropdown-item" href="{{ route('logout') }}" >Billing</a>
+                <a class="dropdown-item" href="{{ route('logout') }}" >Access (IAM)</a>
                 <a class="dropdown-item" href="{{ route('logout') }}" >Logout</a>
+
              </div>
         </li>
 
@@ -61,8 +64,15 @@ $host_os = $os_info['name'];
           <a class="nav-link" href="../config/preferences.php">Preferences</a>
         </li>
 
-        <li class="nav-item">
-          <a class="nav-link" href="../../index.php?action=logout">Sign out</a>
+        <li class="nav-item dropdown">
+             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                Hi, <?php echo $_SESSION['username'];?><span class="caret"></span>
+             </a>
+             <div class="dropdown-menu position-absolute dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{{ route('logout') }}" >Profile</a>
+                <a class="dropdown-item" href="../../index.php?action=logout">Sign out</a>
+
+             </div>
         </li>
 
 
