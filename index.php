@@ -85,7 +85,7 @@ shell_exec("./apps/noVNC/utils/websockify/run --web $fileDir/apps/noVNC/ $cert_o
 $action = $_GET['action'];
 if ($action == "logout") {
   session_destroy(); //Destory all $_SESSION data
-  //unset($_SESSION['username']);
+  // unset($_SESSION['username']);
 }
 
 //Redirect based on login session or initial setup complete
@@ -98,15 +98,17 @@ if (isset($_SESSION['username'])) {
     $pools = $lv->get_storagepools();
   if (empty($pools)) {
     header('Location: pages/storage/storage-pools.php');
-  } else if ('arclight' === $_SESSION['username']){
-    $_SESSION['roles'] = "Enterprise";                   //redirect to 
+  } else if ($_SESSION['username'] == $db_user){
+    $_SESSION['roles'] = "Enterprise";                   //Assign IAM roles as per user data 
     header('Location: pages/domain/domain-list.php');
   }
-  else{
-    $_SESSION['roles'] = "Admin";
+  else if ($_SESSION['username'] != $db_user){
+    $_SESSION['roles'] = "Administrator";
     header('Location: pages/domain/domain-list-user.php');
   }
-
+ else {
+  header('Location: pages/login.php');
+  }
   
 
 //If user is not logged in check to make sure that the config.php setup file is created. If it does send them to login
@@ -122,12 +124,12 @@ header('Location: pages/config/setup-configuration.php');
   if(isset($_SESSION['roles'])){
     $roleset = $_SESSION['roles'];
     $userid = $_SESSION['userid'];
-    // $sql = "INSERT INTO arclight_users (roles) VALUES ('$roleset')"; 
     $sql = "UPDATE arclight_users SET roles = '$roleset'  WHERE  userid = '$userid'";
     $inserttrole = mysqli_query($conn, $sql);
   } 
   else {
-    echo "That Wasn't Supposed To Happen";
+    header('Location: pages/login.php');
+
   }
 
 
