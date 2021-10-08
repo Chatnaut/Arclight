@@ -34,35 +34,36 @@ $host_os = $os_info['name'];
       <!-- <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"> -->
       <ul class="navbar-nav px-3">
 
-        <li class="nav-item">
-            <?php
-                if ($_SESSION['update_available'] == true) {
-                    echo "<a class=\"nav-link\" style=\"color:orange;\" href=\"../config/update.php\">Update</a>";
-                } else {
-                    echo "<a class=\"nav-link\" href=\"../config/update.php\">Update</a>";
-                }
-            ?>
-
-        <li class="nav-item dropdown">
-             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                Manage<span class="caret"></span>
-             </a>
-             <div class="dropdown-menu position-absolute dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{{ route('logout') }}" >Account</a>
-                <a class="dropdown-item" href="{{ route('logout') }}" >Billing</a>
-                <a class="dropdown-item" href="{{ route('logout') }}" >Access (IAM)</a>
-                <a class="dropdown-item" href="{{ route('logout') }}" >Logout</a>
-
-             </div>
-        </li>
-
-        <li class="nav-item">
+          
+          <li class="nav-item dropdown">
+              <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                  Manage<span class="caret"></span>
+                </a>
+                <div class="dropdown-menu position-absolute dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{ route('logout') }}" >Account</a>
+                    <a class="dropdown-item" href="{{ route('logout') }}" >Billing</a>
+                    <a class="dropdown-item" href="{{ route('logout') }}" >Access (IAM)</a>
+                    <a class="dropdown-item" href="{{ route('logout') }}" >Logout</a>
+                    
+                </div>
+            </li>
+            <li class="nav-item">
+                <?php
+                    if ($_SESSION['update_available'] == true) {
+                        echo "<a class=\"nav-link\" style=\"color:orange;\" href=\"../config/update.php\">Update</a>";
+                    } else {
+                        echo "<a class=\"nav-link\" href=\"../config/update.php\">Update</a>";
+                    }
+                ?>
+            </li>
+            
+        <!-- <li class="nav-item">
           <a class="nav-link" href="../config/settings.php">Settings</a>
         </li>
 
         <li class="nav-item">
           <a class="nav-link" href="../config/preferences.php">Preferences</a>
-        </li>
+        </li> -->
 
         <li class="nav-item dropdown">
              <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -70,12 +71,12 @@ $host_os = $os_info['name'];
              </a>
              <div class="dropdown-menu position-absolute dropdown-menu-right" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="{{ route('logout') }}" >Profile</a>
+                <a class="dropdown-item" href="../config/preferences.php" >Preferences</a>
+                <a class="dropdown-item" href="../config/settings.php" >Settings</a>
                 <a class="dropdown-item" href="../../index.php?action=logout">Sign out</a>
 
              </div>
         </li>
-
-
       </ul>
     </nav>
 
