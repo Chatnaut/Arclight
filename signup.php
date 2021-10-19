@@ -38,12 +38,22 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
         if(($password == $cpassword) ){
           $hash  = password_hash($password, PASSWORD_DEFAULT);
         
-          $sql = "INSERT INTO arclight_users (username, password)
-            VALUES ('$username', '$hash');";
-            $result = mysqli_query($conn, $sql);
-            if($result){
-                $showAlert = true;
-                header('Location: pages/login.php');
+          $sql = "INSERT INTO arclight_users (username, password) VALUES ('$username', '$hash');";
+          $result = mysqli_query($conn, $sql);
+
+          $rsql = "ALTER TABLE arclight_users ADD COLUMN roles VARCHAR(50)";
+          $rolequery = $conn->query($rsql);
+          if($result){
+            if ($username == $db_user){
+              $roleset = "Enterprise"; }
+              else {
+                $roleset = "Administrator";
+              }
+              $sql = "UPDATE arclight_users SET roles = '$roleset'  WHERE  username = '$username'";
+              $inserttrole = mysqli_query($conn, $sql);
+
+              $showAlert = true;
+              header('Location: pages/login.php');
             }
           }
             else{
