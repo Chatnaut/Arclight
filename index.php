@@ -38,10 +38,7 @@ if (file_exists($path)) {
     domain_uuid varchar(255),
     userid INT,
     date datetime)";
-    $rsql = "ALTER TABLE arclight_users ADD COLUMN roles VARCHAR(50)";
-    $event_result = $conn->query($sql);
-    $rolequery = $conn->query($rsql);
-
+  $event_result = $conn->query($sql);
 
   //Setting the SSL Certificate file path
   $sql = "SELECT value FROM arclight_config WHERE name = 'cert_path' LIMIT 1;";
@@ -84,8 +81,20 @@ shell_exec("./apps/noVNC/utils/websockify/run --web $fileDir/apps/noVNC/ $cert_o
 //currently using GET to at the index page to indicate logout, may switch to SESSION VARIABLE
 $action = $_GET['action'];
 if ($action == "logout") {
+  session_unset();   //Remove all session variables
   session_destroy(); //Destory all $_SESSION data
-  // unset($_SESSION['username']);
+}
+
+$username = $_SESSION['username'];
+$rolequery = "SELECT * from arclight_users WHERE username = '$username'";
+$roledata = mysqli_query($conn,$rolequery);
+$rolearr = mysqli_fetch_array($roledata);
+
+if($rolearr['roles'] == "Enterprise"){
+  $_SESSION['roles'] = "Enterprise";
+}
+else{
+  $_SESSION['roles'] = "Administrator";
 }
 
 //Redirect based on login session or initial setup complete
@@ -98,15 +107,11 @@ if (isset($_SESSION['username'])) {
     $pools = $lv->get_storagepools();
   if (empty($pools)) {
     header('Location: pages/storage/storage-pools.php');
-  } else if ($_SESSION['username'] == $db_user){
-    $_SESSION['roles'] = "Enterprise";                   //Assign IAM roles as per user data 
+  } else if ($_SESSION['roles'] == "Enterprise"){
     header('Location: pages/domain/domain-list.php');
-  }
-  else if ($_SESSION['username'] != $db_user){
-    $_SESSION['roles'] = "Administrator";
+  } else if ($_SESSION['roles'] == "Administrator"){
     header('Location: pages/domain/domain-list-user.php');
-  }
- else {
+  } else {
   header('Location: pages/login.php');
   }
   
@@ -120,17 +125,6 @@ if (isset($_SESSION['username'])) {
 header('Location: pages/config/setup-configuration.php');
 }
 
-
-  if(isset($_SESSION['roles'])){
-    $roleset = $_SESSION['roles'];
-    $userid = $_SESSION['userid'];
-    $sql = "UPDATE arclight_users SET roles = '$roleset'  WHERE  userid = '$userid'";
-    $inserttrole = mysqli_query($conn, $sql);
-  } 
-  else {
-    header('Location: pages/login.php');
-
-  }
 
 
 ?>
