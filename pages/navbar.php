@@ -1,4 +1,9 @@
 <?php 
+  // If the SESSION has not been started, start it now
+  if (!isset($_SESSION)) {
+    session_start();
+}
+
 function getOSInformation() { //https://stackoverflow.com/questions/1482260/how-to-get-the-os-on-which-php-is-running
     if (false == function_exists("shell_exec") || false == is_readable("/etc/os-release")) {
         return null;
@@ -24,6 +29,10 @@ function getOSInformation() { //https://stackoverflow.com/questions/1482260/how-
 
 $os_info = getOSInformation();
 $host_os = $os_info['name'];
+
+// fetching users data to give permission to access different pages according to their roles
+require('../config/config.php');
+
 
 ?>
 
@@ -70,6 +79,7 @@ $host_os = $os_info['name'];
                 Hi, <?php echo $_SESSION['username'];?><span class="caret"></span>
              </a>
              <div class="dropdown-menu position-absolute dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="" ><?php echo $_SESSION['roles']; ?></a>
                 <a class="dropdown-item" href="{{ route('logout') }}" >Profile</a>
                 <a class="dropdown-item" href="../config/preferences.php" >Preferences</a>
                 <a class="dropdown-item" href="../config/settings.php" >Settings</a>
@@ -123,10 +133,14 @@ $host_os = $os_info['name'];
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="../storage/storage-pools.php">
-                                <span data-feather="database"></span>
+                            <?php if($_SESSION['roles'] == "Enterprise") { ?>
+                                <a class="nav-link" href="../storage/storage-pools.php"> 
+                                <?php } else { ?>
+                                <a class="nav-link" href="../storage/storage-pools-user.php"> <?php } ?>
+                                <span data-feather="database"></span> 
                                 Storage
-                            </a>
+                            </a></a>
+                            
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="../network/network-list.php">
@@ -141,8 +155,11 @@ $host_os = $os_info['name'];
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="../gpu/gpubinder.php">
-                                <span data-feather="link-2"></span>
+
+                            <?php if($_SESSION['roles'] == "Enterprise") { ?>                        
+                            <a class="nav-link" href="../gpu/gpubinder.php"> <?php } else { ?>
+                            <a class="nav-link" href="../gpu/gpubinder_profiles.php"> <?php } ?>
+                            <span data-feather="link-2"></span>
                                 GPU
                             </a>
                         </li>
