@@ -274,7 +274,7 @@ if (isset($_POST['action'])) {
                                         <?php 
                                         require('../config/config.php');
                                         $userid = $_SESSION['userid'];
-                                        $selectquery = "SELECT * FROM arclight_vgpu WHERE userid = '$userid';";
+                                        $selectquery = "SELECT * FROM arclight_vgpu";
                                         $query = mysqli_query($conn, $selectquery);
 
                                         while($res = mysqli_fetch_array($query)){
