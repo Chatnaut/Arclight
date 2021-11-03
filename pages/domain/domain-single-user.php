@@ -18,10 +18,19 @@
         $data = filter_var($data, FILTER_SANITIZE_STRING);
         return $data;
     }
+    $userid = $_SESSION['userid'];
+    $secure = $_GET['authorize'];
 
+    $authentication = "SELECT authkey from arclight_vm WHERE userid = '$userid'";
+    $showdata = mysqli_query($conn,$authentication);
     // We are now going to grab any GET/POST data and put in in SESSION data, then clear it.
     // This will prevent duplicatig actions when page is reloaded.
-    if (isset($_GET['action']) || isset($_GET['dev']) || isset($_GET['mac']) || isset($_GET['snapshot'])) {
+    if($showdata == $secure){
+      
+      if (isset($_GET['action']) || isset($_GET['dev']) || isset($_GET['mac']) || isset($_GET['snapshot'])) {
+      // if($_SESSION['userid'] = $userid))
+
+
         $_SESSION['action'] = $_GET['action'];
         $_SESSION['dev'] = $_GET['dev'];
         $_SESSION['mac'] = $_GET['mac'];
@@ -46,6 +55,8 @@
         header("Location: ".$_SERVER['PHP_SELF']."?uuid=".$_GET['uuid']);
         exit;
     }
+  }
+  
 
     // Add the header information
     require('../header.php');
@@ -62,10 +73,11 @@
     //Set variables
     $randomString = RandomString(100);
     $uuid = $_GET['uuid'];
+    $authorize = $_GET['authorize'];
     $domName = $lv->domain_get_name_by_uuid($uuid);
     $dom = $lv->get_domain_object($domName);
     $protocol = isset($_SERVER['HTTPS']) ? "https://" : "http://";
-    $url = $protocol . $_SERVER['SERVER_NAME'];
+    $url = $protocol . $_SERVER['HTTP_HOST'];
     $page = basename($_SERVER['PHP_SELF']);
     $action = $_SESSION['action'];
     $domXML = new SimpleXMLElement($lv->domain_get_xml($domName));
@@ -117,9 +129,10 @@
     $notification = $lv->domain_undefine($domName) ? "" : 'Error while deleting domain: '.$lv->get_last_error();
     $description = ($notification) ? $notification : "guest deleted";
     $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
+    $sql = "DELETE FROM arclight_vm WHERE userid = '$userid' AND uuid = '$uuid'";
     $sql_action = $conn->query($sql);
     if (!$lv->domain_get_name_by_uuid($uuid))
-        header('Location: domain-list.php');
+        header('Location: domain-list-user.php');
     }
 
 
