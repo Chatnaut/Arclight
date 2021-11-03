@@ -306,6 +306,7 @@
      sno INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
      userid INT,
      uuid varchar(255),
+     authkey varchar(255),
      action varchar(255),
      dom varchar(255),
      domname varchar(255),
@@ -355,7 +356,7 @@
  // $sql = "SELECT userid FROM arclight_events WHERE userid = '$userid';";
 
  if($conn->query($sql) === TRUE) {
-   $sql = "INSERT INTO arclight_vm (userid, uuid, action, dom, domName, username, domain_type, domain_name, clock_offset, os_platform, vcpu, memory, memory_unit, source_file_volume, volume_image_name, volume_capacity, volume_size, driver_type, target_bus, storage_pool, existing_driver_type,source_file_cd, mac_address, model_type, source_network, xml_data, dt) VALUES('$userid', '$uuid', '$action', '$dom', '$domName', '$username', '$domain_type', '$domain_name', '$clock_offset', '$os_platform', '$vcpu', '$memory', '$memory_unit', '$source_file_volume', '$volume_image_name', '$volume_capacity', '$volume_size', '$driver_type', '$target_bus', '$storage_pool', '$existing_driver_type', '$source_file_cd' , '$mac_address', '$model_type', '$source_network', '$xml_data', current_timestamp());"; 
+   $sql = "INSERT INTO arclight_vm (userid, authkey, uuid, action, dom, domName, username, domain_type, domain_name, clock_offset, os_platform, vcpu, memory, memory_unit, source_file_volume, volume_image_name, volume_capacity, volume_size, driver_type, target_bus, storage_pool, existing_driver_type,source_file_cd, mac_address, model_type, source_network, xml_data, dt) VALUES('$userid', '$authorize', '$uuid', '$action', '$dom', '$domName', '$username', '$domain_type', '$domain_name', '$clock_offset', '$os_platform', '$vcpu', '$memory', '$memory_unit', '$source_file_volume', '$volume_image_name', '$volume_capacity', '$volume_size', '$driver_type', '$target_bus', '$storage_pool', '$existing_driver_type', '$source_file_cd' , '$mac_address', '$model_type', '$source_network', '$xml_data', current_timestamp());"; 
    $inserttablesql = mysqli_query($conn, $sql);
   
    if(!$tablesql)
@@ -506,6 +507,8 @@
                         foreach($array as $name){
                           $dom = $lv->get_domain_object($name);
                           $uuid = libvirt_domain_get_uuid_string($dom);
+                          $bytes = random_bytes(16);                          //user random key
+                          $authorize =  bin2hex($bytes);                      //
                           $active = $lv->domain_is_active($dom);
                           $info = $lv->domain_get_info($dom);
                           $mem = number_format($info['memory'] / 1024, 0, '.', '').' MB';
@@ -533,9 +536,11 @@
 
                           unset($tmp);
                           unset($dom);
+                          $sql = "UPDATE arclight_vm SET authkey = '$authorize', uuid = '$uuid' where userid = '$userid'";
+                          $inserttablesql = mysqli_query($conn, $sql);
 
                           //echo "<tr style=\"cursor: pointer;\" onclick=\"window.location.href='domain-single.php?uuid=$uuid';\">" .
-                          echo "<tr style=\"cursor: pointer;\" data-href=\"domain-single.php?uuid=$uuid\" >" .
+                          echo "<tr style=\"cursor: pointer;\" data-href=\"domain-single-user.php?uuid=$uuid&authorize=$authorize\" >" .
                             "<td>" . htmlentities($name) .  "</td>" .
                             "<td> $cpu </td>" .
                             "<td> $mem </td>" .
