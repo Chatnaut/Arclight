@@ -125,6 +125,13 @@
     $sql_action = $conn->query($sql);
     }
 
+    if ($action == 'domain-reboot') {
+      $notification = $lv->domain_reboot($domName) ? "" : 'Error while rebooting domain: '.$lv->get_last_error();
+      $description = ($notification) ? $notification : "guest rebooted";
+      $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
+      $sql_action = $conn->query($sql);
+      }
+
     if ($action == 'domain-delete') {
     $notification = $lv->domain_undefine($domName) ? "" : 'Error while deleting domain: '.$lv->get_last_error();
     $description = ($notification) ? $notification : "guest deleted";
@@ -484,6 +491,7 @@
                         <?php  if ($state == "running") { ?>
                             <button class="btn btn-sm btn-outline-secondary" onclick="window.location.href='?action=domain-stop&amp;uuid=<?php echo $uuid; ?>'">Shutdown</button>
                             <button class="btn btn-sm btn-outline-secondary" onclick="window.location.href='?action=domain-pause&amp;uuid=<?php echo $uuid; ?>'">Pause</button>
+                            <button class="btn btn-sm btn-outline-secondary" onclick="window.location.href='?action=domain-reboot&amp;uuid=<?php echo $uuid; ?>'">Reboot</button>
                         <?php } ?>
 
                         <?php  if ($state == "paused") { ?>
