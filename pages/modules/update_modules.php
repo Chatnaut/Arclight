@@ -37,6 +37,18 @@ require('../footer.php');
                         echo "<tr>" .
                         "<td><pre>Successfully Updated PCI-Ids: {$result}</pre></td>" .
                         "</tr>";
+
+                        $libextension = shell_exec('sudo extension=libvirt.so');
+                        If($libextension == "") {
+                            echo "<tr>" .
+                            "<td><pre>Successfully Updated libvirt.so</pre></td>" .
+                            "</tr>";
+                        } else {
+                            echo "<tr>" .
+                            "<td><pre>Failed to Update libvirt.so</pre></td>" .
+                            "</tr>";
+                        }
+                        
                     ?>
 
                 </div>
