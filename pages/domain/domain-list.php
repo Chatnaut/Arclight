@@ -346,6 +346,13 @@
     $notification = $lv->domain_destroy($domName) ? "" : 'Error while destroying domain: '.$lv->get_last_error();
   }
 
+  //This will reboot the virtual machine guest
+  if ($action == 'domain-reboot') {
+    $notification = $lv->domain_reboot($domName) ? "" : 'Error while rebooting domain: '.$lv->get_last_error();
+    $description = ($notification) ? $notification : "guest rebooted";
+    $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
+    $sql_action = $conn->query($sql);
+  }
   
   //Remove SESSION varibles created for domain creation
   //General variables
@@ -472,7 +479,7 @@
                             "<td>";
 
                             if ($lv->domain_is_running($name)){
-                              echo "<a href=\"?action=domain-stop&amp;uuid=$uuid\"> Shutdown</a> | <a href=\"?action=domain-destroy&amp;uuid=$uuid\"> Power off</a> | <a href=\"?action=domain-pause&amp;uuid=$uuid\">Pause</a>";
+                              echo "<a href=\"?action=domain-stop&amp;uuid=$uuid\"> Shutdown</a> | <a href=\"?action=domain-destroy&amp;uuid=$uuid\"> Power off</a> | <a href=\"?action=domain-pause&amp;uuid=$uuid\">Pause</a> | <a href=\"?action=domain-reboot&amp;uuid=$uuid\"> Reboot</a>";
                             } else if ($lv->domain_is_paused($name)){
                               echo "<a href=\"?action=domain-resume&amp;uuid=$uuid\"> Resume</a>";
                             } else {
