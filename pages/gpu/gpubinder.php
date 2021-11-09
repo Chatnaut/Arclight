@@ -1,4 +1,3 @@
-
 <?php
 // If the SESSION has not been started, start it now
 if (!isset($_SESSION)) {
@@ -30,12 +29,127 @@ if (isset($_POST['action'])) {
   $_SESSION['mdevtype'] = $_POST['mdevtype'];
   $_SESSION['UUID'] = $_POST['UUID'];
   $_SESSION['domain_name'] = $_POST['domain_name'];
-  unset($_POST);
+  // unset($_POST);
+ 
   header("Location: ".$_SERVER['PHP_SELF']);
   exit;
 }
-?>
+$userid = $_SESSION['userid'];
 
+
+?>
+<style>  
+    .container {  
+      max-width: 400px;  
+      margin: 60px auto;  
+      text-align: center;  
+    }  
+    input[type="submit"] {  
+      margin-bottom: 25px;  
+    }  
+    .select-block {  
+      width: 350px;  
+      margin: 100px auto 40px;  
+      position: relative;  
+    }  
+    select {  
+      width: 100%;  
+      height: 50px;  
+      font-size: 100%;  
+      font-weight: bold;  
+      cursor: pointer;  
+      border-radius: 0;  
+      background-color: #1A33FF;  
+      border: none;  
+      border: 2px solid #1A33FF;  
+      border-radius: 4px;  
+      color: white;  
+      appearance: none;  
+      padding: 8px 38px 10px 18px;  
+      -webkit-appearance: none;  
+      -moz-appearance: none;  
+      transition: color 0.3s ease, background-color 0.3s ease, border-bottom-color 0.3s ease;  
+    }  
+      select::-ms-expand {  
+      display: none;  
+    }  
+    /* .selectIcon {  
+      top: 7px;  
+      right: 15px;  
+      width: 30px;  
+      height: 36px;  
+      padding-left: 5px;  
+      pointer-events: none;  
+      position: absolute;  
+      transition: background-color 0.3s ease, border-color 0.3s ease;  
+    }   */
+    /* .selectIcon svg.icon {  
+      transition: fill 0.3s ease;  
+      fill: white;  
+    }   */
+    select:hover {  
+      color: #000000;  
+      background-color: white;  
+    }  
+select:focus {  
+      color: #000000;  
+      background-color: white;  
+    }  
+    select:hover~.selectIcon  
+     {  
+      background-color: white;  
+    }  
+    select:focus~.selectIcon {  
+      background-color: white;  
+    }  
+    select:hover~.selectIcon svg.icon  
+    {  
+      fill: #1A33FF;  
+    }  
+  select:focus~.selectIcon svg.icon {  
+      fill: #1A33FF;  
+    }  
+h2 {  
+ font-style: italic;  
+font-family: "Playfair Display","Bookman",serif;  
+ color: #999;   
+letter-spacing: -0.005em;   
+word-spacing:1px;  
+font-size: 1.75em;  
+font-weight: bold;  
+  }  
+h1 {  
+ font-style: italic;  
+ font-family: "Playfair Display","Bookman",serif;  
+ color: #999;   
+letter-spacing: -0.005em;   
+word-spacing: 1px;  
+ font-size: 2.75em;  
+  font-weight: bold;  
+  }  
+input[type=submit] {  
+  border: 3px solid;  
+  border-radius: 2px;  
+  color: ;  
+  display: block;  
+  font-size: 1em;  
+  font-weight: bold;  
+  margin: 1em auto;  
+  padding: 1em 4em;  
+  position: relative;  
+  text-transform: uppercase;  
+}  
+input[type=submit]::before,  
+input[type=submit]::after {  
+  background: #fff;  
+  content: '';  
+  position: absolute;  
+  z-index: -1;  
+}  
+input[type=submit]:hover {  
+  color: #1A33FF;  
+}  
+  </style>  
 
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 <?php if($_SESSION['themeColor'] == "dark-edition") { echo "main-dark"; } ?> ">
@@ -59,18 +173,16 @@ if (isset($_POST['action'])) {
                   <div class="table-responsive">
                     <table class="table">
                       <thead class="text-none">
-                        <th>Physical GPUs [PCI]</th>
+                        <th>PCI Devices</th>
                       </thead>
                       <tbody>
                     <!-- start project list -->
                     <?php
                     $result = shell_exec('cd /var/www/html/arclight/gpubinder && ./nvidia-dev-ctl.py list-pci -o table');
-
                       echo "<tr>" .
                         "<td><pre>{$result}</pre></td>" .
-                        "</tr>";
-                    
-                    echo "</tbody></table>";
+                        "</tr>";                
+                      echo "</tbody></table>";
                     ?>
                   </div>
                 </div>
@@ -80,8 +192,7 @@ if (isset($_POST['action'])) {
         </div>
       </form>
     </main>
-  <!-- </div> 
-</div> end content of physical GPUs -->
+  <!-- end content of physical GPUs -->
 
 
 
@@ -104,7 +215,48 @@ if (isset($_POST['action'])) {
                   <div class="table-responsive">
                     <table class="table">
                       <thead class="text-none">
-                        <th>Virtual GPUs [MDEV]</th>
+                        <th>List of Attached Physical GPUs [PCI]</th>
+                      </thead>
+                      <tbody>
+                    <!-- start project list -->
+                    <?php
+                    $result = shell_exec('cd /var/www/html/arclight/gpubinder && ./nvidia-dev-ctl.py list-used-pci -o table');
+                      echo "<tr>" .
+                        "<td><pre> {$result} </pre></td>" .
+                        "</tr>";
+                      echo "</tbody></table>";
+                    ?>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </main>
+  <!-- end content of list of physical GPUs -->
+
+
+
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 <?php if($_SESSION['themeColor'] == "dark-edition") { echo "main-dark"; } ?> ">
+
+
+      <form action="" method="POST">
+        <div class="content">
+          <div class="row">
+
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+
+              <div class="card <?php if($_SESSION['themeColor'] == "dark-edition") { echo "card-dark"; } ?>">
+                <div class="card-header">
+                  <span class="card-title"></span>
+                </div>
+                <div class="card-body">
+
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead class="text-none">
+                        <th>List of Attached Virtual GPUs [MDEV]</th>
                       </thead>
                       <tbody>
                     <!-- start project list -->
@@ -125,8 +277,7 @@ if (isset($_POST['action'])) {
         </div>
       </form>
     </main>
-  <!-- </div> 
-</div> end content of virtual GPUs -->
+  <!-- end content of list of virtual GPUs -->
 
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 <?php if($_SESSION['themeColor'] == "dark-edition") { echo "main-dark"; } ?> ">
@@ -147,15 +298,12 @@ if (isset($_POST['action'])) {
                   <div class="table-responsive">
                     <table class="table">
                       <thead class="text-none">
-                        <th>Create MDEV</th>
+                        <th>Create Virtual GPU</th>
                         </thead>
                         <tbody>
 
                           <!-- start project list -->
                           <?php                                                 
-                            $userid = $_SESSION['userid']; //grab the $uuid variable from $_POST, only used for actions below
-                            $action = $_SESSION['action']; //grab the $action variable from $_SESSION
-                            unset($_SESSION['action']); //Unset the Action Variable to prevent repeats of action on page reload
                             
                             //Creating user's databse table
                             require('../config/config.php');
@@ -174,8 +322,6 @@ if (isset($_POST['action'])) {
                             // usage: nvidia-dev-ctl.py create-mdev [-n] PCI_ADDRESS, MDEV_TYPE_OR_NAME
                             
                             if ($action == "createmdev"){ 
-                              $pciaddr = $_SESSION['pciaddr'];
-                              $mdevtype = $_SESSION['mdevtype'];
                             
                             
                               $createddmdev = shell_exec("cd /var/www/html/arclight/gpubinder && sudo ./nvidia-dev-ctl.py create-mdev '".$pciaddr."' '".$mdevtype."'");
@@ -231,8 +377,7 @@ if (isset($_POST['action'])) {
         </div>
       </form>
     </main>
-  <!-- </div> 
-</div> end content of Creating virtual GPUs -->
+  <!-- end content of Creating virtual GPUs -->
 
 
 
@@ -273,7 +418,6 @@ if (isset($_POST['action'])) {
                                       <tbody>
                                         <?php 
                                         require('../config/config.php');
-                                        $userid = $_SESSION['userid'];
                                         $selectquery = "SELECT * FROM arclight_vgpu";
                                         $query = mysqli_query($conn, $selectquery);
 
@@ -328,7 +472,128 @@ if (isset($_POST['action'])) {
           <!-- </div>
         </div> -->
       </form>
-    </main>
-  <!-- </div> 
-</div> end content of GPU Manager -->
 
+<!--------------------------------------------------------------------- -->
+
+  <!-- Trigger the modal with a button -->
+  <button type="button" class="custom-btn btn-2" data-toggle="modal" data-target="#save-modal">Save</button>
+  <button class="custom-btn btn-2" data-toggle="modal" data-target="#restore-modal">Restore</button>
+
+  <?php                                                 
+    if (isset($_POST['savegpuconf'])){
+        $sql = "CREATE TABLE IF NOT EXISTS arclight_gpuevents (
+        sno INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        userid INT,
+        action varchar(255),
+        conf char(50),    
+        dt DATETIME)";
+        $tablesql = mysqli_query($conn, $sql);
+        
+        $userid = $_SESSION['userid'];
+        $filename = $_POST['filename']; 
+      if($_POST['filename'] != ""){                          
+        $creatgpuconf = shell_exec("cd /var/www/html/arclight/gpubinder && sudo ./nvidia-dev-ctl.py save -o '".$filename."'.conf");
+        if($creatgpuconf == ""){
+          $action = "Configuration File Created";
+          echo $action;
+          $sql = "INSERT INTO arclight_gpuevents (userid, action, conf, dt) VALUES('$userid', '$action', '$filename', current_timestamp());"; 
+          $inserttablesql = mysqli_query($conn, $sql);
+        }
+        else{
+          echo "Error creating file";
+        }
+      }
+      else{
+        echo "Please enter a filename";
+      }
+    }
+  ?>
+
+  <div id="save-modal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content <?php if($_SESSION['themeColor'] == "dark-edition") { echo "modal-dark"; } ?>">
+			<div class="modal-header">
+        <h5 class="modal-title">Save GPU Configuration</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+			</div> 
+			 <form id="savegpu-conf" name="savegpu-conf" role="form" action="" method="post">
+				<div class="modal-body">				
+					<div class="form-group">
+						<label for="filename">File Name</label>
+						<input type="text" name="filename" class="form-control">
+          </div>
+          <input type="hidden" name="savegpuconf" class="form-control">	
+				</div>
+				<div class="modal-footer">					
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<input type="submit" class="btn btn-primary" value="Save">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- end content of Save file Configuration -->
+<?php
+require('../config/config.php');
+
+$showquery = "SELECT * from arclight_gpuevents WHERE userid = '$userid'";
+$showdata = mysqli_query($conn,$showquery);
+$arrdata = mysqli_fetch_array($showdata);
+?>
+
+<div id="restore-modal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content <?php if($_SESSION['themeColor'] == "dark-edition") { echo "modal-dark"; } ?>">
+			<div class="modal-header">
+        <h5 class="modal-title">Restore GPU Configuration</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+			</div> 
+      <div class="container mt-5">  
+
+      <form action="" method="post">   
+
+        <?php
+        if (mysqli_num_rows($arrdata) > 0) {
+?>
+      <select name="domainname">  
+
+<option selected>Open this select menu</option>
+        <!-- <select class="form-select" id="selectmdev" name="selectmdev"> -->
+        <option value = "" selected> File Name</option>  
+                <?php
+                $i=0;
+                while($DB_ROW = mysqli_fetch_array($arrdata)) {
+                ?>
+            <option value="<?php echo $DB_ROW["conf"];?>"><?php echo $DB_ROW["conf"];?></option>
+            <?php
+                $i++;
+                }     
+              }  
+                else{
+                        echo "Configuration  File Not Found";
+                }
+            ?>
+      </select>
+      <br> <br> <input type = "submit" name = "submit" value = "Attach">  
+    </form> 
+		</div>
+	</div>
+</div>
+</div>
+
+
+    </main>
+
+
+
+
+<!-- replaceState method of JQuery to prevent data again after submission due to post back -->
+<script>
+if ( window.history.replaceState ) {
+  window.history.replaceState( null, null, window.location.href );
+}
+</script>
