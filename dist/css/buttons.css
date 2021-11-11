@@ -7,7 +7,7 @@ button {
   color: #fff;
   border-radius: 5px;
   padding: 10px 25px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
   font-weight: 500;
   background: transparent;
   cursor: pointer;
@@ -19,6 +19,23 @@ button {
   outline: none;
 }
 
+.custom-btnlong {
+  width: 180px;
+  height: 40px;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px 25px;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-weight: 500;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  /* box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5),
+    7px 7px 20px 0px rgba(0, 0, 0, 0.1), 4px 4px 5px 0px rgba(0, 0, 0, 0.1); */
+  outline: none;
+}
 /* 2 */
 .btn-2 {
   background: rgb(96, 9, 240);
@@ -38,4 +55,109 @@ button {
     /* -4px -4px 6px 0 rgba(116, 125, 136, 0.5), */
     inset -4px -4px 6px 0 rgba(255, 255, 255, 0.2),
     inset 4px 4px 6px 0 rgba(0, 0, 0, 0.4);
+}
+
+/* Modal GPU css ------------------------------------------------------------------------*/
+.gpumodal {  
+  max-width: 400px;  
+  margin: 60px auto;  
+  text-align: center;  
+}  
+
+.modeselect-block {  
+  width: 350px;  
+  margin: 100px auto 40px;  
+  position: relative;  
+}  
+.modeselect {  
+  width: 100%;  
+  height: 50px;  
+  font-size: 100%;
+  text-align: center;  
+  cursor: pointer;  
+  border-radius: 0; 
+  background: white;
+  border: none;  
+  border: 2px solid #e9ecef;  
+  border-radius: 2px;  
+  color: black;  
+  appearance: none;  
+  padding: 8px 38px 10px 38px;  
+  -webkit-appearance: none;  
+  -moz-appearance: none;  
+  transition: color 0.3s ease, background-color 0.3s ease, border-bottom-color 0.3s ease;  
+}  
+modeselect::-ms-expand {  
+  display: none;  
+}  
+
+modeselect:hover {  
+  color: #000000;  
+  background-color: white;  
+}  
+modeselect:focus {  
+  color: #000000;  
+  background-color: white;  
+}  
+modeselect:hover~.selectIcon  
+ {  
+  background-color: white;  
+}  
+modeselect:focus~.selectIcon {  
+  background-color: white;  
+}  
+
+h2 {  
+font-style: italic;  
+font-family: "Playfair Display","Bookman",serif;  
+color: #999;   
+letter-spacing: -0.005em;   
+word-spacing:1px;  
+font-size: 1.75em;  
+/* font-weight: bold;   */
+}  
+
+input[type=submit] {
+  margin-bottom: 25px;  
+}
+
+input[type=submit] {
+width: 130px;
+height: 40px;
+color: #fff;
+border-radius: 5px;
+padding: 10px 25px;
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+font-weight: 500;
+background: transparent;
+cursor: pointer;
+transition: all 0.3s ease;
+position: relative;
+display: inline-block;
+/* box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5),
+7px 7px 20px 0px rgba(0, 0, 0, 0.1), 4px 4px 5px 0px rgba(0, 0, 0, 0.1); */
+outline: none;
+}
+
+/* 2 */
+input[type=submit] {
+background: rgb(96, 9, 240);
+background: linear-gradient(
+0deg,
+rgba(96, 9, 240, 1) 0%,
+rgba(129, 5, 240, 1) 100%
+);
+border: none;
+}
+
+input[type=submit]::before {
+height: 0%;
+width: 2px;
+}
+
+input[type=submit]:hover {
+box-shadow: 4px 4px 6px 0 rgba(255, 255, 255, 0.5),
+/* -4px -4px 6px 0 rgba(116, 125, 136, 0.5), */
+inset -4px -4px 6px 0 rgba(255, 255, 255, 0.2),
+inset 4px 4px 6px 0 rgba(0, 0, 0, 0.4);
 }
