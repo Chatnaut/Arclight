@@ -12,6 +12,8 @@ if (!isset($_SESSION['username'])){
 require('../header.php');
 require('../navbar.php');
 require('../footer.php');
+require('../config/config.php');
+
 
   // This function is used to prevent any problems with user form input
   function clean_input($data) {
@@ -37,119 +39,7 @@ if (isset($_POST['action'])) {
 $userid = $_SESSION['userid'];
 
 
-?>
-<style>  
-    .container {  
-      max-width: 400px;  
-      margin: 60px auto;  
-      text-align: center;  
-    }  
-    input[type="submit"] {  
-      margin-bottom: 25px;  
-    }  
-    .select-block {  
-      width: 350px;  
-      margin: 100px auto 40px;  
-      position: relative;  
-    }  
-    select {  
-      width: 100%;  
-      height: 50px;  
-      font-size: 100%;  
-      font-weight: bold;  
-      cursor: pointer;  
-      border-radius: 0;  
-      background-color: #1A33FF;  
-      border: none;  
-      border: 2px solid #1A33FF;  
-      border-radius: 4px;  
-      color: white;  
-      appearance: none;  
-      padding: 8px 38px 10px 18px;  
-      -webkit-appearance: none;  
-      -moz-appearance: none;  
-      transition: color 0.3s ease, background-color 0.3s ease, border-bottom-color 0.3s ease;  
-    }  
-      select::-ms-expand {  
-      display: none;  
-    }  
-    /* .selectIcon {  
-      top: 7px;  
-      right: 15px;  
-      width: 30px;  
-      height: 36px;  
-      padding-left: 5px;  
-      pointer-events: none;  
-      position: absolute;  
-      transition: background-color 0.3s ease, border-color 0.3s ease;  
-    }   */
-    /* .selectIcon svg.icon {  
-      transition: fill 0.3s ease;  
-      fill: white;  
-    }   */
-    select:hover {  
-      color: #000000;  
-      background-color: white;  
-    }  
-select:focus {  
-      color: #000000;  
-      background-color: white;  
-    }  
-    select:hover~.selectIcon  
-     {  
-      background-color: white;  
-    }  
-    select:focus~.selectIcon {  
-      background-color: white;  
-    }  
-    select:hover~.selectIcon svg.icon  
-    {  
-      fill: #1A33FF;  
-    }  
-  select:focus~.selectIcon svg.icon {  
-      fill: #1A33FF;  
-    }  
-h2 {  
- font-style: italic;  
-font-family: "Playfair Display","Bookman",serif;  
- color: #999;   
-letter-spacing: -0.005em;   
-word-spacing:1px;  
-font-size: 1.75em;  
-font-weight: bold;  
-  }  
-h1 {  
- font-style: italic;  
- font-family: "Playfair Display","Bookman",serif;  
- color: #999;   
-letter-spacing: -0.005em;   
-word-spacing: 1px;  
- font-size: 2.75em;  
-  font-weight: bold;  
-  }  
-input[type=submit] {  
-  border: 3px solid;  
-  border-radius: 2px;  
-  color: ;  
-  display: block;  
-  font-size: 1em;  
-  font-weight: bold;  
-  margin: 1em auto;  
-  padding: 1em 4em;  
-  position: relative;  
-  text-transform: uppercase;  
-}  
-input[type=submit]::before,  
-input[type=submit]::after {  
-  background: #fff;  
-  content: '';  
-  position: absolute;  
-  z-index: -1;  
-}  
-input[type=submit]:hover {  
-  color: #1A33FF;  
-}  
-  </style>  
+?> 
 
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 <?php if($_SESSION['themeColor'] == "dark-edition") { echo "main-dark"; } ?> ">
@@ -306,7 +196,6 @@ input[type=submit]:hover {
                           <?php                                                 
                             
                             //Creating user's databse table
-                            require('../config/config.php');
                             $sql = "CREATE TABLE IF NOT EXISTS arclight_vgpu (
                             sno INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
                             userid INT,
@@ -366,7 +255,7 @@ input[type=submit]:hover {
                             </div>
                                     <input type="hidden" name="action" value="createmdev">
                             <div class="col-auto">
-                              <button type="Create" class="btn btn-primary">Create Virtual GPU</button>
+                              <button type="Create" class="custom-btnlong btn-2">Create Virtual GPU</button>
                             </div>
                           </form>
                   </div>
@@ -477,7 +366,7 @@ input[type=submit]:hover {
 
   <!-- Trigger the modal with a button -->
   <button type="button" class="custom-btn btn-2" data-toggle="modal" data-target="#save-modal">Save</button>
-  <button class="custom-btn btn-2" data-toggle="modal" data-target="#restore-modal">Restore</button>
+  <button type="button" class="custom-btn btn-2" data-toggle="modal" data-target="#restore-modal">Restore</button>
 
   <?php                                                 
     if (isset($_POST['savegpuconf'])){
@@ -535,12 +424,40 @@ input[type=submit]:hover {
 	</div>
 </div>
 <!-- end content of Save file Configuration -->
-<?php
-require('../config/config.php');
 
-$showquery = "SELECT * from arclight_gpuevents WHERE userid = '$userid'";
-$showdata = mysqli_query($conn,$showquery);
-$arrdata = mysqli_fetch_array($showdata);
+
+
+ 
+<?php
+$dsql = "SELECT * from arclight_gpuevents WHERE userid = '$userid'";
+$dresult = $conn->query($dsql);
+
+if(isset($_POST['restore'])){  
+  if(!empty($_POST['restoreconf'])) {  
+    $rfilename = clean_input($_POST['rfilename']);
+    $restoregpuconf = shell_exec("cd /var/www/html/arclight/gpubinder && sudo ./nvidia-dev-ctl.py restore -o '".$rfilename."'.conf");
+    if($restoregpuconf == ""){
+      $action = "GPU Configuration Restored";
+      echo $action;
+
+    $rsql = "DELETE FROM arclight_gpuevents WHERE conf = '$rfilename';";
+    $result = $conn->query($rsql);
+
+    // Delete the file from the directory after restoring it
+    $file_pointer = unlink(__DIR__ . "/../../gpubinder/" .$rfilename. ".conf");
+    // if($file_pointer){
+    //   echo "File deleted successfully";
+    // }
+    // else{
+    //   echo "Error deleting file";
+    // }
+
+    }
+    else{
+      echo "Error While Restoring GPU Configuration";
+    }
+    }
+  }
 ?>
 
 <div id="restore-modal" class="modal fade" role="dialog">
@@ -551,38 +468,33 @@ $arrdata = mysqli_fetch_array($showdata);
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-			</div> 
-      <div class="container mt-5">  
-
-      <form action="" method="post">   
-
-        <?php
-        if (mysqli_num_rows($arrdata) > 0) {
-?>
-      <select name="domainname">  
-
-<option selected>Open this select menu</option>
-        <!-- <select class="form-select" id="selectmdev" name="selectmdev"> -->
-        <option value = "" selected> File Name</option>  
-                <?php
-                $i=0;
-                while($DB_ROW = mysqli_fetch_array($arrdata)) {
-                ?>
-            <option value="<?php echo $DB_ROW["conf"];?>"><?php echo $DB_ROW["conf"];?></option>
+			</div>
+        <div class="gpumodal">
+          <form action="" method="post">   
             <?php
-                $i++;
-                }     
-              }  
-                else{
-                        echo "Configuration  File Not Found";
-                }
+            if (mysqli_num_rows($dresult) > 0) {
             ?>
-      </select>
-      <br> <br> <input type = "submit" name = "submit" value = "Attach">  
-    </form> 
-		</div>
-	</div>
-</div>
+              <select class="modeselect" name="restoreconf">  
+              <!-- <option value = "" selected> File Name</option>   -->
+                    <?php
+                    $i=0;
+                    while($DB_ROW = mysqli_fetch_array($dresult)) {
+                    ?>
+                <option value="<?php echo $DB_ROW["conf"];?>"><?php echo $DB_ROW["conf"];?>.conf</option>
+                <?php
+                    $i++;
+                    }     
+                  }  
+                    else{
+                            echo "Configuration File Not Found";
+                    }
+                ?>
+              </select>
+              <br> <br> <input type = "submit" name = "restore" value = "Restore">  
+          </form>
+        </div> 
+    </div>
+  </div>
 </div>
 
 
@@ -591,7 +503,7 @@ $arrdata = mysqli_fetch_array($showdata);
 
 
 
-<!-- replaceState method of JQuery to prevent data again after submission due to post back -->
+<!-- replaceState method of JQuery to prevent duplication of data submission due to post back -->
 <script>
 if ( window.history.replaceState ) {
   window.history.replaceState( null, null, window.location.href );
