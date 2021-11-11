@@ -245,7 +245,8 @@
                                 </div>
                                 <br> <br> <input type = \"submit\" name = \"submit\" value = \"Resize\">  
                                 </form> 
-                                
+                                echo $path;
+                                echo $filename;
                                 </td>" .
                                   "</tr>";
                               }
@@ -299,7 +300,7 @@
 				</div>
 				<div class="modal-footer">					
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<input type="submit" class="btn btn-primary" id="submit" value="Submit">
+					<input type="submit" class="custom-btnshrt" id="submitmodalbt" value="Submit">
 				</div>
 			</form>
 		</div>
@@ -406,7 +407,7 @@
 				</div>
 				<div class="modal-footer">					
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<input type="submit" class="btn btn-primary" id="submit" value="Submit">
+					<input type="submit" class="custom-btnshrt" id="submitmodalbt" value="Submit">
 				</div>
 			</form>
 		</div>
@@ -447,7 +448,7 @@
 				</div>
 				<div class="modal-footer">					
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<input type="submit" class="btn btn-primary" id="submit" value="Submit">
+					<input type="submit" class="custom-btnshrt" id="submitmodalbt" value="Submit">
 				</div>
 			</form>
 		</div>

@@ -374,7 +374,7 @@ require('../navbar.php');
         </div>
 				<div class="modal-footer">					
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<input type="submit" class="btn btn-primary" id="submit" value="Submit">
+					<input type="submit" class="custom-btnshrt" id="submitmodalbt" value="Submit">
 				</div>
 			</form>
 		</div>
@@ -433,7 +433,7 @@ require('../navbar.php');
         </div>
 				<div class="modal-footer">					
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<input type="submit" class="btn btn-primary" id="submit" value="Submit">
+					<input type="submit" class="custom-btnshrt" id="submitmodalbt" value="Submit">
 				</div>
 			</form>
 		</div>
@@ -460,7 +460,7 @@ require('../navbar.php');
         </div>
 				<div class="modal-footer">					
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<input type="submit" class="btn btn-primary" id="submit" value="Submit">
+					<input type="submit" class="custom-btnshrt" id="submitmodalbt" value="Submit">
 				</div>
 			</form>
 		</div>
@@ -512,7 +512,7 @@ require('../navbar.php');
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <?php
           if ($editable_xml){
-            echo "<input type=\"submit\" class=\"btn btn-primary\" id=\"submit\" value=\"Submit\">";
+            echo "<input type=\"submit\" class=\"custom-btnshrt\" id=\"submitmodalbt\" value=\"Submit\">";
             echo "<input type=\"hidden\" name=\"action\" value=\"edit-xml\">";
             echo "<input type=\"hidden\" name=\"net_name\" value=\"$net_name\">";
           }
@@ -522,7 +522,6 @@ require('../navbar.php');
 		</div>
 	</div>
 </div>
-
 
 <script>
   //Still needs to be setup to remove DHCP range if disabled

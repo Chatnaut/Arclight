@@ -417,7 +417,7 @@ $userid = $_SESSION['userid'];
 				</div>
 				<div class="modal-footer">					
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<input type="submit" class="btn btn-primary" value="Save">
+					<input type="submit" class="custom-btnshrt" id="submitmodalbt" value="Save">
 				</div>
 			</form>
 		</div>
@@ -434,7 +434,7 @@ $dresult = $conn->query($dsql);
 
 if(isset($_POST['restore'])){  
   if(!empty($_POST['restoreconf'])) {  
-    $rfilename = clean_input($_POST['rfilename']);
+    $rfilename = clean_input($_POST['restoreconf']);
     $restoregpuconf = shell_exec("cd /var/www/html/arclight/gpubinder && sudo ./nvidia-dev-ctl.py restore -o '".$rfilename."'.conf");
     if($restoregpuconf == ""){
       $action = "GPU Configuration Restored";
@@ -490,7 +490,7 @@ if(isset($_POST['restore'])){
                     }
                 ?>
               </select>
-              <br> <br> <input type = "submit" name = "restore" value = "Restore">  
+              <br> <br> <input type = "submit" name = "restore" id = "modalsv" value = "Restore">  
           </form>
         </div> 
     </div>

@@ -893,7 +893,7 @@
         </div>
 				<div class="modal-footer">					
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<input type="submit" class="btn btn-primary" id="submit" value="Submit">
+					<input type="submit" class="custom-btnshrt" id="submitmodalbt" value="Submit">
 				</div>
 			</form>
 		</div>
@@ -921,7 +921,7 @@
         </div>
 				<div class="modal-footer">					
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<input type="submit" class="btn btn-primary" id="submit" value="Submit">
+					<input type="submit" class="custom-btnshrt" id="submitmodalbt" value="Submit">
 				</div>
 			</form>
 		</div>
