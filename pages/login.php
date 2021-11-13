@@ -108,6 +108,8 @@
 
     <!-- Custom styles for this template -->
     <link href="../assets/css/login.css" rel="stylesheet">
+    <link href="../dist/css/buttons.css" rel="stylesheet">
+
   </head>
 
   <body>
@@ -127,8 +129,8 @@
         <label for="inputPassword">Password</label>
       </div>
 
-
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      <div class="center">
+      <button class="log-btnlong btn-2" type="submit">Sign in</button></div>
       <p class="mt-5 mb-3 text-muted text-center">&copy; 
         <script>
           document.write(new Date().getFullYear())

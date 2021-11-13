@@ -84,6 +84,8 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
 
     <!-- Custom styles for this template -->
     <link href="assets/css/login.css" rel="stylesheet">
+    <link href="dist/css/buttons.css" rel="stylesheet">
+
   </head>
   <body>
 
@@ -110,8 +112,9 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
         <label for="inputPassword">Confirm password</label>
       </div>
 
-
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+      <div class="center">
+      <button class="log-btnlong btn-2" type="submit">Sign up</button>
+      </div>
       <!-- Alert from bootstrap ----------------------------------------------------------------------->
 <?php
 if ($showAlert){
