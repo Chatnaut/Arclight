@@ -86,8 +86,7 @@ $userid = $_SESSION['userid'];
 
 
 
-
-<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 <?php if($_SESSION['themeColor'] == "dark-edition") { echo "main-dark"; } ?> ">
+  <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 <?php if($_SESSION['themeColor'] == "dark-edition") { echo "main-dark"; } ?> ">
 
 
       <form action="" method="POST">
@@ -126,6 +125,123 @@ $userid = $_SESSION['userid'];
     </main>
   <!-- end content of list of physical GPUs -->
 
+
+<!-- ------------------------------------------------------------------------------------------------------------ -->
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 <?php if($_SESSION['themeColor'] == "dark-edition") { echo "main-dark"; } ?> ">
+
+
+      <form action="" method="POST">
+        <div class="content">
+          <div class="row">
+
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+
+              <div class="card <?php if($_SESSION['themeColor'] == "dark-edition") { echo "card-dark"; } ?>">
+                <div class="card-header">
+                  <span class="card-title"></span>
+                </div>
+                <div class="card-body">
+
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead class="text-none">
+                        <th>
+                        <button type="button" class="custom-btn btn-2" data-toggle="modal" data-target="#attachpci-modal">Attach</button>
+                        <button type="button" class="custom-btn btn-2" data-toggle="modal" data-target="#restore-modal">Detach</button>  
+                        </th>
+                      </thead>
+                      <tbody>
+                        <!-- start project list -->
+                        
+                        
+                        <?php
+                          if (isset($_POST['attachpci'])){
+                            $sql = "CREATE TABLE IF NOT EXISTS arclight_gpu (
+                            sno INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                            userid INT,
+                            pciaddr varchar(255),    
+                            action varchar(255),
+                            domain_name varchar(255),
+                            dt DATETIME)";
+                            $tablesql = mysqli_query($conn, $sql);
+
+                            if($_POST['pciaddr'] && $_POST['domain_name'] != ""){
+                              $userid = $_SESSION['userid'];
+                              $pciaddr = $_POST['pciaddr']; 
+                              $domain_name = $_POST['domain_name'];
+                              $optionalargs = $_POST['optionalargs'];
+
+                              $attachpci = exec("cd /var/www/html/arclight/gpubinder && sudo ./nvidia-dev-ctl.py attach-pci '".$optionalargs."' '".$pciaddr."' '".$domain_name."'", $output, $return_var);
+                              if (empty($return_var)){
+                                $action = "Attached";
+                                echo "Successfully Passthrough to VM " .$domain_name;
+                                $sql = "INSERT INTO arclight_gpu (userid, pciaddr, action, domain_name, dt) VALUES ('$userid', '$pciaddr', '$action', '$domain_name', current_timestamp())";
+                                $result = $conn->query($sql);
+                              }
+                              else{
+                                echo "GPU Passthrough Error";
+                              }
+                            }
+                          }
+                        ?>
+
+<!-- start project list include '../domain/rud.php-->
+<div class="container-xl">
+                          <div class="table-responsive">
+                              <div class="table-wrapper">
+                                  <div class="table-title">
+                                      <div class="row">
+                                  <table class="table table-striped table-hover">
+                                      <thead>
+                                          <tr>
+                                              <th>PCI Address</th>
+                                              <th>Action</th>						
+                                              <th>VM</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                        <?php 
+                                        $selectquery = "SELECT * FROM arclight_gpu";
+                                        $query = mysqli_query($conn, $selectquery);
+
+                                        while($res = mysqli_fetch_array($query)){
+                                              ?>
+                                          
+                                          <tr>
+                                              <td><?php echo $res['pciaddr']; ?></td>
+                                                  <td>
+                                                  <?php
+                                              if ($res['action'] == 'Attached'){
+                                                  ?>
+                                                  <span class="status text-success">&bull;</span> Attached
+                                                <?php
+                                              }  ?>
+                                                  </td>
+                                              <td><?php echo $res['domain_name']; ?></td>
+                                              <td> 
+                                                  <?php if ($res['action'] == 'Attached'){ ?>
+                                                  <!-- Redirecting customers directly to detach and remove page actions by their ids via GET -->
+                                                  <a href="../domain/dmdev.php?id=<?php echo $res['sno']; ?>" class="settings" title="Detach" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
+                                                  <?php } ?>
+
+                                                </td> 
+                                                
+
+                                          </tr>
+                                        <?php } ?>
+     
+
+
+                      </tbody>
+                    </table>                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </main><!-- end content of attach and detach Pyhsical GPU -->
 
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 <?php if($_SESSION['themeColor'] == "dark-edition") { echo "main-dark"; } ?> ">
@@ -242,7 +358,7 @@ $userid = $_SESSION['userid'];
                             echo "</tbody></table>";
                                               
                           ?>
-                          <!-------------------------------------CREATE MDEV GPU------------------------------------->
+                          <!-------------------------------------CREATE MDEV GPU-------------------------------------->
                           
                           <form class="row gx-3 gy-2 align-items-center" id="create-mdev" name="create-mdev" role="form" action="" method="post" >
                             <div class="col-sm-3">
@@ -362,7 +478,7 @@ $userid = $_SESSION['userid'];
         </div> -->
       </form>
 
-<!--------------------------------------------------------------------- -->
+<!------------------------------------------------------------------------>
 
   <!-- Trigger the modal with a button -->
   <button type="button" class="custom-btn btn-2" data-toggle="modal" data-target="#save-modal">Save</button>
@@ -495,8 +611,47 @@ if(isset($_POST['restore'])){
         </div> 
     </div>
   </div>
-</div>
+</div><!-- end content of Restore file Configuration -->
 
+
+
+<div id="attachpci-modal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content <?php if($_SESSION['themeColor'] == "dark-edition") { echo "modal-dark"; } ?>">
+			<div class="modal-header">
+        <h5 class="modal-title">Add GPU Passthrough</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+			</div>
+			 <form id="attachpci-conf" name="attachpci-conf" role="form" action="" method="post">
+				<div class="modal-body">				
+					<div class="form-group">
+						<label for="pciaddr">PCI Address</label>
+						<input type="text" name="pciaddr" class="form-control">
+          </div>
+          <div class="form-group">
+						<label for="domname">VM Name</label>
+						<input type="text" name="domain_name" class="form-control">
+          </div>
+          <input type="hidden" name="attachpci" class="form-control">	
+				</div>
+        </select>
+        <select class="form-select" name="optionalargs">  
+          <!-- <select class="form-select" id="selectmdev" name="selectmdev"> -->
+          <!-- <option value = "" selected> Arguments </option>  -->
+          <option value="">None</option> 
+          <option value="--hotplug">Hotplug</option>
+          <option value="--restart">Restart</option>
+        </select>
+				<div class="modal-footer">					
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<input type="submit" class="custom-btnshrt" id="submitmodalbt" value="Add">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 
     </main>
 
