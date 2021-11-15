@@ -147,7 +147,7 @@ $userid = $_SESSION['userid'];
                       <thead class="text-none">
                         <th>
                         <button type="button" class="custom-btn btn-2" data-toggle="modal" data-target="#attachpci-modal">Attach</button>
-                        <button type="button" class="custom-btn btn-2" data-toggle="modal" data-target="#restore-modal">Detach</button>  
+                        <button type="button" class="custom-btn btn-2" data-toggle="modal" data-target="#detachpci-modal">Detach</button>  
                         </th>
                       </thead>
                       <tbody>
@@ -221,7 +221,9 @@ $userid = $_SESSION['userid'];
                                               <td> 
                                                   <?php if ($res['action'] == 'Attached'){ ?>
                                                   <!-- Redirecting customers directly to detach and remove page actions by their ids via GET -->
-                                                  <a href="../domain/dmdev.php?id=<?php echo $res['sno']; ?>" class="settings" title="Detach" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
+
+
+                                                  <a href="?pciid=<?php echo $res['sno']; ?>" class="delete" title="Detach" data-toggle="modal" data-target="#detachpci-modal"><i class="material-icons">&#xE8B8;</i></a>
                                                   <?php } ?>
 
                                                 </td> 
@@ -614,18 +616,25 @@ if(isset($_POST['restore'])){
 </div><!-- end content of Restore file Configuration -->
 
 
+<?php 
+$pciids = $_GET['pciid'];
+$showquery = "SELECT * from arclight_gpu WHERE sno={$pciids} AND action = 'Attached'";
+$showdata = mysqli_query($conn,$showquery);
+$pciarrdata = mysqli_fetch_array($showdata);
 
-<div id="attachpci-modal" class="modal fade" role="dialog">
+
+?>
+<div id="detachpci-modal" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content <?php if($_SESSION['themeColor'] == "dark-edition") { echo "modal-dark"; } ?>">
 			<div class="modal-header">
-        <h5 class="modal-title">Add GPU Passthrough</h5>
+        <h5 class="modal-title">Remove GPU Passthrough</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
 			</div>
-			 <form id="attachpci-conf" name="attachpci-conf" role="form" action="" method="post">
-				<div class="modal-body">				
+			 <form id="detachpci-conf" name="detachpci-conf" role="form" action="" method="post">
+				<!-- <div class="modal-body">				
 					<div class="form-group">
 						<label for="pciaddr">PCI Address</label>
 						<input type="text" name="pciaddr" class="form-control">
@@ -634,10 +643,17 @@ if(isset($_POST['restore'])){
 						<label for="domname">VM Name</label>
 						<input type="text" name="domain_name" class="form-control">
           </div>
-          <input type="hidden" name="attachpci" class="form-control">	
-				</div>
-        </select>
-        <select class="form-select" name="optionalargs">  
+          <input type="hidden" name="detachpci" class="form-control">	
+				</div> -->
+        <select class="browser-default custom-select" name="pciaddr">  
+        <!-- <select class="form-select" id="selectmdev" name="selectmdev"> -->
+            <option value="<?php echo $pciarrdata['pciaddr']; ?>"><?php echo $pciarrdata['pciaddr']; ?></option>
+        </select> 
+      <select class="browser-default custom-select" name="domain_name">  
+            <option value="<?php echo $pciarrdata['domain_name']; ?>"><?php echo $pciarrdata['domain_name']; ?></option>
+      </select>
+ 
+      <select class="form-select" name="optionalargs">  
           <!-- <select class="form-select" id="selectmdev" name="selectmdev"> -->
           <!-- <option value = "" selected> Arguments </option>  -->
           <option value="">None</option> 
@@ -646,9 +662,10 @@ if(isset($_POST['restore'])){
         </select>
 				<div class="modal-footer">					
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<input type="submit" class="custom-btnshrt" id="submitmodalbt" value="Add">
+					<input type="submit" class="custom-btnshrt" id="submitmodalbt" value="Remove">
 				</div>
 			</form>
+      
 		</div>
 	</div>
 </div>
