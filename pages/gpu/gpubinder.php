@@ -151,9 +151,7 @@ $userid = $_SESSION['userid'];
                         </th>
                       </thead>
                       <tbody>
-                        <!-- start project list -->
-                        
-                        
+                        <!-- start attachpci project list -->
                         <?php
                           if (isset($_POST['attachpci'])){
                             $sql = "CREATE TABLE IF NOT EXISTS arclight_gpu (
@@ -180,6 +178,26 @@ $userid = $_SESSION['userid'];
                               }
                               else{
                                 echo "GPU Passthrough Error";
+                              }
+                            }
+                          }
+                          //  start detachpci project list
+                          if (isset($_POST['detachpci'])){
+                            if($_POST['pciaddr'] && $_POST['domain_name'] != ""){
+                              $userid = $_SESSION['userid'];
+                              $pciaddr = $_POST['pciaddr']; 
+                              $domain_name = $_POST['domain_name'];
+                              $optionalargs = $_POST['optionalargs'];
+
+                              $detachpci = exec("cd /var/www/html/arclight/gpubinder && sudo ./nvidia-dev-ctl.py detach-pci '".$optionalargs."' '".$pciaddr."' '".$domain_name."'", $output, $return_var);
+                              if (empty($return_var)){
+                                $action = "Detached";
+                                echo "Succesfully Removed " .$domain_name;
+                                $rsql = "DELETE FROM arclight_gpu WHERE pciaddr = '$pciaddr' AND domain_name = '$domain_name'";
+                                $result = $conn->query($rsql);
+                              }
+                              else{
+                                echo "Passthrough Error 485";
                               }
                             }
                           }
@@ -616,15 +634,90 @@ if(isset($_POST['restore'])){
 </div><!-- end content of Restore file Configuration -->
 
 
+<div id="attachpci-modal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content <?php if($_SESSION['themeColor'] == "dark-edition") { echo "modal-dark"; } ?>">
+			<div class="modal-header">
+        <h5 class="modal-title">Add GPU Passthrough</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+			</div>
+			 <form id="attachpci-conf" name="attachpci-conf" role="form" action="" method="post">
+				<div class="modal-body">				
+					<div class="form-group">
+						<label for="pciaddr">PCI Address</label>
+						<input type="text" name="pciaddr" class="form-control">
+          </div>
+          <div class="form-group">
+						<label for="domname">VM Name</label>
+						<input type="text" name="domain_name" class="form-control">
+          </div>
+          <input type="hidden" name="attachpci" class="form-control">	
+				</div>
+        </select>
+        <select class="form-select" name="optionalargs">  
+          <!-- <select class="form-select" id="selectmdev" name="selectmdev"> -->
+          <!-- <option value = "" selected> Arguments </option>  -->
+          <option value="">None</option> 
+          <option value="--hotplug">Hotplug</option>
+          <option value="--restart">Restart</option>
+        </select>
+				<div class="modal-footer">					
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<input type="submit" class="custom-btnshrt" id="submitmodalbt" value="Add">
+				</div>
+			</form>
+		</div>
+	</div>
+</div><!-- end content of Attach PCI modal-->
+
+<div id="detachpci-modal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content <?php if($_SESSION['themeColor'] == "dark-edition") { echo "modal-dark"; } ?>">
+			<div class="modal-header">
+        <h5 class="modal-title">Remove GPU Passthrough</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+			</div>
+			 <form id="detachpci-conf" name="detachpci-conf" role="form" action="" method="post">
+				<div class="modal-body">				
+					<div class="form-group">
+						<label for="pciaddr">PCI Address</label>
+						<input type="text" name="pciaddr" class="form-control">
+          </div>
+          <div class="form-group">
+						<label for="domname">VM Name</label>
+						<input type="text" name="domain_name" class="form-control">
+          </div>
+          <input type="hidden" name="detachpci" class="form-control">	
+				</div>
+        </select>
+        <select class="form-select" name="optionalargs">  
+          <!-- <select class="form-select" id="selectmdev" name="selectmdev"> -->
+          <!-- <option value = "" selected> Arguments </option>  -->
+          <option value="">None</option> 
+          <option value="--hotplug">Hotplug</option>
+          <option value="--restart">Restart</option>
+        </select>
+				<div class="modal-footer">					
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<input type="submit" class="custom-btnshrt" id="submitmodalbt" value="Remove">
+				</div>
+			</form>
+		</div>
+	</div>
+</div><!-- end content of detach PCI modal-->
+
+
 <?php 
 $pciids = $_GET['pciid'];
 $showquery = "SELECT * from arclight_gpu WHERE sno={$pciids} AND action = 'Attached'";
 $showdata = mysqli_query($conn,$showquery);
 $pciarrdata = mysqli_fetch_array($showdata);
-
-
 ?>
-<div id="detachpci-modal" class="modal fade" role="dialog">
+<div id="detachpcibtn-modal" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content <?php if($_SESSION['themeColor'] == "dark-edition") { echo "modal-dark"; } ?>">
 			<div class="modal-header">
