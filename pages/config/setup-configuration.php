@@ -122,7 +122,7 @@
             echo "<h1 class=\"h3 mb-3 font-weight-normal\">$error</h1>";
           }
         ?>
-        <img class="mb-4" src="../../assets/img/squarelogo.png" alt="" width="100" height="100">
+        <img class="mb-4" src="../../assets/img/arclight-dark.svg" alt="" width="300" height="200">
         <h1 class="h3 mb-3 font-weight-normal">Create an admin account.</h1>
       </div>
 

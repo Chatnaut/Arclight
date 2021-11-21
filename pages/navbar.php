@@ -39,7 +39,7 @@ require('../config/config.php');
 
 <body class=" <?php if($_SESSION['themeColor'] == "dark-edition") { echo "main-dark"; } ?> ">
     <nav class="navbar navbar-dark bg-dark sticky-top flex-md-nowrap p-0 <?php if($_SESSION['themeColor'] == "dark-edition") { echo "main-dark"; } ?> ">
-      <a class="navbar-brand navbar-dark col-sm-3 col-md-2 mr-0" href="../../index.php"><img src="../../assets/img/squarelogo.png" width="28px"> &ensp; Dashboard</a>
+      <a class="navbar-brand navbar-dark col-sm-3 col-md-2 mr-0" href="../../index.php"><img src="../../assets/img/arclight-dark.svg" width="28px"> &ensp; Dashboard</a>
       <!-- <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"> -->
       <ul class="navbar-nav px-3">
 
