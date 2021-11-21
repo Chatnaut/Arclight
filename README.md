@@ -4,19 +4,34 @@
   </a>
 </p>
 
-<h3 align="center">
-  Build, automate and self-host internal tools in minutes
-</h3>
 <p align="center">
-VMDashboard is an open source HTML5 and PHP based web interface for the KVM/QEMU hypervisor.  It is designed to be a easy-to-use management platform allowing users to create and manage virtual machines (VMs) on Linux servers. The web-based virtualization management software began development in March 2018. Arclight utilizes the Libvirt API, All of the actions you would expect from a virtualization management tool are included in the software. For example, user can create clone and manage VMs, storage pools netwworks and volumes. When it comes to networking, there are multiple options available. Users create private networks for there VMs and have the option to control DHCP within the private network. In addition to private networks, VMs can also use bridged connections, connecting them directly to the network interfaces on the physical server. Manage virtual machines directly from Arclight. There is no need to install additional VNC software.
+Arclight is an open-source server virtualization management solution based on KVM/QEMU hypervisor. It is designed to be a easy-to-use management platform allowing users to create and manage virtual machines (VMs) on Linux servers. Arclight utilizes the Libvirt API, All of the actions you would expect from a virtualization management tool are included in the software. For example, user can create, clone and manage VMs, storage pools netwworks and volumes. When it comes to networking, there are multiple options available. Users create private networks for there VMs and have the option to control DHCP within the private network. In addition to private networks, VMs can also use bridged connections, connecting them directly to the network interfaces on the physical server. Manage virtual machines directly from Arclight. There is no need to install additional VNC software. [About this project]: This project is in-development and we are still adding features to it along with complete ISO package and API for Enterprise Usage. 
 </p>
+<h2 align="center">Deploy on Bare-Metal Cloud Servers or Simply in your Home Lab
+</br>
+<a href="">
+  <img src="https://pro2-bar-s3-cdn-cf6.myportfolio.com/8d43c87dc07beef9eb1915c7ee44e163/735230eb-6c42-4d2f-8f1c-99ab9d520781_rw_1920.png?h=ee0b3cfc058ec6dfd1729ace6bf3c7d2" alt="IBM Cloud" width="200px">
+</a>
+<a href="">
+  <img src="https://download.logo.wine/logo/Amazon_Web_Services/Amazon_Web_Services-Logo.wine.png" alt="AWS Cloud" width="150px">
+</a> 
+<a href="">
+  <img src="https://66m4i2zg7xf1y14ot28gqej8-wpengine.netdna-ssl.com/wp-content/uploads/2020/10/GCP-logo.png" alt="GCP" width="200px">
+</a>
+<a href="">
+  <img src="https://eucoc.cloud/fileadmin/_processed_/c/0/csm_alibaba_square_acb9a96177.png" alt="Alibaba Cloud" width="200px">
+</a>
+<a href="">
+  <img src="https://download.logo.wine/logo/Microsoft_Azure/Microsoft_Azure-Logo.wine.png" alt="Azure Cloud" width="200px">
+</a>
+</h2>
 
 <h3 align="center">
  🤖 🎨 🚀
 </h3>
 
 <p align="center">
-  <img alt="Budibase design ui" src="https://i.imgur.com/5BnXPsN.png">
+  <img alt="Arclight design ui" src="https://i.imgur.com/5BnXPsN.png">
 </p>
 
 <p align="center">
@@ -36,6 +51,10 @@ VMDashboard is an open source HTML5 and PHP based web interface for the KVM/QEMU
 </p>
 
 
+
+
+
+
   * [Getting-Started](#Getting Started)
   * [list-mdev](#list-mdev-command)
   * [list-used-pci](#list-used-pci-command)
@@ -44,8 +63,13 @@ VMDashboard is an open source HTML5 and PHP based web interface for the KVM/QEMU
   * [remove-mdev](#remove-mdev-command)
   * [save](#save-command)
   * [restore](#restore-command)
+<br />
 
-## Getting Started
+---
+
+<br />
+
+## 🏁 Getting Started
 <!-- Installation of Arclight Web Console FOR UBUNTU 18.04****************************************************************** -->
 
 Arclight Dashboard is a web-based front end for libvirt based KVM virtual machines.
@@ -132,8 +156,13 @@ Restart Apache ```/etc/init.d/apache2 restart```
 Once rebooted, use a web browser to navigate to your server’s IP address or domain name. Add /arclight to the end of the URL. For example: http://192.168.1.2/arclight
 
 
+<br />
 
-<!-- Installation of Arclight Web Console FOR CENTOS 7 minimal****************************************************************** -->
+---
+
+<br />
+
+## Installation of Arclight Web Console FOR CENTOS 7 minimal :
 
 This guide follows a fresh installation of the CentOS 7 minimal server. Before installing packages be sure to update repository information using the following command:
 ```
@@ -183,51 +212,71 @@ Now download the latest version of Arclight Dashboard to the web root directory.
 wget https://github.com/arclight/arclight/archive/v19.01.03.tar.gz
 ```
 Extract the downloaded package.
+```
 sudo tar -xzf v19.01.03.tar.gz
-
+```
 Rename the extracted directory
+```
 sudo mv arclight-19.01.03 arclight
-
+```
 Change the ownership of the arclight directory to the web server user (www-data).
+```
 chown -R apache:apache /var/www/html/arclight
-
+```
 In order for PHP to be able to save configuration files we will need to run the following command:
+```
 chcon -t httpd_sys_rw_content_t /var/www/html/arclight/ -R
-
+```
 The CentOS firewall will block incoming http and https traffic. Also the VNC connection uses port 6080. To allow the web traffic use the following commands:
+```
 firewall-cmd --permanent --add-service=http
 firewall-cmd --permanent --add-service=https
 firewall-cmd --permanent --add-port=6080/tcp
 systemctl restart firewalld
-
+```
 SeLinux will block the qemu connection through the web browser. Modify the /etc/sysconfig/selinux file. The default value of the SELINUX=enforcing. Change it to SELINUX=permissive.
+```
 nano /etc/sysconfig/selinux
+```
 Creating a database
 
 We will need a MySQL database for Arclight Dashboard to work with. To log into MySQL use the following command:
+```
 mysql -u root
-
+```
 You will be prompted for your the password that was setup for the root user on MySQL. Once logged in, create a new database. I will name it arclight.
+```
 CREATE DATABASE arclight;
-
+```
 Now create a user for Arclight Dashboard to use. You could use the root user and password, but that is never advised. I will create a new user named vmdashbaord. Be sure to change the password.
+```
 CREATE USER 'arclight'@'localhost' IDENTIFIED BY 'password';
-
+```
 Change the permissions of the new user to have full access to the database tables.
+```
 GRANT ALL PRIVILEGES ON arclight.* to 'arclight'@'localhost';
-
+```
 The new privileges should be applied, but sometimes you will need to flush the privileges so that they can be reloaded into the MySQL database. To do this use the following command:
+```
 FLUSH PRIVILEGES;
-
+```
 To exit MySQL, type quit or use the EXIT; statement.
+```
 EXIT;
+```
 Connecting to Arclight Dashboard
 
 You will need to restart your server before you can use the Arclight Dashboard software. This way the server restarts with all the necessary hypervisor software loaded and the user groups applied.
+```
 sudo reboot
-
+```
 Once rebooted, use a web browser to navigate to your server’s IP address or domain name. Add /arclight to the end of the URL. For example: http://192.168.1.2/arclight
 
+<br />
+
+---
+
+<br />
 
 ## Installation of PHPmyadmin to see Databases [OPTIONAL]
 
@@ -239,8 +288,10 @@ Once rebooted, use a web browser to navigate to your server’s IP address or do
 Make sure to select apache2. Done.
 
 If you can't access phpmyadmin in browser apply these fixes:
-#sudo ln -s /usr/share/phpmyadmin/ /var/www/phpmyadmin
-Copy the apache.conf file from /etc/phpmyadmin to /etc/apache2/sites-available and to /etc/apache2/sites-enabled using file manager as root.
+```
+sudo ln -s /usr/share/phpmyadmin/ /var/www/phpmyadmin
+```
+Copy the apache.conf file from ```/etc/phpmyadmin``` to ```/etc/apache2/sites-available``` and to ```/etc/apache2/sites-enabled``` using file manager as root.
 Then run ``` sudo service apache2 restart ``` and everything was just fine.
 
 [OPTIONAL]
@@ -266,6 +317,11 @@ FLUSH PRIVILEGES;
 EXIT
 ```
 
+<br />
+
+---
+
+<br />
 
 ## Defining Storage Pools via the Terminal
 
@@ -297,6 +353,11 @@ Lastly if you decide to remove the storage pool you can undefine it. This will l
 virsh pool-undefine myHomePool
 ```
 
+<br />
+
+---
+
+<br />
 
 ## ISO images for KVM machines
 When getting started with KVM virtual machines, one common question is how do I get ISO image files used to install the operating systems in the virtual machines. The default location that Libvirt uses as a storage pool for KVM virtual machines is the /var/lib/libvirt/images/ directory. You will need to download the ISO files using a command such as wget. Find the URL of the ISO from from the vendor, for example http://releases.ubuntu.com/18.04.1/ubuntu-18.04.1-live-server-amd64.iso.
@@ -316,7 +377,13 @@ wget http://releases.ubuntu.com/18.04.1/ubuntu-18.04.1-live-server-amd64.iso
 The ISO file will now show up in arclight.
 
 
-## Encrypting arclight with Let’s Encrypt:
+<br />
+
+---
+
+<br />
+
+## Encrypting arclight with Lets Encrypt
 
 As a security recommendation, it is always a good practice to encrypt the data sent across the Internet. You can encrypt both your arclight connection as well as the VNC console connection to your virtual machines.
 
@@ -378,8 +445,13 @@ sudo kill 1386
 Now logout and login to the arclight to restart the VNC connection and the new certificate should be applied.
 
 
+<br />
 
-## Encrypting arclight with a self-signed cert:
+---
+
+<br />
+
+## Encrypting arclight with a self-signed cert
 
 As a security recommendation, it is always a good practice to encrypt your the data sent across the Internet. You can encrypt both your arclight connection as well as the VNC connection to your virtual machines.
 
@@ -418,3 +490,13 @@ Now kill the process. For example if the process was numbered 29226, you would k
 sudo kill 29226
 ```
 Now when you log into arclight, the VNC software will use the self-signed cert. Because it is self-signed your browser will not trust it. To trust the certification visit your URL:6080 and click the Advanced button on the screen. For example, if I were using 192.168.1.2 to view the web interface I would use https://192.168.1.2:6080.
+
+<br />
+
+---
+
+<br />
+
+## 🙌 Contributing to Arclight
+
+From opening a bug report to creating a pull request: every contribution is appreciated and welcomed. If you're planning to implement a new feature or change the API please create an issue first. This way we can ensure your work is not in vain. Let's build this damn Cloud !
