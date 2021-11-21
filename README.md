@@ -8,7 +8,7 @@
   Build, automate and self-host internal tools in minutes
 </h3>
 <p align="center">
-  Budibase is an open-source low-code platform, helping developers and IT professionals build, automate, and ship internal tools on their own infrastructure in minutes.
+VMDashboard is an open source HTML5 and PHP based web interface for the KVM/QEMU hypervisor.  It is designed to be a easy-to-use management platform allowing users to create and manage virtual machines (VMs) on Linux servers. The web-based virtualization management software began development in March 2018. Arclight utilizes the Libvirt API, All of the actions you would expect from a virtualization management tool are included in the software. For example, user can create clone and manage VMs, storage pools netwworks and volumes. When it comes to networking, there are multiple options available. Users create private networks for there VMs and have the option to control DHCP within the private network. In addition to private networks, VMs can also use bridged connections, connecting them directly to the network interfaces on the physical server. Manage virtual machines directly from Arclight. There is no need to install additional VNC software.
 </p>
 
 <h3 align="center">
@@ -36,7 +36,7 @@
 </p>
 
 
-  * [GettingStarted](#Getting Started)
+  * [Getting-Started](#Getting Started)
   * [list-mdev](#list-mdev-command)
   * [list-used-pci](#list-used-pci-command)
   * [list-used-mdev](#list-used-mdev-command)
@@ -73,8 +73,9 @@ To use VNC to connect into your virtual machines, you will need to edit the /etc
 sudo nano /etc/libvirt/qemu.conf
 ```
 The web server user account on Ubuntu is called www-data. This account will need to have permissions to work with libvirt. The group is called libvirtd in Ubuntu 16.04 and libvirt in Ubuntu 18.04.  To do this, add the www-data user to the necessary group.
-#sudo adduser www-data libvirt
-
+```
+sudo adduser www-data libvirt
+```
 Change your directory location to the root directory of your web server. The default location is /var/www/html/ in Ubuntu.
 ```
 cd /var/www/html
@@ -135,40 +136,52 @@ Once rebooted, use a web browser to navigate to your server’s IP address or do
 <!-- Installation of Arclight Web Console FOR CENTOS 7 minimal****************************************************************** -->
 
 This guide follows a fresh installation of the CentOS 7 minimal server. Before installing packages be sure to update repository information using the following command:
+```
 yum update -y
+```
 Installing the necessary packages
 
 On the CentOS server, install the QEMU + KVM hypervisor  using the following command:
+```
 yum install qemu-kvm libvirt -y
-
+```
 The PHP Libvirt extension is located in the Enterprise Linux repository. To setup this repository use the following command:
+```
 yum install epel-release -y
-
+```
 Install the web server, database, and necessary PHP packages to your server. Use the following command:
+```
 yum install httpd mariadb-server mariadb php php-mysql php-xml php-libvirt -y
-
+```
 You will need to start and enable the Apache web server and Maria database. To do this use the following commands:
+```
 systemctl start mariadb
 systemctl enable mariadb
 systemctl start httpd
-systemctl enable httpd
+systemctl enable httpd 
+```
 Configuring files and permissions
 
 To use VNC to connect into your virtual machines, you will need to edit the /etc/libvirt/qemu.conf file. Be sure to allow listening on IP address 0.0.0.0 by uncommenting the line #vnc_listen = “0.0.0.0” and saving the file.(If nano is not installed you can install it with yum install nano, or just simply use vi instead of nano).
+```
 nano /etc/libvirt/qemu.conf
-
+```
 The web server user account on CentOS is called apache. This account will need to have permissions to work with libvirt. We can do this by adding the apache user to the libvirt group.  To do this, use the following command:
+```
 usermod -a -G libvirt apache
-
+```
 Change your directory location to the root directory of your web server. The default location is /var/www/html/ in Ubuntu.
+```
 cd /var/www/html
-
+```
 The minimal installation of CentOS does not come with wget to download files. You will also need git to perform software updates. Install the, using the following command:
+```
 yum install wget git -y
-
+```
 Now download the latest version of Arclight Dashboard to the web root directory.
+```
 wget https://github.com/arclight/arclight/archive/v19.01.03.tar.gz
-
+```
 Extract the downloaded package.
 sudo tar -xzf v19.01.03.tar.gz
 
@@ -216,43 +229,45 @@ sudo reboot
 Once rebooted, use a web browser to navigate to your server’s IP address or domain name. Add /arclight to the end of the URL. For example: http://192.168.1.2/arclight
 
 
-<!-- Installation of PHPmyadmin to see Databases:********************************************************** -->
+## Installation of PHPmyadmin to see Databases [OPTIONAL]
 
-    1.Open a terminal window on your Ubuntu Server.
-    2.Issue the command sudo apt-get install phpmyadmin php-mbstring php-gettext -y.
-    3.When prompted, type your sudo password.
-    4.Allow the installation to complete.
+1. Open a terminal window on your Ubuntu Server.
+2. Issue the command ``` sudo apt-get install phpmyadmin php-mbstring php-gettext -y ```
+3. When prompted, type your sudo password.
+4. Allow the installation to complete.
 
 Make sure to select apache2. Done.
 
 If you can't access phpmyadmin in browser apply these fixes:
 #sudo ln -s /usr/share/phpmyadmin/ /var/www/phpmyadmin
 Copy the apache.conf file from /etc/phpmyadmin to /etc/apache2/sites-available and to /etc/apache2/sites-enabled using file manager as root.
-Then ran sudo service apache2 restart and everything was just fine.
+Then run ``` sudo service apache2 restart ``` and everything was just fine.
 
 [OPTIONAL]
 In order to fix this problem, go back to the terminal window on your server and log into MySQL with the command:
 
-sudo mysql -u root -p
+``` sudo mysql -u root -p ```
 
 Once at the MySQL prompt, you need to grant the proper permissions for the phpmyadmin user with the commands:
 
+```
 GRANT ALL PRIVILEGES ON *.* TO 'phpmyadmin'@'localhost';
 FLUSH PRIVILEGES;
 EXIT
-
+```
 Log out of the phpMyAdmin GUI and log back in (still using the phpmyadmin user). You should now have full privileges for MySQL with that user.
 
 If you're concerned about security you could create an entirely new MySQL admin user like so:
 
+```
 CREATE USER USERNAME IDENTIFIED by 'PASSWORD';
 GRANT ALL PRIVILEGES ON *.* TO 'username'@'localhost';
 FLUSH PRIVILEGES;
 EXIT
+```
 
 
-
-<!-- <!-- Defining Storage Pools via the Terminal*********************************************************************************** -->
+## Defining Storage Pools via the Terminal
 
 Using arclight, you can define Libvirt storage pools in the /var, /mnt, and /media directories. This was done to prevent full access to the operating system from the Web interface. If you need to define a storage pool outside of these limitations, you can use the terminal using Libvirt to register a storage pool. In this example we will define the /home/ubuntu/ directory as a storage pool.
 
@@ -283,8 +298,7 @@ virsh pool-undefine myHomePool
 ```
 
 
-<!-- ISO images for KVM machines**************************************************************************************** -->
-
+## ISO images for KVM machines
 When getting started with KVM virtual machines, one common question is how do I get ISO image files used to install the operating systems in the virtual machines. The default location that Libvirt uses as a storage pool for KVM virtual machines is the /var/lib/libvirt/images/ directory. You will need to download the ISO files using a command such as wget. Find the URL of the ISO from from the vendor, for example http://releases.ubuntu.com/18.04.1/ubuntu-18.04.1-live-server-amd64.iso.
 
 You will need to switch your user account to the root user:
@@ -302,7 +316,7 @@ wget http://releases.ubuntu.com/18.04.1/ubuntu-18.04.1-live-server-amd64.iso
 The ISO file will now show up in arclight.
 
 
-<!-- Encrypting arclight with Let’s Encrypt****************************************************************************** -->
+## Encrypting arclight with Let’s Encrypt:
 
 As a security recommendation, it is always a good practice to encrypt the data sent across the Internet. You can encrypt both your arclight connection as well as the VNC console connection to your virtual machines.
 
@@ -365,7 +379,7 @@ Now logout and login to the arclight to restart the VNC connection and the new c
 
 
 
-<!-- Encrypting arclight with a self-signed cert******************************************************************************* -->
+## Encrypting arclight with a self-signed cert:
 
 As a security recommendation, it is always a good practice to encrypt your the data sent across the Internet. You can encrypt both your arclight connection as well as the VNC connection to your virtual machines.
 
