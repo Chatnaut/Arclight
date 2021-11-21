@@ -36,7 +36,7 @@
 </p>
 
 
-  * [Getting-Started](#Getting-Started)
+  * [Getting Started](#Getting Started)
   * [list-mdev](#list-mdev-command)
   * [list-used-pci](#list-used-pci-command)
   * [list-used-mdev](#list-used-mdev-command)
