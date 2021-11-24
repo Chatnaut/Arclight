@@ -58,10 +58,14 @@ if ($action == 'dumpxml') {
   $xml_data = htmlentities($lv->get_node_device_xml($name, false));
 }
 
+//get Qemu/KVM info
 $ci  = $lv->get_connect_information();
 $info = '';
 if ($ci['uri'])
     $info .= ' <i>'.$ci['uri'].'</i>, ';
+
+$getlibvirtversion = $lv->get_lib_version();
+
 ?>
 
 
@@ -111,7 +115,7 @@ if ($ci['uri'])
                           return array( $days, $hours, $min, $sec );
                       }
                       $ut = Uptime();
-                      echo "<strong> Uptime:</strong> $ut[0] Days $ut[1] Hours $ut[2] Minutes $ut[3] Seconds <br>";
+                        echo "<strong> Uptime:</strong> $ut[0] Days $ut[1] Hours $ut[2] Minutes $ut[3] Seconds <br>";
                         echo "<strong>" . $lang['host'] . ":</strong> $hn <br />";
                         echo "<strong>" . $lang['hardware_vendor'] . ":</strong> $vendor <br />";
                         echo "<strong>" . $lang['product'] . ":</strong> $product_name <br />";
@@ -189,6 +193,7 @@ if ($ci['uri'])
                 if (strlen($info) > 2)
                     $info[ strlen($info) - 2 ] = ' ';
                 echo "<strong>" . $lang['hypervisor'] . ":</strong> {$ci['hypervisor_string']} <br>";
+                echo "<strong>" . $lang['libvirt'] . ":</strong> {$getlibvirtversion['libvirt.major']}.{$getlibvirtversion['libvirt.minor']}.{$getlibvirtversion['libvirt.release']} <br>";
                 echo "<strong>" . $lang['host_location'] . ":</strong> localhost <br>";
                 echo "<strong>" . $lang['connection'] . ":</strong> $info <br>";
                 echo "<strong>" . $lang['architecture'] . ":</strong> $arch <br>";
