@@ -201,6 +201,10 @@ class Libvirt {
         return $this->conn;
     }
 
+    function get_lib_version() {
+        return libvirt_version();
+    }
+
     function get_hostname() {
         return libvirt_connect_get_hostname($this->conn);
     }
@@ -542,6 +546,7 @@ class Libvirt {
 
         return true;
     }
+
 
     function translate_volume_type($type) {
         if ($type == 1)
