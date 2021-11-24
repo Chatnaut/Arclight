@@ -17,7 +17,6 @@
       feather.replace()
     </script>
 
-
     <script>
       window.onload =  function() {
         <?php
@@ -44,5 +43,11 @@
       }
     </script>
 
+<!-- replaceState method of JQuery to prevent duplication of data submission due to post back -->
+    <script>
+      if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+      }
+    </script>
   </body>
 </html>
