@@ -46,7 +46,7 @@ $lang = array (
   'cached_memory' => "Cached Memory",
   /* HYPERVISOR CARD */
   'hypervisor' => "Hypervisor",
-  //'hypervisor' => "Hypervisor", //repeated value
+  'libvirt' => "Libvirt", 
   'host_location' => "Host Location",
   'connection' => "Connection",
   'architecture' => "Architecture",
