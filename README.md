@@ -106,15 +106,15 @@ cd /var/www/html
 ```
 Now download the latest version of Arclight Dashboard to the web root directory.
 ```
-sudo wget https://github.com/Chatnaut/Arclight/archive/refs/heads/version2.zip
+wget https://github.com/Chatnaut/Arclight/archive/refs/tags/v19.01.05.tar.gz
 ```
 Extract the downloaded package.
 ```
-sudo tar -xzf arclight.tar.gz
+sudo tar -xzf v19.01.05.tar.gz
 ```
 Rename the extracted directory
 ```
-sudo mv version2 arclight
+sudo mv Arclight-19.01.05 arclight
 ```
 Change the ownership of the arclight directory to the web server user (www-data).
 ```
