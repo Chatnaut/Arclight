@@ -241,7 +241,7 @@ $userid = $_SESSION['userid'];
                                                   <!-- Redirecting customers directly to detach and remove page actions by their ids via GET -->
 
 
-                                                  <a href="?pciid=<?php echo $res['sno']; ?>" class="delete" title="Detach" data-toggle="modal" data-target="#detachpci-modal"><i class="material-icons">&#xE8B8;</i></a>
+                                                  <a href="../domain/dpci.php?pciid=<?php echo $res['sno']; ?>" class="delete" title="Detach" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
                                                   <?php } ?>
 
                                                 </td> 
@@ -762,15 +762,4 @@ $pciarrdata = mysqli_fetch_array($showdata);
 		</div>
 	</div>
 </div>
-
-    </main>
-
-
-
-
-<!-- replaceState method of JQuery to prevent duplication of data submission due to post back -->
-<script>
-if ( window.history.replaceState ) {
-  window.history.replaceState( null, null, window.location.href );
-}
-</script>
+</main>
