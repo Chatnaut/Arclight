@@ -20,6 +20,7 @@ $lang = array (
   /* SYSTEM CARD */
   'system' => "System",
   'host' => "Host",
+  'os' => "OS",
   'hardware_vendor' => "Hardware Vendor",
   'product' => "Product",
   'serial' => "Serial",

@@ -110,13 +110,14 @@ $getlibvirtversion = $lv->get_lib_version();
                           $hours = sprintf( "%2d", ( ($ut % (3600*24)) / 3600) );
                           $min = sprintf( "%2d", ($ut % (3600*24) % 3600)/60  );
                           $sec = sprintf( "%2d", ($ut % (3600*24) % 3600)%60  );
-                      
-                      
                           return array( $days, $hours, $min, $sec );
-                      }
+                          
+                        }
+                        $os_info = parse_ini_file("/etc/lsb-release");
                       $ut = Uptime();
                         echo "<strong> Uptime:</strong> $ut[0] Days $ut[1] Hours $ut[2] Minutes $ut[3] Seconds <br>";
                         echo "<strong>" . $lang['host'] . ":</strong> $hn <br />";
+                        echo "<strong>" . $lang['os'] . ":</strong> {$os_info['DISTRIB_DESCRIPTION']} <br />";
                         echo "<strong>" . $lang['hardware_vendor'] . ":</strong> $vendor <br />";
                         echo "<strong>" . $lang['product'] . ":</strong> $product_name <br />";
                         echo "<strong>" . $lang['serial'] . ":</strong> $serial <br />";
