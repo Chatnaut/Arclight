@@ -68,7 +68,7 @@ Arclight is an open-source server virtualization management solution based on KV
   * [ISO images for KVM machines](#ISO-images-for-KVM-machines)
   * [Encrypt Arclight Console](#Encrypt-Arclight-Console)
   * [Encrypt Arclight console with self-signed cert](#Encrypt-Arclight-console-with-self-signed-cert)
-  * [🙌 Contributing to Arclight](#🙌-Contributing-to-Arclight)
+  * [🙌 Contributing to Arclight](#Contributing-to-Arclight)
 
 
 <br />
