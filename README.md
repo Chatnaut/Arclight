@@ -60,7 +60,7 @@ Arclight is a server virtualization management solution based on KVM. It is desi
   * [Installation](#Installation)
     * [Installation on Ubuntu 18.4 Server](#Installation-on-Ubuntu-18.4-Server)
     * [Installation on CentOS 7 Server](#Installation-on-CentOS-7-Server)
-  * [Installation of PHPmyadmin to see Databases [OPTIONAL]](#Installation-of-PHPmyadmin-to-see-Databases-[OPTIONAL])
+  * [Installation of PHPmyadmin to see Databases](#Installation-of-PHPmyadmin-to-see-Databases)
   * [Add Custom Storage Pools](#Add-Custom-Storage-Pools)
   * [ISO images for KVM machines](#ISO-images-for-KVM-machines)
   * [Encrypt Arclight Console](#Encrypt-Arclight-Console)
@@ -283,7 +283,7 @@ Once rebooted, use a web browser to navigate to your server’s IP address or do
 
 <br />
 
-## Installation of PHPmyadmin to see Databases [OPTIONAL]
+## Installation of PHPmyadmin to see Databases
 
 1. Open a terminal window on your Ubuntu Server.
 2. Issue the command ``` sudo apt-get install phpmyadmin php-mbstring php-gettext -y ```
