@@ -5,9 +5,9 @@
 </p>
 
 <p align="center">
-Arclight is an open-source server virtualization management solution based on KVM/QEMU hypervisor. It is designed to be a easy-to-use management platform allowing users to create and manage virtual machines (VMs) on Linux servers. Arclight utilizes the Libvirt API, All of the actions you would expect from a virtualization management tool are included in the software. For example, user can create, clone and manage VMs, storage pools netwworks and volumes. When it comes to networking, there are multiple options available. Users create private networks for there VMs and have the option to control DHCP within the private network. In addition to private networks, VMs can also use bridged connections, connecting them directly to the network interfaces on the physical server. Manage virtual machines directly from Arclight. There is no need to install additional VNC software. [About this project]: This project is in-development and we are still adding features to it along with complete ISO package and API for Enterprise Usage. 
+Arclight is a server virtualization management solution based on KVM. It is designed to be a easy-to-use management platform allowing users to create and manage virtual machines (VMs) on Linux servers. Arclight utilizes the Libvirt API, All of the actions you would expect from a virtualization management tool are included in the software. For example, user can create, clone and manage VMs, storage pools netwworks and volumes. When it comes to networking, there are multiple options available. Users create private networks for there VMs and have the option to control DHCP within the private network. In addition to private networks, VMs can also use bridged connections, connecting them directly to the network interfaces on the physical server. Manage virtual machines directly from Arclight. There is no need to install additional VNC software. [About this project]: This project is in-development and we are still adding features to it along with complete ISO package and APIs for Enterprise Usage. 
 </p>
-<h2 align="center">Deploy on Bare-Metal Cloud Servers or Simply in your Home Lab
+<h2 align="center">Deploy on Bare-Metal Cloud Servers or simply in your Home Lab
 </br>
 <a href="">
   <img src="https://pro2-bar-s3-cdn-cf6.myportfolio.com/8d43c87dc07beef9eb1915c7ee44e163/735230eb-6c42-4d2f-8f1c-99ab9d520781_rw_1920.png?h=ee0b3cfc058ec6dfd1729ace6bf3c7d2" alt="IBM Cloud" width="200px">
@@ -47,11 +47,6 @@ Arclight is an open-source server virtualization management solution based on KV
   </a>
   <a href="https://twitter.com/intent/follow?screen_name=chatnaut">
     <img src="https://img.shields.io/twitter/follow/chatnaut?style=social" alt="Follow @chatnaut" />
-  </a>
-  <img src="https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg" alt="Code of conduct" />
-  <a href="https://codecov.io/gh/Budibase/budibase">
-    <img src="https://codecov.io/gh/Budibase/budibase/graph/badge.svg?token=E8W2ZFXQOH"/>
-  </a>
 </p>
 
 
