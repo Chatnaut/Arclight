@@ -166,7 +166,7 @@ Once rebooted, use a web browser to navigate to your server’s IP address or do
 
 <br />
 
-## Installation on CentOS 7 Server :
+## Installation on CentOS 7 Server
 
 This guide follows a fresh installation of the CentOS 7 minimal server. Before installing packages be sure to update repository information using the following command:
 ```
