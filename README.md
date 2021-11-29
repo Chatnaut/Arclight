@@ -61,6 +61,10 @@ Arclight is an open-source server virtualization management solution based on KV
     * [Installation on CentOS 7 Server](#Installation-on-CentOS-7-Server)
   * [Installation of PHPmyadmin to see Databases [OPTIONAL]](#Installation-of-PHPmyadmin-to-see-Databases-[OPTIONAL])
   * [Add Custom Storage Pools](#Add-Custom-Storage-Pools)
+  * [ISO images for KVM machines](#ISO-images-for-KVM-machines)
+  * [Encrypt Arclight Console](#Encrypt-Arclight-Console)
+  * [Encrypt Arclight console with self-signed cert](#Encrypt-Arclight-console-with-self-signed-cert)
+  * [🙌 Contributing to Arclight](#Contributing-to-Arclight)
 
 
 <br />
@@ -383,7 +387,7 @@ The ISO file will now show up in arclight.
 
 <br />
 
-## Encrypting arclight with Lets Encrypt
+## Encrypt Arclight Console
 
 As a security recommendation, it is always a good practice to encrypt the data sent across the Internet. You can encrypt both your arclight connection as well as the VNC console connection to your virtual machines.
 
@@ -451,7 +455,7 @@ Now logout and login to the arclight to restart the VNC connection and the new c
 
 <br />
 
-## Encrypting arclight with a self-signed cert
+## Encrypt Arclight console with self-signed cert
 
 As a security recommendation, it is always a good practice to encrypt your the data sent across the Internet. You can encrypt both your arclight connection as well as the VNC connection to your virtual machines.
 
