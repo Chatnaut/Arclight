@@ -55,21 +55,25 @@ Arclight is an open-source server virtualization management solution based on KV
 
 
 
-  * [Getting-Started](#Getting Started)
-  * [list-mdev](#list-mdev-command)
-  * [list-used-pci](#list-used-pci-command)
-  * [list-used-mdev](#list-used-mdev-command)
-  * [create-mdev](#create-mdev-command)
-  * [remove-mdev](#remove-mdev-command)
-  * [save](#save-command)
-  * [restore](#restore-command)
+### 🏁Getting Started
+  * [Installation](#Installation)
+    * [Installation on Ubuntu 18.4 Server](#Installation-on-Ubuntu-18.4-Server)
+    * [Installation on CentOS 7 Server](#Installation-on-CentOS-7-Server)
+  * [Installation of PHPmyadmin to see Databases [OPTIONAL]](#Installation-of-PHPmyadmin-to-see-Databases-[OPTIONAL])
+  * [Add Custom Storage Pools](#Add-Custom-Storage-Pools)
+  * [ISO images for KVM machines](#ISO-images-for-KVM-machines)
+  * [Encrypt Arclight Console](#Encrypt-Arclight-Console)
+  * [Encrypt Arclight console with self-signed cert](#Encrypt-Arclight-console-with-self-signed-cert)
+  * [🙌 Contributing to Arclight](#🙌-Contributing-to-Arclight)
+
+
 <br />
 
 ---
 
 <br />
 
-## 🏁 Getting Started
+## Installation on Ubuntu 18.4 Server :
 <!-- Installation of Arclight Web Console FOR UBUNTU 18.04****************************************************************** -->
 
 Arclight Dashboard is a web-based front end for libvirt based KVM virtual machines.
@@ -162,7 +166,7 @@ Once rebooted, use a web browser to navigate to your server’s IP address or do
 
 <br />
 
-## Installation of Arclight Web Console FOR CENTOS 7 minimal :
+## Installation on CentOS 7 Server
 
 This guide follows a fresh installation of the CentOS 7 minimal server. Before installing packages be sure to update repository information using the following command:
 ```
@@ -323,7 +327,7 @@ EXIT
 
 <br />
 
-## Defining Storage Pools via the Terminal
+## Add Custom Storage Pools
 
 Using arclight, you can define Libvirt storage pools in the /var, /mnt, and /media directories. This was done to prevent full access to the operating system from the Web interface. If you need to define a storage pool outside of these limitations, you can use the terminal using Libvirt to register a storage pool. In this example we will define the /home/ubuntu/ directory as a storage pool.
 
@@ -383,7 +387,7 @@ The ISO file will now show up in arclight.
 
 <br />
 
-## Encrypting arclight with Lets Encrypt
+## Encrypt Arclight Console
 
 As a security recommendation, it is always a good practice to encrypt the data sent across the Internet. You can encrypt both your arclight connection as well as the VNC console connection to your virtual machines.
 
@@ -451,7 +455,7 @@ Now logout and login to the arclight to restart the VNC connection and the new c
 
 <br />
 
-## Encrypting arclight with a self-signed cert
+## Encrypt Arclight console with self-signed cert
 
 As a security recommendation, it is always a good practice to encrypt your the data sent across the Internet. You can encrypt both your arclight connection as well as the VNC connection to your virtual machines.
 
