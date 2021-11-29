@@ -55,21 +55,17 @@ Arclight is an open-source server virtualization management solution based on KV
 
 
 
-  * [Getting-Started](#Getting Started)
-  * [list-mdev](#list-mdev-command)
-  * [list-used-pci](#list-used-pci-command)
-  * [list-used-mdev](#list-used-mdev-command)
-  * [create-mdev](#create-mdev-command)
-  * [remove-mdev](#remove-mdev-command)
-  * [save](#save-command)
-  * [restore](#restore-command)
+### 🏁Getting Started
+  * [Installation](#Installation)
+    * [Installation on Ubuntu 18.4 Server](#Installation-on-Ubuntu-18.4-Server)
+
 <br />
 
 ---
 
 <br />
 
-## 🏁 Getting Started
+## Installation on Ubuntu 18.4 server
 <!-- Installation of Arclight Web Console FOR UBUNTU 18.04****************************************************************** -->
 
 Arclight Dashboard is a web-based front end for libvirt based KVM virtual machines.
