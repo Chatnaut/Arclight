@@ -58,6 +58,10 @@ Arclight is an open-source server virtualization management solution based on KV
 ### 🏁Getting Started
   * [Installation](#Installation)
     * [Installation on Ubuntu 18.4 Server](#Installation-on-Ubuntu-18.4-Server)
+    * [Installation on CentOS 7 Server](#Installation-on-CentOS-7-Server)
+  * [Installation of PHPmyadmin to see Databases [OPTIONAL]](#Installation-of-PHPmyadmin-to-see-Databases-[OPTIONAL])
+  * [Add Custom Storage Pools](#Add-Custom-Storage-Pools)
+
 
 <br />
 
@@ -65,7 +69,7 @@ Arclight is an open-source server virtualization management solution based on KV
 
 <br />
 
-## Installation on Ubuntu 18.4 server
+## Installation on Ubuntu 18.4 Server :
 <!-- Installation of Arclight Web Console FOR UBUNTU 18.04****************************************************************** -->
 
 Arclight Dashboard is a web-based front end for libvirt based KVM virtual machines.
@@ -158,7 +162,7 @@ Once rebooted, use a web browser to navigate to your server’s IP address or do
 
 <br />
 
-## Installation of Arclight Web Console FOR CENTOS 7 minimal :
+## Installation on CentOS 7 Server :
 
 This guide follows a fresh installation of the CentOS 7 minimal server. Before installing packages be sure to update repository information using the following command:
 ```
@@ -319,7 +323,7 @@ EXIT
 
 <br />
 
-## Defining Storage Pools via the Terminal
+## Add Custom Storage Pools
 
 Using arclight, you can define Libvirt storage pools in the /var, /mnt, and /media directories. This was done to prevent full access to the operating system from the Web interface. If you need to define a storage pool outside of these limitations, you can use the terminal using Libvirt to register a storage pool. In this example we will define the /home/ubuntu/ directory as a storage pool.
 
