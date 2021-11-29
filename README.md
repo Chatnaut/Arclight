@@ -40,13 +40,15 @@ Arclight is a server virtualization management solution based on KVM. It is desi
 
 <p align="center">
   <a href="https://github.com/Chatnaut/Arclight/releases">
-    <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/Budibase/budibase/total">
+    <img alt="GitHub all releases" src="">
   </a>
   <a href="https://github.com/Chatnaut/Arclight/releases">
     <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/Chatnaut/Arclight">
   </a>
   <a href="https://twitter.com/intent/follow?screen_name=chatnaut">
     <img src="https://img.shields.io/twitter/follow/chatnaut?style=social" alt="Follow @chatnaut" />
+  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/Chatnaut/Arclight">
+  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/Chatnaut/Arclight">
 </p>
 
 
