@@ -45,12 +45,23 @@ require('../footer.php');
                             "</tr>";
                         } else {
                             echo "<tr>" .
-                            "<td><pre>Failed to Update libvirt.so</pre></td>" .
+                            "<td><pre><p style='color:red;'>Failed to Update libvirt.so</p></pre></td>" .
+                            "</tr>";
+                        }
+
+                        $pullupdate = exec('sudo chown -R www-data .git', $output, $return_var);
+
+                        if($pullupdate == "") {
+                            echo "<tr>" .
+                            "<td><pre>Git permissions added to the group</pre></td>" .
+                            "</tr>";
+                        } else {
+                            echo "<tr>" .
+                            "<td><pre><p style='color:red;'>Failed to Update git permissions</p></pre></td>" .
                             "</tr>";
                         }
                         
                     ?>
-
                 </div>
               </div>
             </div>
