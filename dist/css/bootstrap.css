@@ -3274,6 +3274,7 @@ tbody.collapse.show {
   white-space: nowrap;
   background-color: transparent;
   border: 0;
+  border-radius: 1.25rem;
 }
 
 .dropdown-item:hover, .dropdown-item:focus {
