@@ -164,7 +164,7 @@
       </div>
 
 
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+      <button class="log-btnlong btn-2" type="submit">Submit</button>
       <p class="mt-5 mb-3 text-muted text-center">&copy; 
         <script>
           document.write(new Date().getFullYear())
