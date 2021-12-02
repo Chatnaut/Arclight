@@ -58,7 +58,7 @@ Arclight is a server virtualization management solution based on KVM. It is desi
 
 ### 🏁Getting Started
   * [Installation](#Installation)
-    * [Installation on Ubuntu 18.4 Server](#Installation-on-Ubuntu-Server)
+    * [Installation on Ubuntu Server](#Installation-on-Ubuntu-Server)
     * [Installation on CentOS 7 Server](#Installation-on-CentOS-7-Server)
   * [Installation of PHPmyadmin to see Databases](#Installation-of-PHPmyadmin-to-see-Databases)
   * [Add Custom Storage Pools](#Add-Custom-Storage-Pools)
@@ -74,14 +74,12 @@ Arclight is a server virtualization management solution based on KVM. It is desi
 
 <br />
 
-## Installation on Ubuntu 18.4 Server :
+## Installation on Ubuntu Server :
 <!-- Installation of Arclight Web Console FOR UBUNTU 18.04****************************************************************** -->
 
-Arclight Dashboard is a web-based front end for libvirt based KVM virtual machines.
+Before installing software, run the ```sudo apt``` update command to make sure you are installing from the latest repository information.
 
-Before installing software, run the sudo apt update command to make sure you are installing from the latest repository information.
 Installing the necessary packages
-
 On the Ubuntu server, install the QEMU + KVM hypervisor  using the following command:
 ```
 sudo apt install qemu-kvm libvirt-bin
