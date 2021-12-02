@@ -58,14 +58,14 @@ Arclight is a server virtualization management solution based on KVM. It is desi
 
 ### 🏁Getting Started
   * [Installation](#Installation)
-    * [Installation on Ubuntu Server](#Installation-on-Ubuntu-Server)
+    * [Installation on Ubuntu 18.4 LTS Server](#Installation-on-Ubuntu-18.4-LTS-Server)
     * [Installation on CentOS 7 Server](#Installation-on-CentOS-7-Server)
   * [Installation of PHPmyadmin to see Databases](#Installation-of-PHPmyadmin-to-see-Databases)
   * [Add Custom Storage Pools](#Add-Custom-Storage-Pools)
   * [ISO images for KVM machines](#ISO-images-for-KVM-machines)
   * [Encrypt Arclight Console](#Encrypt-Arclight-Console)
   * [Encrypt Arclight console with self-signed cert](#Encrypt-Arclight-console-with-self-signed-cert)
-  * [🙌 Contributing to Arclight](#Contributing-to-Arclight)
+  * [Contributing to Arclight 🙌](#Contributing-to-Arclight)
 
 
 <br />
@@ -74,7 +74,7 @@ Arclight is a server virtualization management solution based on KVM. It is desi
 
 <br />
 
-## Installation on Ubuntu Server :
+## Installation on Ubuntu 18.4 LTS Server
 <!-- Installation of Arclight Web Console FOR UBUNTU 18.04****************************************************************** -->
 
 Before installing software, run the ```sudo apt``` update command to make sure you are installing from the latest repository information.
@@ -500,6 +500,6 @@ Now when you log into arclight, the VNC software will use the self-signed cert. 
 
 <br />
 
-## 🙌 Contributing to Arclight
+## Contributing to Arclight 🙌
 
 From opening a bug report to creating a pull request: every contribution is appreciated and welcomed. If you're planning to implement a new feature or change the API please create an issue first. This way we can ensure your work is not in vain. Let's build this damn Cloud !
