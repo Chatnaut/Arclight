@@ -1,10 +1,32 @@
 <?php header('Location: index.php'); ?>
 <hr>
 <h4>Changelog</h4>
+[19.01.09] - 30.Nov.2021
+*Rewriting of the theme, using bootstrap dashboard example as base theme
+*Redesigned the initial setup page of Arclight to a single configuration page
+*Minimized the number of pages by using bootstrap modals for configuration tasks
+*Fixed CentOS host issue with Windows Server 2016 guest giving a BSOD because of CPU settings
+*Modified sidebar menu, structured for future use of multiple host machines (clustering)
+
+[19.01.08] - 30.Nov.2021
+*Rewriting of the theme, using bootstrap dashboard example as base theme
+*Redesigned the initial setup page of Arclight to a single configuration page
+*Minimized the number of pages by using bootstrap modals for configuration tasks
+*Fixed CentOS host issue with Windows Server 2016 guest giving a BSOD because of CPU settings
+*Modified sidebar menu, structured for future use of multiple host machines (clustering)
+
+[19.01.07] - 30.Nov.2021
+*Rewriting of the theme, using bootstrap dashboard example as base theme
+
+[19.01.06] - 30.Nov.2021
+*Rewriting of the theme, using bootstrap dashboard example as base theme
+*Added events log that will list the last three events that occurred for a virtual machine. Will need to initially logout and login to 
+
+
 [19.01.03] - 03.JAN.2019
 *Rewriting of the theme, using bootstrap dashboard example as base theme
 *Added events log that will list the last three events that occurred for a virtual machine. Will need to initially logout and login to start recording events
-*Redesigned the initial setup page of VM Dashboard to a single configuration page
+*Redesigned the initial setup page of Arclight to a single configuration page
 *Minimized the number of pages by using bootstrap modals for configuration tasks
 *Fixed CentOS host issue with Windows Server 2016 guest giving a BSOD because of CPU settings
 *Modified sidebar menu, structured for future use of multiple host machines (clustering)
@@ -24,9 +46,9 @@
 
 
 [18.10.09] - 09.OCT.2018
-*Renamed the software from OpenVM Dashboard to VM Dashboard
+*Renamed the software from OpenVM Dashboard to Arclight
 *Changed github repository to https://github.com/arclight/arclight.git
-*Added support for VM Dashboard on RedHat/CentOS
+*Added support for Arclight on RedHat/CentOS
 *Improved XML Definitions of VMs
 *Fixed login redirect link on /pages/vnc.php to direct to correct url
 *Improved appearance of radio buttons in the dark-theme

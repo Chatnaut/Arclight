@@ -208,21 +208,22 @@ if (isset($_POST['action'])) {
                                               
                           ?>
                           <!-------------------------------------CREATE MDEV GPU------------------------------------->
-                          
-                          <form class="row gx-3 gy-2 align-items-center" id="create-mdev" name="create-mdev" role="form" action="" method="post" >
-                            <div class="col-sm-3">
-                              <label class="visually-hidden" for="pciaddr">PCI Address</label>
-                              <input type="text" class="form-control" id="pciaddr" name="pciaddr" placeholder="PCI Address">
-                            </div>
-                            <div class="col-sm-3">
-                              <label class="visually-hidden" for="mdevtype">Mdev Type</label>
-                              <input type="text" class="form-control" id="mdevtype" name="mdevtype" placeholder="Mdevtype">
-                            </div>
-                                    <input type="hidden" name="action" value="createmdev">
-                            <div class="col-auto">
-                              <button type="Create" class="btn btn-primary">Create Virtual GPU</button>
-                            </div>
-                          </form>
+                          <div class="mdevcontainer">
+                            <form class="row gx-3 gy-2 align-items-right" id="create-mdev" name="create-mdev" role="form" action="" method="post" >
+                              <div class="col-sm-3">
+                                <label class="visually-hidden" for="pciaddr">PCI Address</label>
+                                <input type="text" class="form-control" id="pciaddr" name="pciaddr" placeholder="PCI Address">
+                              </div>
+                              <div class="col-sm-3">
+                                <label class="visually-hidden" for="mdevtype">Mdev Type</label>
+                                <input type="text" class="form-control" id="mdevtype" name="mdevtype" placeholder="Mdevtype">
+                              </div>
+                                      <input type="hidden" name="action" value="createmdev">
+                              <div class="col-auto">
+                                <button type="Create" class="btn btn-primary">Create Virtual GPU</button>
+                              </div>
+                            </form>
+                          </div>
                   </div>
                 </div>
               </div>

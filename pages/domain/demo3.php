@@ -1,23 +1,45 @@
 
 <?php
+
 //Anonymous readonly connection
 
 print_r ( libvirt_version() );
-echo "<br>";
+echo "<br>"."<br>";
 
 $conn=libvirt_connect("qemu:///system");
 $res1=libvirt_list_domains($conn);
 print_r($res1); 
-echo "<br>";
+echo "<br>"."<br>";
 
-$domain = "Win2019";
+$getconinfo  = libvirt_connect_get_information($conn);
+print_r($getconinfo); 
+echo "Get connection information"."<br>"."<br>";
+
+$getsysinfo = libvirt_connect_get_sysinfo($conn);
+print_r($getsysinfo ); 
+echo "Get sytem information"."<br>"."<br>";
+
+
+$alldomainres = libvirt_list_domain_resources($conn);
+print_r($alldomainres); 
+echo "Domain resource all"."<br>"."<br>";
+
+
+$domain = "Shiba11";
 $res2 = libvirt_domain_lookup_by_name($conn, $domain);
 print_r($res2); 
-echo "<br>";
+echo "Domain resource ID buy its name Shiba11"."<br>"."<br>";
+
+$domain = "Win2019";
+$res9 = libvirt_domain_lookup_by_name($conn, $domain);
+print_r($res9); 
+echo "Domain resource ID buy its name Win2019"."<br>"."<br>";
+
+
 
 $res3 = libvirt_connect_get_hostname($conn);
 print_r($res3); 
-echo "<br>";
+echo "<br>"."<br>";
  
 //$res5 = "L3Zhci9saWIvbGlidmlydC9pbWFnZXMva2ltam9udW4ucWNvdzI=";
 //$vol =  libvirt_storagevolume_delete($res5)
@@ -26,49 +48,64 @@ echo "<br>";
 $name ="default";
 $memo = libvirt_storagepool_lookup_by_name($conn, $name);
 print_r($memo); 
-echo "Function which return storage pool resource id"."<br>";
+echo "Function which return storage pool resource id"."<br>"."<br>";
 
 $mem= libvirt_storagepool_get_info($memo);
 print_r($mem); 
-echo "<br>";
+echo "<br>"."<br>";
 
 $listpools = libvirt_list_storagepools($conn);
 print_r($listpools); 
-echo "Function which return all storage pools"."<br>";
+echo "Function which return all storage pools"."<br>"."<br>";
 
 $volname = "kimjonun.qcow2";
 $outvolres = libvirt_storagevolume_lookup_by_name($memo, $volname);
 print_r($outvolres); 
-echo "Function which return storage volume resource id by its name here kimjonun.qcow2"."<br>";
+echo "Function which return storage volume resource id by its name here kimjonun.qcow2"."<br>"."<br>";
 
 $outvolname = libvirt_storagevolume_get_name($outvolres);
 print_r($outvolname); 
-echo "<br>";
+echo "<br>"."<br>";
 
 
 $getvolinfo = libvirt_storagevolume_get_info($outvolres);
 print_r($getvolinfo); 
-echo "Function for volume information array of type, allocation and capacity"."<br>";
+echo "Function for volume information array of type, allocation and capacity"."<br>"."<br>";
 
+$path = "/var/lib/libvirt/images/kimjonun.qcow2";
+$getstoragevolres = libvirt_storagevolume_lookup_by_path($conn, $path);
+print_r($getstoragevolres); 
+echo "Function is used to lookup for storage volume by it's path"."<br>"."<br>";
 
 $capacity = 21737418240;
-$resizevol = libvirt_storagevolume_resize($outvolres, $capacity);
+$resizevol = libvirt_storagevolume_resize($getstoragevolres, $capacity);
 print_r($resizevol); 
-echo "Function to resize volume"."<br>";
-
-        $hostname=libvirt_get_hostname($conn);
-    echo ("hostname:$hostname\n");
-    echo ("Domain count: Active ".libvirt_get_active_domain_count($conn).",Inactive ".libvirt_get_inactive_domain_count($conn).", Total ".libvirt_get_domain_count($conn)."\n");
-    
-    $domains=libvirt_list_domains($conn);
-    foreach ($domains as $dom)
-    {
-        echo ("Name:\t".libvirt_domain_get_name($dom)."\n");
-        echo("UUID:\t".libvirt_domain_get_uuid_string($dom)."\n");
-        $dominfo=libvirt_domain_get_info($dom);
-        print_r($dominfo);
-    }
+echo "Function to resize volume"."<br>"."<br>";
 
 
+$dominfo = libvirt_domain_get_info($res2);
+print_r($dominfo); 
+echo "Domain info"."<br>"."<br>";
+
+$mac = "52:54:00:6a:6c:66";
+$win2019netinfo = libvirt_domain_get_network_info($res9, $mac);
+print_r($win2019netinfo); 
+echo "Domain network infor for Win2019"."<br>"."<br>";
+
+$datoz = libvirt_version();
+echo "Libvirt Version: " . $datoz['libvirt.major'] . "." . $datoz['libvirt.minor'] . "." . $datoz['libvirt.release'];
+
+$cmd = "sudo virt-clone --original lol--auto-clone";
+
+while (@ ob_end_flush()); // end all output buffers if any
+
+$proc = popen($cmd, 'r');
+echo '<pre>';
+while (!feof($proc))
+{
+    echo fread($proc, 4096);
+    @ flush();
+}
+echo '</pre>';
 
 ?>

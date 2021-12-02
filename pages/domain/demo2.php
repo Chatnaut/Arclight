@@ -75,6 +75,8 @@ if ($ci['uri'])
 
 echo "<strong>:</strong> {$ci['hypervisor_string']} <br>";
 
+include('../swmp/index.php');
+
 //$getlibvirtversion = $lv->get_l_version();
 
 //echo "Libvirt Version: " . $getlibvirtversion['libvirt.major'] . "." . $getlibvirtversion['libvirt.minor'] . "." . $getlibvirtversion['libvirt.release'];
