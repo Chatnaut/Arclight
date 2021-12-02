@@ -154,7 +154,7 @@ if ($_SESSION['password'] === $_SESSION['confirm_password'] && $_SESSION['passwo
                   <div class="form-group">
                     <select class="form-control" name="language">
                       <option value="english" <?php if ($_SESSION['language'] == "english") { echo "selected"; } ?> >English (English)</option>
-                  <!--    <option value="spanish" <?php if ($_SESSION['language'] == "spanish") { echo "selected"; } ?> >Spanish (EspaÃ±ol)</option> -->
+                  <!--    <option value="spanish" <?php if ($_SESSION['language'] == "spanish") { echo "selected"; } ?> >Spanish (Español)</option> -->
                     </select>
                   </div>
                 </div>

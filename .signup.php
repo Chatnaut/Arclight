@@ -93,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
 <div class="container">
     <form class="form-signin" method="post" action="">
       <div class="text-center mb-4">
-        <img class="mb-4" src="assets/img/arclight-dark.svg" alt="" width="300" height="300">
+        <img class="mb-4" src="assets/img/arclight-dark.svg" alt="" width="300" height="200">
         <h1 class="h3 mb-3 font-weight-normal">Create new account</h1>
       </div>
 

@@ -235,7 +235,8 @@ input[type=submit]:hover {
         else {
             echo 'Please select any value.';
         }
-        
+        header('Location: ../gpu/gpubinder.php');
+
      } 
 
 
