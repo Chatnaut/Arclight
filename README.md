@@ -58,7 +58,7 @@ Arclight is a server virtualization management solution based on KVM. It is desi
 
 ### 🏁Getting Started
   * [Installation](#Installation)
-    * [Installation on Ubuntu 18.4 Server](#Installation-on-Ubuntu-18-.-4-Server)
+    * [Installation on Ubuntu 18.4 Server](#Installation-on-Ubuntu-Server)
     * [Installation on CentOS 7 Server](#Installation-on-CentOS-7-Server)
   * [Installation of PHPmyadmin to see Databases](#Installation-of-PHPmyadmin-to-see-Databases)
   * [Add Custom Storage Pools](#Add-Custom-Storage-Pools)
