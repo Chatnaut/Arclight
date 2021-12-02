@@ -29,9 +29,9 @@ if (isset($_SESSION['update'])) {
   //If git is not installed, then do not run the git commands
   if ($path != "") {
     //$tmp = shell_exec("cd .. && cd .. && $path pull 2>&1"); //run git at the web root directory. Use shell_exec to display all the output, not just last line. Redirect STDERR and STDOUT to variable
-    $setOrigin = shell_exec("cd .. && cd .. && $path remote set-url origin https://github.com/elondust/Arclight.git 2>&1");
-    $fetchOrigin = shell_exec("cd .. && cd .. && $path fetch origin master 2>&1");
-    $resetOrigin = shell_exec("cd .. && cd .. && $path reset --hard origin/master 2>&1");
+    $setOrigin = shell_exec("cd .. && cd .. && $path remote set-url origin https://github.com/Chatnaut/Arclight.git 2>&1");
+    $fetchOrigin = shell_exec("cd .. && cd .. && $path fetch origin version1 2>&1");
+    $resetOrigin = shell_exec("cd .. && cd .. && $path reset --hard origin/version1 2>&1");
   }
 }
 
@@ -75,7 +75,7 @@ require('../navbar.php');
 
                 if ($_SESSION['update_available'] == true) { ?>
                   <h5>Status: There is an update available!</h5>
-                  <p>The newest release is <?php echo $arrayLatest[1]; ?> </p>
+                  <p>The newest release is <?php echo $arrayLatest[0]; ?> </p>
                   <input type="submit" name="update" value="Update Now" class="btn btn-warning">
                 <?php }
 
