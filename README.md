@@ -60,7 +60,6 @@ Arclight is a server virtualization management solution based on KVM. It is desi
   * [Installation](#Installation)
     * [Installation on Ubuntu Server](#Installation-on-Ubuntu-Server)
     * [Installation on CentOS 7 Server](#Installation-on-CentOS-7-Server)
-  * [Installation of PHPmyadmin to see Databases](#Installation-of-PHPmyadmin-to-see-Databases)
   * [Add Custom Storage Pools](#Add-Custom-Storage-Pools)
   * [ISO images for KVM machines](#ISO-images-for-KVM-machines)
   * [Encrypt Arclight Console](#Encrypt-Arclight-Console)
@@ -274,50 +273,6 @@ sudo reboot
 ```
 Once rebooted, use a web browser to navigate to your server’s IP address or domain name. Add /arclight to the end of the URL. For example: http://192.168.1.2/arclight
 
-<br />
-
----
-
-<br />
-
-## Installation of PHPmyadmin to see Databases
-
-1. Open a terminal window on your Ubuntu Server.
-2. Issue the command ``` sudo apt-get install phpmyadmin php-mbstring php-gettext -y ```
-3. When prompted, type your sudo password.
-4. Allow the installation to complete.
-
-Make sure to select apache2. Done.
-
-If you can't access phpmyadmin in browser apply these fixes:
-```
-sudo ln -s /usr/share/phpmyadmin/ /var/www/phpmyadmin
-```
-Copy the apache.conf file from ```/etc/phpmyadmin``` to ```/etc/apache2/sites-available``` and to ```/etc/apache2/sites-enabled``` using file manager as root.
-Then run ``` sudo service apache2 restart ``` and everything was just fine.
-
-[OPTIONAL]
-In order to fix this problem, go back to the terminal window on your server and log into MySQL with the command:
-
-``` sudo mysql -u root -p ```
-
-Once at the MySQL prompt, you need to grant the proper permissions for the phpmyadmin user with the commands:
-
-```
-GRANT ALL PRIVILEGES ON *.* TO 'phpmyadmin'@'localhost';
-FLUSH PRIVILEGES;
-EXIT
-```
-Log out of the phpMyAdmin GUI and log back in (still using the phpmyadmin user). You should now have full privileges for MySQL with that user.
-
-If you're concerned about security you could create an entirely new MySQL admin user like so:
-
-```
-CREATE USER USERNAME IDENTIFIED by 'PASSWORD';
-GRANT ALL PRIVILEGES ON *.* TO 'username'@'localhost';
-FLUSH PRIVILEGES;
-EXIT
-```
 
 <br />
 
