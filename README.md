@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://www.chatnaut.com">
-    <img alt="Chatnaut_Cloud_Solutions" src="https://i.imgur.com/W3zKRyu.png" width="300" />
+    <img alt="Chatnaut_Cloud_Solutions" src="https://i.imgur.com/Ut1dwkj.png" width="300" />
   </a>
 </p>
 
