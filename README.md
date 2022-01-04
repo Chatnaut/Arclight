@@ -31,7 +31,7 @@ Arclight is a server virtualization management solution based on KVM. It is desi
 </h3>
 
 <p align="center">
-  <img alt="Arclight" src="https://i.imgur.com/mGdHb5A.png"</br></br>
+  <img alt="Arclight" src="https://i.imgur.com/mGdHb5A.png"></br></br>
   <img alt="Arclight Create virtual machine" src="https://i.imgur.com/qNoYuoI.png"></br></br>
   <img alt="Arclight Create Networks" src="https://i.imgur.com/dlIDheU.png"></br></br>
   <img alt="Arclight Single Domain" src="https://i.imgur.com/HbCqa7n.jpg"></br></br>
