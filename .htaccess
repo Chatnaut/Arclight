@@ -1,31 +1,12 @@
-# Start of Apache Rewrite Rules
+RewriteEngine On
 
- <IfModule mod_rewrite.c>
- 
-  Options +FollowSymLinks
-  RewriteEngine On
-  RewriteBase
-  
-# From http:// to https://
-  
-  RewriteCond %{ENV:HTTPS} !=on
-  RewriteRule ^.*$ https://%{SERVER_NAME}%{REQUEST_URI} [R,L]
-  
-# Redirect /file.php to /file with POST (enabled)
+# Unless directory, remove trailing slash
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([^/]+)/$ http://example.com/folder/$1 [R=301,L]
 
-  RewriteCond %{REQUEST_METHOD} !POST     
-  RewriteCond %{THE_REQUEST} \s/([^.]+)\.php [NC]
-  RewriteRule ^ /%1 [NE,L,R]
+# Redirect external .php requests to extensionless URL
+RewriteCond %{THE_REQUEST} ^(.+)\.php([#?][^\ ]*)?\ HTTP/
+RewriteRule ^(.+)\.php$ http://example.com/folder/$1 [R=301,L]
 
-# Add trailing slash to url
-
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_URI} !(\.[a-zA-Z0-9]{1,5}|/|#(.*))$
-  RewriteRule ^(.*)$ $1/ [L]
-
-# Remove .php-extension from url
-
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteCond %{REQUEST_FILENAME}\.php -f
-  RewriteRule ^([^\.]+)/$ $1.php 
- </IfModule>
+# Resolve .php file for extensionless PHP URLs
+RewriteRule ^([^/.]+)$ $1.php [L]
