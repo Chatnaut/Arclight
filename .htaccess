@@ -1,32 +1,5 @@
-# Start of Apache Rewrite Rules
-
- <IfModule mod_rewrite.c>
- 
-  Options +FollowSymLinks
-  RewriteEngine On
-  RewriteBase
-  
-# From http:// to https://
-  
-  RewriteCond %{ENV:HTTPS} !=on
-  RewriteRule ^.*$ https://%{SERVER_NAME}%{REQUEST_URI} [R,L]
-  
-# Redirect /file.php to /file with POST (enabled)
-
-  RewriteCond %{REQUEST_METHOD} !POST     
-  RewriteCond %{THE_REQUEST} \s/([^.]+)\.php [NC]
-  RewriteRule ^ /%1 [NE,L,R]
-
-# Add trailing slash to url
-
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_URI} !(\.[a-zA-Z0-9]{1,5}|/|#(.*))$
-  RewriteRule ^(.*)$ $1/ [L]
-
-# Remove .php-extension from url
-
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteCond %{REQUEST_FILENAME}\.php -f
-  RewriteRule ^([^\.]+)/$ $1.php 
-
- </IfModule>
+RewriteEngine on
+RewriteBase /
+RewriteRule ^(.+)\.php$ /$1 [R,L]
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.*?)/?$ /$1.php [NC,END]

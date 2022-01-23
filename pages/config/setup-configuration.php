@@ -26,6 +26,7 @@
     //Capturing the POST Data
     $username = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
     $password = $_POST['password']; //do not need to sanitize because it will be hashed
+    $roles = $_POST['roles'];
     $db_name = clean_input($_POST['db_name']);
     $db_user = clean_input($_POST['db_user']);
     $db_password = $_POST['db_password'];
@@ -42,7 +43,8 @@
         userid INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         username varchar(255),
         email varchar(255),
-        password varchar(255))";
+        password varchar(255),
+        roles varchar(255))";
       
       //Test to see if we can create the table for users
       if($conn->query($sql) === TRUE) {
@@ -55,9 +57,10 @@
         //Hash and salt password with bcrypt
         $hash = password_hash($password, PASSWORD_BCRYPT);
 
+        $roles = "Enterprise";
+
         // Create the SQL to add the user
-        $sql = "INSERT INTO arclight_users (username, password)
-          VALUES ('$username', '$hash');";
+        $sql = "INSERT INTO arclight_users (username, password, roles) VALUES ('$username', '$hash', '$roles')";
 
         //Test the SQL statement for adding the admin user
         if ($conn->query($sql) === TRUE) {
@@ -110,7 +113,9 @@
     <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="../../assets/css/initial-setup.css" rel="stylesheet">
+    <link href="../../assets/css/form-template.css" rel="stylesheet">
+    <link href="../../dist/css/buttons.css" rel="stylesheet">
+
   </head>
 
   <body >
@@ -123,7 +128,7 @@
           }
         ?>
         <img class="mb-4" src="../../assets/img/arclight-dark.svg" alt="" width="300" height="200">
-        <h1 class="h3 mb-3 font-weight-normal">Create an admin account.</h1>
+        <h1 class="h3 mb-3 font-weight-normal">Create an admin account</h1>
       </div>
 
       <!-- -------------- USER ACCOUNT INFORMATION -------------- -->
@@ -140,7 +145,7 @@
 
        <!-- -------------- DATABASE CONFIGURATION INFORMATION -------------- -->
       <div class="text-center mb-4">
-        <h1 class="h3 mb-3 font-weight-normal">Configure the database.</h1>
+        <h1 class="h3 mb-3 font-weight-normal">Configure the database</h1>
       </div>
 
       <div class="form-label-group">
@@ -163,8 +168,10 @@
         <label for="inputDatabaseHost">Database Host</label>
       </div>
 
+      <div class="center">
+        <button class="log-btnlong btn-2" type="submit">Submit</button>
+      </div>
 
-      <button class="log-btnlong btn-2" type="submit">Submit</button>
       <p class="mt-5 mb-3 text-muted text-center">&copy; 
         <script>
           document.write(new Date().getFullYear())

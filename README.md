@@ -281,9 +281,9 @@ Once rebooted, use a web browser to navigate to your server’s IP address or do
 <br />
 
 ## Installation of PHPmyadmin to see Databases
-
+<!-- https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-on-ubuntu-20-04 -->
 1. Open a terminal window on your Ubuntu Server.
-2. Issue the command ``` sudo apt-get install phpmyadmin php-mbstring php-gettext -y ```
+2. Issue the command ``` sudo apt install phpmyadmin php-mbstring php-zip php-gd php-json php-curl ```
 3. When prompted, type your sudo password.
 4. Allow the installation to complete.
 
