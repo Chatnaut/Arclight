@@ -72,17 +72,45 @@ $ci  = $lv->get_connect_information();
 $info = '';
 if ($ci['uri'])
     $info .= ' <i>'.$ci['uri'].'</i>, ';
-
 echo "<strong>:</strong> {$ci['hypervisor_string']} <br>";
 
-include('../swmp/index.php');
 
 //$getlibvirtversion = $lv->get_l_version();
 
 //echo "Libvirt Version: " . $getlibvirtversion['libvirt.major'] . "." . $getlibvirtversion['libvirt.minor'] . "." . $getlibvirtversion['libvirt.release'];
 
+//Delete storage volume==========================================================
+// $path = "/var/lib/libvirt/images/goku.qcow2";
+// $del_storagevolume = $lv->storagevolume_delete($path);
+// if($del_storagevolume) {
+//   echo "Storage Volume Deleted";
+// } else {
+//   echo "Storage Volume Not Deleted";
+// }
+
+//Resize storage volume==========================================================
+
+  // $path = "/var/lib/libvirt/images/goku.qcow2";
+  // $size = "80G";
+  // $resize_storagevolume = $lv->storagevolume_resize($path, $size);
+  // if($resize_storagevolume) {
+  //   echo "Storage Volume Resized";
+  // } else {
+  //   echo "Storage Volume Not Resized";
+  // }
+
+//create new storage volume in pool default==========================================================
+  $pool_name = "default";
+  $name = "gokuo.qcow2";
+  $size = "10G";
+  $format = "qcow2";
+  $notification = $lv->storagevolume_create($pool_name, $name, $size, $format)? "Storage Volume Created" : "Storage Volume Not Created";
+
+
 
                     ?>
+
+
                   </div>
                 </div>
               </div>

@@ -100,6 +100,12 @@
     $notification = $lv->storagevolume_create($pool, $volume_image_name, $volume_capacity.$unit, $volume_size.$unit, $driver_type) ? "" : "Cannot create volume: ".$lv->get_last_error();
   }
 
+  if ($action == 'volume-resize') {
+    $notification = $lv->storagevolume_resize($path, $volume_size.$unit) ? "" : "Cannot resize volume: ".$lv->get_last_error();
+
+
+  }
+
   if ($action == 'storage-pool-add') {
     if (substr($pool_path, 0, 4) == "/var" || substr($pool_path, 0, 4) == "/mnt" || substr($pool_path, 0, 6) == "/media") {
       $xml = "
@@ -234,20 +240,8 @@
                                   "<td>{$lv->format_size($tmp[$tmp_keys[$ii]]['allocation'], 2)}</td>" .
                                   "<td>{$tmp[$tmp_keys[$ii]]['path']}</td>" .
                                   "<td><a href=\"#clone-modal\" data-toggle=\"modal\" data-target=\"#clone-modal\" data-clone-name=\"clone-$filename\" data-original-filename=\"$filename\" data-path=\"$path\" data-pool=\"$poolName\">Clone </a>" .
-                                  " |  <a data-href=\"?action=volume-delete&amp;path=$path\" data-filename=\"$filename\" data-toggle=\"modal\" data-target=\"#confirm-delete-modal\" href=\"#confirm-delete-modal\"> Delete</a></td>" .
-
-
-                                  "<td>
-                                  <form action=\"volume-resize\" method=\"\">  
-
-                                  <div class=\"form-outline\">
-                                  <input type=\"number\" id=\"typeNumber\" class=\"form-control\" />
-                                </div>
-                                <br> <br> <input type = \"submit\" name = \"submit\" value = \"Resize\">  
-                                </form> 
-                                echo $path;
-                                echo $filename;
-                                </td>" .
+                                  " |  <a data-href=\"?action=volume-delete&amp;path=$path\" data-filename=\"$filename\" data-toggle=\"modal\" data-target=\"#confirm-delete-modal\" href=\"#confirm-delete-modal\"> Delete</a>" .
+                                  " |  <a data-href=\"?action=volume-resize&amp;path=$path\" data-filename=\"$filename\" data-toggle=\"modal\" data-target=\"#resize-modal\" href=\"#resize-modal\"> Resize</a>" .
                                   "</tr>";
                               }
                             }
@@ -455,8 +449,64 @@
 	</div>
 </div>
 
+<!-- Hidden modal for resizing a storage volume 👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋-->
+<div id="resize-modal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content <?php if($_SESSION['themeColor'] == "dark-edition") { echo "modal-dark"; } ?>">
+			<div class="modal-header">
+        <h5 class="modal-title">Resize Volume </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+			</div>
+			<form id="resizeForm" name="resizeVolume" role="form" action="">
+				<div class="modal-body">				          
+          <!-- <div class="row">
+            <label class="col-3 col-form-label text-right">Volume Name: </label>
+            <div class="col-6">
+              <div class="form-group">
+                <input type="text" value="newVolume.qcow2" required="required" placeholder="Enter name for new volume image" class="form-control" name="volume_image_name" />
+              </div>
+            </div>
+          </div> -->
+          <div class="row">
+            <label class="col-3 col-form-label text-right">New Volume Size: <?php $filename; ?></label>
+            <div class="col-3">
+              <div class="form-group">
+                 <input type="number" class="form-control" required="required" value="40" min="1" name="volume_size">
+              </div>
+            </div>
+            <div class="col-4 checkbox-radios">
+              <div class="form-check form-check-inline">
+                <label class="form-check-label text-right">
+                  <input class="form-check-input" type="radio" name="unit" value="M"> MB
+                  <span class="circle">
+                    <span class="check"></span>
+                  </span>
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <label class="form-check-label text-right">
+                  <input class="form-check-input" type="radio" name="unit" value="G" checked="checked"> GB
+                  <span class="circle">
+                    <span class="check"></span>
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
 
-
+          <input type="hidden" name="action" value="volume-resize" class="form-control">
+				</div>
+				<div class="modal-footer">					
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<input type="submit" class="custom-btnshrt" id="submitmodalbt" value="Resize">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- 👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋 -->
 <?php
 require('../footer.php');
 ?>
@@ -505,7 +555,7 @@ require('../footer.php');
   function submitCloneForm(){
     $.ajax({
       type: "POST",
-      url: "storage-pools.php",
+      url: "storage-pools-user.php",
       cache:false,
       data: $('form#cloneForm').serialize(),
       success: function(response){
@@ -518,7 +568,7 @@ require('../footer.php');
     });
   }
 
-  
+
 
   //Set submit action for add storage pool modal
   $(document).ready(function(){	
@@ -532,7 +582,7 @@ require('../footer.php');
   function submitAddForm(){
     $.ajax({
       type: "POST",
-      url: "storage-pools.php",
+      url: "storage-pools-user.php",
       cache:false,
       data: $('form#addStoragePoolForm').serialize(),
       success: function(response){
