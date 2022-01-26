@@ -49,10 +49,9 @@ require('../config/config.php');
                   Manage<span class="caret"></span>
                 </a>
                 <div class="dropdown-menu position-absolute dropdown-menu-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{{ route('logout') }}" >Account</a>
-                    <a class="dropdown-item" href="{{ route('logout') }}" >Billing</a>
-                    <a class="dropdown-item" href="{{ route('logout') }}" >Access (IAM)</a>
-                    <a class="dropdown-item" href="{{ route('logout') }}" >Logout</a>
+                    <a class="dropdown-item" href="">Account</a>
+                    <a class="dropdown-item" href="">Billing</a>
+                    <a class="dropdown-item" href="">Access (IAM)</a>
                     
                 </div>
             </li>
@@ -79,10 +78,10 @@ require('../config/config.php');
                 Hi, <?php echo $_SESSION['username'];?><span class="caret"></span>
              </a>
              <div class="dropdown-menu position-absolute dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="" ><?php echo $_SESSION['roles']; ?></a>
-                <a class="dropdown-item" href="{{ route('logout') }}" >Profile</a>
-                <a class="dropdown-item" href="../config/preferences.php" >Preferences</a>
-                <a class="dropdown-item" href="../config/settings.php" >Settings</a>
+                <a class="dropdown-item" href=""><?php echo $_SESSION['roles']; ?></a>
+                <a class="dropdown-item" href="">Profile</a>
+                <a class="dropdown-item" href="../config/preferences.php">Preferences</a>
+                <a class="dropdown-item" href="../config/settings.php">Settings</a>
                 <a class="dropdown-item" href="../../index.php?action=logout">Sign out</a>
 
              </div>
