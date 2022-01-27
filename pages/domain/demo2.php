@@ -100,11 +100,16 @@ echo "<strong>:</strong> {$ci['hypervisor_string']} <br>";
   // }
 
 //create new storage volume in pool default==========================================================
-  $pool_name = "default";
-  $name = "gokuo.qcow2";
-  $size = "10G";
-  $format = "qcow2";
-  $notification = $lv->storagevolume_create($pool_name, $name, $size, $format)? "Storage Volume Created" : "Storage Volume Not Created";
+  // $pool_name = "default";
+  // $name = "gokuo.qcow2";
+  // $size = "10G";
+  // $format = "qcow2";
+  // $notification = $lv->storagevolume_create($pool_name, $name, $size, $format)? "Storage Volume Created" : "Storage Volume Not Created";
+
+
+  //get hosttname
+  $hostname = $lv->get_hostname();
+  echo "Hostname: " . $hostname;
 
 
 
