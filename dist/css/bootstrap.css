@@ -3154,7 +3154,7 @@ tbody.collapse.show {
 .dropdown-menu {
   position: absolute;
   top: 100%;
-  left: 0;
+  /* left: 0; */
   z-index: 1000;
   display: none;
   float: left;
@@ -3273,8 +3273,8 @@ tbody.collapse.show {
   text-align: inherit;
   white-space: nowrap;
   background-color: transparent;
-  border: 0;
-  border-radius: 1.25rem;
+  /* border: 0; */
+  border-radius: inherit;
 }
 
 .dropdown-item:hover, .dropdown-item:focus {
