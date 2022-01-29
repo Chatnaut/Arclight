@@ -33,8 +33,8 @@ if (isset($_GET['action'])) {
   $_SESSION['memory_unit'] = $_GET['memory_unit']; //choice of "MiB" or "GiB"
   $_SESSION['memory'] = $_GET['memory']; //number input, still need to sanitze for number and verify it is not zero
   $_SESSION['vcpu'] = $_GET['vcpu']; //number input, still need to sanitze for number and verify it is not zero, also may need to set limit to host CPU#
-  $_SESSION['tcores'] = $_GET['tcores']; 
-  $_SESSION['tthreads'] = $_GET['tthreads'];
+  $_SESSION['t_cores'] = $_GET['tcores'];
+  $_SESSION['t_threads'] = $_GET['tthreads'];
   $_SESSION['clock_offset'] = "localtime"; //set to localtime
   $_SESSION['os_platform'] = $_GET['os_platform']; //Used to determine what goes in XML. Ex. Windows VMs need extra options
 
@@ -75,20 +75,14 @@ $dom = $lv->get_domain_object($domName); //gets the resource id for a domain
 if ($action == "create-domain") {
   $domain_type = $_SESSION['domain_type']; //hard coded as "kvm" for now
   $domain_name = $_SESSION['domain_name']; //sanatized name for virtual machine
-  $description = "powered by arclight"; //plug for software that helped put virtual machine together
+  $description = "powered by arclight"; //hypervisor description
   $memory_unit = $_SESSION['memory_unit']; //either MiB or GiB
   $memory = $_SESSION['memory']; //whatever the user sets
   $vcpu = $_SESSION['vcpu']; //whatever the user sets, defaults to 1
 
-  //multiplication of threads and cores should not exceed total number of vcpus
-  if($_SESSION['tthreads'] * $_SESSION['tcores'] > $vcpu) {
-    $notification = "Error: Threads x Cores cannot exceed total number of vcpus";
-  }else {
-  $tcores = $_SESSION['tcores'];
-  $tthreads = $_SESSION['tthreads'];
-  $notification = "Toplogy: " . $tcores . " x " . $tthreads . " = " . $vcpu;
-  }
-  
+  $tcores = $_SESSION['t_cores'];
+  $tthreads = $_SESSION['t_threads'];
+  $cpuTopology = $tcores * $tthreads;
 
   $clock_offset = $_SESSION['clock_offset']; //hard coded as "localtime" for now
   $os_platform = $_SESSION['os_platform']; //determines if bios features need to be set, needed for Windows 
@@ -147,9 +141,14 @@ if ($action == "create-domain") {
         </kvm>
       </features>
       <cpu mode='host-model' check='partial'>
-        <model fallback='allow'/>
-        <topology sockets='1' cores='$tcores' threads='$tthreads'/>
-      </cpu>
+        <model fallback='allow'/>";
+    //check if cores and threads are set, add them to the XML
+    if ($cpuTopology = $vcpu) {
+      $vm_xml .= "<topology cores='$tcores' threads='$tthreads'/>";
+    }
+    $vm_xml .= "
+        </cpu>
+      
       <clock offset='localtime'/>
       <devices>
           <graphics type='vnc' port='-1' autoport='yes'/>
@@ -353,13 +352,13 @@ if ($action == "create-domain") {
      xml_data TEXT,
      dt DATETIME)";
   $tablesql = mysqli_query($conn, $sql);
-  
-  
+
+
   //  $sql = 'SELECT * FROM arclight_vm';
   //  $tablesql = mysqli_query($conn, $sql);
   // $sql = "SELECT userid FROM arclight_events WHERE userid = '$userid';";
 
-  if ($conn->query($sql) === TRUE && $new_vm->create() == 0) {
+  if ($conn->query($sql) === TRUE && (!$notification)) {
     $sql = "INSERT INTO arclight_vm (userid, authkey, uuid, action, dom, domName, username, domain_type, domain_name, clock_offset, os_platform, vcpu, memory, memory_unit, source_file_volume, volume_image_name, volume_capacity, volume_size, driver_type, target_bus, storage_pool, existing_driver_type,source_file_cd, mac_address, model_type, source_network, xml_data, dt) VALUES('$userid', '$authorize', '$uuid', '$action', '$dom', '$domName', '$username', '$domain_type', '$domain_name', '$clock_offset', '$os_platform', '$vcpu', '$memory', '$memory_unit', '$source_file_volume', '$volume_image_name', '$volume_capacity', '$volume_size', '$driver_type', '$target_bus', '$storage_pool', '$existing_driver_type', '$source_file_cd' , '$mac_address', '$model_type', '$source_network', '$xml_data', current_timestamp());";
     $inserttablesql = mysqli_query($conn, $sql);
 
@@ -386,8 +385,6 @@ if ($action == "create-domain") {
   $description = ($notification) ? $notification : "domain created";
   $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
   $sql_action = $conn->query($sql);
-
-
 }
 // *********************************************************************************************
 
@@ -402,7 +399,7 @@ if ($action == "create-xml") {
 
   //Return back to the domain-single page if successful
   if (!$notification) {
-    header('Location: domain-list.php');
+    header('Location: domain-list-user.php');
     exit;
   }
 } //end if $_SESSION
@@ -447,6 +444,8 @@ unset($_SESSION['domain_name']);
 unset($_SESSION['memory_unit']);
 unset($_SESSION['memory']);
 unset($_SESSION['vcpu']);
+unset($_SESSION['t_cores']);
+unset($_SESSION['t_threads']);
 unset($_SESSION['clock_offset']);
 unset($_SESSION['os_platform']);
 //Storage variables
@@ -657,10 +656,11 @@ require('../navbar.php');
               </div>
             </div>
 
-<div class="container" id="advancedop">
-<button type="button" class="btn btn-outline-secondary" onclick="advanceToggle()" id="advanceOp">Advance Options</button>
-</div>
-</div>
+            <div class="container" id="advancedop">
+              <button type="button" class="btn btn-outline-secondary" onclick="advanceToggle()" id="advanceOp">Advance Options</button>
+            </div>
+            <!-- hidden div here -->
+          </div>
 
           <div class="row">
             <label class="col-3 col-form-label text-right">Memory: </label>
@@ -968,20 +968,16 @@ require('../navbar.php');
   //Advanced toggle
   function advanceToggle() {
     document.querySelector('#advancedop').insertAdjacentHTML(
-      'beforeend',
+      'afterend',
       `<div class="col-6">
           <label class="col-3 col-form-label text-right">Topology</label>
 
           <div class="form-group">
-            <input type="number" id="tsocket" name="tsocket" class="form-control" min="1" value="1">
+            <input type="number" id="tcores" name="tcores" class="form-control" min="" value="">
           </div>
 
           <div class="form-group">
-            <input type="number" id="tcores" name="tcores" class="form-control" min="1" value="<?php $vcpu?>">
-          </div>
-
-          <div class="form-group">
-            <input type="number" id="tthreads" name="tthreads" class="form-control" min="1" value="1">
+            <input type="number" id="tthreads" name="tthreads" class="form-control" min="" value="">
           </div>
         </div>`
     )
