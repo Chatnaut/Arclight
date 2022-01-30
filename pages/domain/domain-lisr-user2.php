@@ -84,7 +84,7 @@ if ($action == "create-domain") {
         $tcores = $_SESSION['tcores'];
         $tthreads = $_SESSION['tthreads'];
         $cpuTopology = $tcores * $tthreads;
-    } else{
+    } else {
         $notification = "CPU Topology is not valid";
     }
 
@@ -572,11 +572,12 @@ require('../navbar.php');
                                 <input type="number" id="vcpu" name="vcpu" required="required" class="form-control" min="1" value="2">
                             </div>
                         </div>
-                        <div class="container" id="advancedop">
-                            <button type="button" class="btn btn-outline-secondary" onclick="advanceToggle()" id="advanceOp">Advance Options</button>
+                        <div class="container" id="toggleOp">
+                            <button type="button" class="btn btn-outline-secondary" onclick="advanceToggle()" id="togglebtn">Advanced Options</button>
                         </div>
-                        <!-- hidden div here -->
                     </div>
+
+                    <!-- hidden div here -->
                     <div class="row">
                         <label class="col-3 col-form-label text-right">Memory: </label>
                         <div class="col-3">
@@ -880,23 +881,28 @@ require('../navbar.php');
 
 
 <script>
-    //Advanced toggle
-    function advanceToggle() {
-        document.querySelector('#advancedop').insertAdjacentHTML(
+    //Advanced toggle optiions
+    let advanceToggle = document.getElementById('togglebtn');
+
+    advanceToggle.addEventListener('click', function() {
+        document.getElementById('toggleOp').insertAdjacentHTML(
             'afterend',
-            `<div class="col-6">
+            `
                 <label class="col-3 col-form-label text-right">Topology</label>
+                <div class="col-3">
+                    <div class="form-group">
+                        <input type="number" id="tcores" name="tcores" class="form-control" min="" value="">
+                    </div>
 
-                <div class="form-group">
-                    <input type="number" id="tcores" name="tcores" class="form-control" min="" value="">
-                </div>
-
-                <div class="form-group">
-                    <input type="number" id="tthreads" name="tthreads" class="form-control" min="" value="">
-                </div>
+                    <div class="form-group">
+                        <input type="number" id="tthreads" name="tthreads" class="form-control" min="" value="">
+                    </div>
             </div>`
         )
-    };
+    }, {
+        once: true
+    });
+
 
 
     function diskChangeOptions(selectEl) {
