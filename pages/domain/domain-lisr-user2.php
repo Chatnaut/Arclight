@@ -85,7 +85,7 @@ if ($action == "create-domain") {
         $tthreads = $_SESSION['tthreads'];
         $cpuTopology = $tcores * $tthreads;
     } else {
-        $notification = "CPU Topology is not valid";
+        $notification = $notification . " Wrong CPU Topology. ";
     }
 
     $clock_offset = $_SESSION['clock_offset']; //hard coded as "localtime" for now
@@ -566,14 +566,14 @@ require('../navbar.php');
                         </div>
                     </div>
                     <div class="row">
-                        <label class="col-3 col-form-label text-right">Virtual CPUs: </label>
+                        <label class="col-3 col-form-label text-right">vCPUs: </label>
                         <div class="col-6">
                             <div class="form-group">
                                 <input type="number" id="vcpu" name="vcpu" required="required" class="form-control" min="1" value="2">
                             </div>
                         </div>
                         <div class="container" id="toggleOp">
-                            <button type="button" class="btn btn-outline-secondary" onclick="advanceToggle()" id="togglebtn">Advanced Options</button>
+                            <button type="button" class="btn btn-outline-secondary" onclick="" id="togglebtn">Advanced Options</button>
                         </div>
                     </div>
 
@@ -891,18 +891,28 @@ require('../navbar.php');
                 <label class="col-3 col-form-label text-right">Topology</label>
                 <div class="col-3">
                     <div class="form-group">
-                        <input type="number" id="tcores" name="tcores" class="form-control" min="" value="">
+                        <input type="number" id="tcores" placeholder="Cores" name="tcores" class="form-control" min="" value="">
                     </div>
 
                     <div class="form-group">
-                        <input type="number" id="tthreads" name="tthreads" class="form-control" min="" value="">
+                        <input type="number" id="tthreads" placeholder="Threads" name="tthreads" class="form-control" min="" value="">
                     </div>
             </div>`
         )
+        //checking correct CPU toplogy cores*threads must be equal to total vcpus
+        let cores = document.getElementById('tcores');
+        let threads = document.getElementById('tthreads');
+        let vcpus = document.getElementById('vcpu');
+
+
+        threads.addEventListener('change', function() {
+            if (cores.value * threads.value != vcpus.value) {
+                showNotification("top", "right", "Cores * Threads must be equal to total vCPUs, No changes made");
+            }
+        });
     }, {
         once: true
     });
-
 
 
     function diskChangeOptions(selectEl) {
