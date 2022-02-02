@@ -11,6 +11,8 @@
 
     <!-- Bootstrap core CSS -->
     <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../assets/css/oscard.css" rel="stylesheet">
+
 
     <!-- Custom styles for this template -->
     <link href="../../assets/css/dashboard.css" rel="stylesheet">
