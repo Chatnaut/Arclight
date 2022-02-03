@@ -84,9 +84,8 @@ if ($action == "create-domain") {
         $tcores = $_SESSION['tcores'];
         $tthreads = $_SESSION['tthreads'];
         $cpuTopology = $tcores * $tthreads;
-    } else {
-        $notification = $notification . " Wrong CPU Topology. ";
     }
+
 
     $clock_offset = $_SESSION['clock_offset']; //hard coded as "localtime" for now
     $os_platform = $_SESSION['os_platform']; //determines if bios features need to be set, needed for Windows 
@@ -553,79 +552,65 @@ require('../navbar.php');
                     </div>
                     <div class="row">
                         <label class="col-3 col-form-label text-right">OS Platform: </label>
-                        <!-- <div class="col-6">
-                            <div class="form-group"> -->
-                            <!-- 👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋 -->
-                                <!-- <select class="form-control" name="os_platform">
-                                    <option value="linux">Linux</option>
-                                    <option value="unix">Unix</option>
-                                    <option value="windows">Windows</option>
-                                    <option value="mac">Macintosh</option>
-                                    <option value="other">Other</option>
-                                </select> -->
-                                <div class="containerUos">
-<div class="containeros">
-  <div class="cardos active">
-    <div class="bg" style="background-image: url(https://images.unsplash.com/photo-1517927224534-948d7df17392?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1182&q=80)">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="formGroupExampleInput" name="os_platform" value="" placeholder="OS Type">
 
-      <div class="contentos">
-        <div class="osdata">
-          <div class="oscircle"> <i class="fas fa-snowflake"></i></div>
-          <div class="osdetail">
-            <h4 class="title">Linux</h4>
-            <!-- <p>A snow filled mountain</p> -->
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="cardos">
-    <div class="bg" style="background-image: url(https://images.unsplash.com/photo-1508255139162-e1f7b7288ab7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80)">
+                            </div>
+                        </div>
+                        <div class="containerUos">
+                            <div class="containeros">
+                                <div class="cardos active" id="1">
+                                    <div class="bg" style="background-image: url(../../assets/img/linux.jpg)">
+                                        <div class="contentos">
+                                            <div class="osdata">
+                                                <div class="oscircle"><i class="fab fa-linux" style="color: black;"></i></div>
+                                                <div class="osdetail">
+                                                    <h4 class="title">Linux</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="cardos" id="2">
+                                    <div class="bg" style="background-image: url(../../assets/img/unix.jpg)">
+                                        <div class="contentos">
+                                            <div class="osdata">
+                                                <div class="oscircle"><i class="fab fa-uniregistry" style="color: black;"></i></div>
+                                                <div class="osdetail">
+                                                    <h4 class="title">Unix</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="cardos" id="3">
+                                    <div class="bg" style="background-image: url(../../assets/img/windows.png)">
+                                        <div class="contentos">
+                                            <div class="osdata">
+                                                <div class="oscircle"><i class="fab fa-windows" style="color: black;"></i></div>
+                                                <div class="osdetail">
+                                                    <h4 class="title">Windows</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="cardos" id="4">
+                                    <div class="bg" style="background-image: url(../../assets/img/arclightbg.jpg)">
+                                        <div class="contentos">
+                                            <div class="osdata">
+                                                <div class="oscircle"><i class="fas fa-coffee" style="color: black;"></i></div>
+                                                <div class="osdetail">
+                                                    <h4 class="title">Other</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-      <div class="contentos">
-        <div class="osdata">
-          <div class="oscircle"> <i class="fas fa-tree"></i></div>
-          <div class="osdetail">
-            <h4 class="title">Unix</h4>
-            <!-- <p>A forest full of trees</p> -->
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="cardos">
-    <div class="bg" style="background-image: url(https://images.unsplash.com/photo-1519692933481-e162a57d6721?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80)">
-
-      <div class="contentos">
-        <div class="osdata">
-          <div class="oscircle"> <i class="fas fa-tint"></i></div>
-          <div class="osdetail">
-            <h4 class="title">Windows</h4>
-            <!-- <p>City with shower of love</p> -->
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="cardos">
-    <div class="bg" style="background-image: url(https://images.unsplash.com/photo-1509316785289-025f5b846b35?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1176&q=80)">
-
-      <div class="contentos">
-        <div class="osdata">
-          <div class="oscircle"> <i class="fas fa-sun"></i></div>
-          <div class="osdetail">
-            <h4 class="title">Other</h4>
-            <!-- <p>A Strong standing desert</p> -->
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-                                <!-- 👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋 -->
-                            <!-- </div>
-                        </div> -->
                     </div>
                     <div class="row">
                         <label class="col-3 col-form-label text-right">vCPUs: </label>
@@ -1031,18 +1016,35 @@ require('../navbar.php');
     }
 </script>
 
-<script>const cards = document.getElementsByClassName("cardos");
+<script>
+    const cards = document.getElementsByClassName("cardos");
+    for (let card of cards) {
+        card.addEventListener("click", () => {
+            if (!card.classList.contains("active")) {
+                for (let c of cards) {
+                    c.classList.remove("active");
+                    card.classList.add("active");
+                    c.classList.remove("os");
+                    card.classList.add("os");
+                }
 
-for (let card of cards) {
-  card.addEventListener("click", () => {
-    if (!card.classList.contains("active")) {
-      for (let c of cards) {
-        c.classList.remove("active");
-        card.classList.add("active");
-      }
+
+                if (card.classList.contains("os") && card.id == "1") {
+                    document.getElementById("formGroupExampleInput").value = "linux";
+                    // console.log("hello linux");
+                } else if (card.classList.contains("os") && card.id == "2") {
+                    document.getElementById("formGroupExampleInput").value = "unix";
+                    // console.log("hello unix");
+                } else if (card.classList.contains("os") && card.id == "3") {
+                    document.getElementById("formGroupExampleInput").value = "windows";
+                    // console.log("hello windows");
+                } else if (card.classList.contains("os") && card.id == "4") {
+                    document.getElementById("formGroupExampleInput").value = "other";
+                    // console.log("hello other");
+                }
+            }
+        });
     }
-  });
-}
 </script>
 
 

@@ -66,7 +66,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  height: 75%;
+  height: 95%;
   transform: scale(0.6666666666666);
   transition: all var(--animation-time) linear;
 }
@@ -106,7 +106,7 @@ p {
 }
 
 .bg {
-  height: 20rem;
+  height: inherit;
   width: 4rem;
   box-shadow: inset 0px -20px 100px 10px rgba(0, 0, 0, 0.7);
 
@@ -125,6 +125,6 @@ p {
   transform: scale(1);
 }
 
-i {
+/* i {
   color: #2b425e;
-}
+} */

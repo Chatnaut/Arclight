@@ -11,7 +11,6 @@
 
     <!-- Bootstrap core CSS -->
     <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../../assets/css/oscard.css" rel="stylesheet">
 
 
     <!-- Custom styles for this template -->
@@ -20,8 +19,9 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/brands.css" integrity="sha384-whKHCkwP9f4MyD1vda26+XRyEg2zkyZezur14Kxc784RxUU1E7HvWVYj9EoJnUV7" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> <!--gpu manager material icons -->
     <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
-    <!-- BTN Main Styles -->
+    <!-- Btn Main and OScard Styles -->
     <link href="../../dist/css/buttons.css" rel="stylesheet">
+    <link href="../../assets/css/oscard.css" rel="stylesheet">
 
   </head>
 
