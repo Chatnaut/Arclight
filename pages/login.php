@@ -109,35 +109,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <!-- Custom styles for this template -->
   <link href="../assets/css/form-template.css" rel="stylesheet">
   <link href="../dist/css/buttons.css" rel="stylesheet">
-
 </head>
 
 <body>
-  <form class="form-signin" method="post" action="">
-    <div class="text-center mb-4">
-      <img class="mb-4" src="../assets/img/arclight-dark.svg" alt="" width="300" height="200">
-      <h1 class="h3 mb-3 font-weight-normal">Sign in to Arclight web console</h1>
-    </div>
+  <div class="container">
+    <form class="form-signin" method="post" action="">
+      <div class="text-center mb-4">
+        <!-- <img src="../assets/img/arclight-dark.svg" class="rounded mx-auto d-block" alt="..."> -->
+        <img class="mb-4" src="../assets/img/arclight-dark.svg" alt="" width="300" height="200">
+        <h1 class="h3 mb-3 font-weight-normal">Sign in to Arclight web console</h1>
+      </div>
 
-    <div class="form-label-group">
-      <input type="text" name="username" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
-      <label for="inputUsername">Username</label>
-    </div>
+      <div class="form-label-group">
+        <input type="text" name="username" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+        <label for="inputUsername">Username</label>
+      </div>
 
-    <div class="form-label-group">
-      <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
-      <label for="inputPassword">Password</label>
-    </div>
+      <div class="form-label-group">
+        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <label for="inputPassword">Password</label>
+      </div>
 
-    <div class="center">
-      <button class="log-btnlong btn-2" type="submit">Sign in</button>
-    </div>
-    <p class="mt-5 mb-3 text-muted text-center">&copy;
-      <script>
-        document.write(new Date().getFullYear())
-      </script>, chatnaut cloud
-    </p>
-  </form>
+      <div class="center">
+        <button class="log-btnlong btn-2" type="submit">Sign in</button>
+      </div>
+      <p class="mt-5 mb-3 text-muted text-center">&copy;
+        <script>
+          document.write(new Date().getFullYear())
+        </script>, chatnaut cloud
+      </p>
+    </form>
+  </div>
 </body>
-
 </html>

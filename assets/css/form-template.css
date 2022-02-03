@@ -3,12 +3,6 @@
   --input-padding-y: .75rem;
 }
 
-html,
-body {
-  height: auto;
-  background-color: #121212 !important;
-}
-
 body {
   display: -ms-flexbox;
   display: -webkit-box;
@@ -25,7 +19,7 @@ body {
   background-image: url('../img/arclightbg.jpg');
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-size: cover;
+  background-size: cover; 
 }
 
 .form-signin {
