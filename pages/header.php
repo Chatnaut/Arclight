@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/brands.css" integrity="sha384-whKHCkwP9f4MyD1vda26+XRyEg2zkyZezur14Kxc784RxUU1E7HvWVYj9EoJnUV7" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> <!--gpu manager material icons -->
     <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <!-- Font Awesome 5.10.0 cdn -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Btn Main and OScard Styles -->
     <link href="../../dist/css/buttons.css" rel="stylesheet">
     <link href="../../assets/css/oscard.css" rel="stylesheet">
