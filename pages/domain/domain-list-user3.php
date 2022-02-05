@@ -482,7 +482,7 @@ require('../navbar.php');
 
                                         unset($tmp);
                                         unset($dom);
-
+                                            
                                         //echo "<tr style=\"cursor: pointer;\" onclick=\"window.location.href='domain-single.php?uuid=$uuid';\">" .
                                         echo "<tr style=\"cursor: pointer;\" data-href=\"domain-single.php?uuid=$uuid\" >" .
                                             "<td>" . htmlentities($name) .  "</td>" .
@@ -555,10 +555,9 @@ require('../navbar.php');
                         <div class="col-6">
                             <div class="form-group">
                                 <input type="text" class="form-control" id="formGroupExampleInput" name="os_platform" value="" placeholder="OS Type">
-
                             </div>
                         </div>
-                        <div class="containerUos">
+                    </div>
                             <div class="containeros">
                                 <div class="cardos active" id="1">
                                     <div class="bg" style="background-image: url(../../assets/img/linux.jpg)">
@@ -600,7 +599,7 @@ require('../navbar.php');
                                     <div class="bg" style="background-image: url(../../assets/img/arclightbg.jpg)">
                                         <div class="contentos">
                                             <div class="osdata">
-                                                <div class="oscircle"><i class="fas fa-coffee" style="color: black;"></i></div>
+                                                <div class="oscircle"><i class="far fa-circle" style="color: black;"></i></div>
                                                 <div class="osdetail">
                                                     <h4 class="title">Other</h4>
                                                 </div>
@@ -609,9 +608,7 @@ require('../navbar.php');
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                    </div>
                     <div class="row">
                         <label class="col-3 col-form-label text-right">vCPUs: </label>
                         <div class="col-6">
@@ -1016,6 +1013,7 @@ require('../navbar.php');
     }
 </script>
 
+<!-- OS cards -->
 <script>
     const cards = document.getElementsByClassName("cardos");
     for (let card of cards) {
@@ -1027,8 +1025,6 @@ require('../navbar.php');
                     c.classList.remove("os");
                     card.classList.add("os");
                 }
-
-
                 if (card.classList.contains("os") && card.id == "1") {
                     document.getElementById("formGroupExampleInput").value = "linux";
                     // console.log("hello linux");

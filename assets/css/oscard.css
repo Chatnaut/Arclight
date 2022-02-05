@@ -28,7 +28,8 @@ body {
   margin-top: 10px;
   margin-right: 50px;
   margin-bottom: 40px;
-  margin-left: 50px;
+  margin-left: 5px;
+  /* width: 100vw; */
 }
 
 .cardos {
@@ -47,7 +48,7 @@ body {
 }
 
 .cardos.active {
-  width: 30rem;
+  width: 25vw;
 }
 
 .oscircle {
@@ -121,7 +122,7 @@ p {
 }
 
 .cardos.active .bg {
-  width: 30rem;
+  width: 100%;
   transform: scale(1);
 }
 
