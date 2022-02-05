@@ -69,15 +69,6 @@ if ($action == "logout") {
 }
 
 $username = $_SESSION['username'];
-$rolequery = "SELECT * from arclight_users WHERE username = '$username'";
-$roledata = mysqli_query($conn, $rolequery);
-$rolearr = mysqli_fetch_array($roledata);
-
-if ($rolearr['roles'] == "Enterprise") {
-  $_SESSION['roles'] = "Enterprise";
-} else {
-  $_SESSION['roles'] = "Administrator";
-}
 
 //Redirect based on login session or initial setup complete
 if (isset($_SESSION['username'])) {
@@ -89,10 +80,6 @@ if (isset($_SESSION['username'])) {
   $pools = $lv->get_storagepools();
   if (empty($pools)) {
     header('Location: pages/storage/storage-pools.php');
-  } else if ($_SESSION['roles'] == "Enterprise") {
-    header('Location: pages/domain/domain-list.php');
-  } else if ($_SESSION['roles'] == "Administrator") {
-    header('Location: pages/domain/domain-list-user.php');
   } else {
     header('Location: pages/login.php');
   }

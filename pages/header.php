@@ -23,7 +23,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Btn Main and OScard Styles -->
     <link href="../../dist/css/buttons.css" rel="stylesheet">
-    <link href="../../assets/css/oscard.css" rel="stylesheet">
 
   </head>
 

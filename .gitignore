@@ -4,5 +4,7 @@ Thumbs.db
 #*
 .idea/*
 web.config
-
+nvidia-devices.conf
 config.local.php
+novnc.log
+test.log

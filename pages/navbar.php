@@ -31,7 +31,6 @@ function getOSInformation()
 $os_info = getOSInformation();
 $host_os = $os_info['name'];
 
-// fetching users data to give permission to access different pages according to their roles
 require('../config/config.php');
 
 
@@ -49,7 +48,7 @@ require('../config/config.php');
         <ul class="navbar-nav px-3">
 
 
-            <li class="nav-item dropdown">
+            <!-- <li class="nav-item dropdown">
                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                     Manage<span class="caret"></span>
                 </a>
@@ -59,7 +58,7 @@ require('../config/config.php');
                     <a class="dropdown-item" href="">Access (IAM)</a>
 
                 </div>
-            </li>
+            </li> -->
             <li class="nav-item">
                 <?php
                 if ($_SESSION['update_available'] == true) {
@@ -70,21 +69,11 @@ require('../config/config.php');
                 ?>
             </li>
 
-            <!-- <li class="nav-item">
-          <a class="nav-link" href="../config/settings.php">Settings</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="../config/preferences.php">Preferences</a>
-        </li> -->
-
             <li class="nav-item dropdown">
                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                     Hi, <?php echo $_SESSION['username']; ?><span class="caret"></span>
                 </a>
                 <div class="dropdown-menu position-absolute dropdown-menu-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href=""><?php echo $_SESSION['roles']; ?></a>
-                    <a class="dropdown-item" href="">Profile</a>
                     <a class="dropdown-item" href="../config/preferences.php">Preferences</a>
                     <a class="dropdown-item" href="../config/settings.php">Settings</a>
                     <a class="dropdown-item" href="../../index.php?action=logout">Sign out</a>
@@ -137,10 +126,7 @@ require('../config/config.php');
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <?php if ($_SESSION['roles'] == "Enterprise") { ?>
                                         <a class="nav-link" href="../storage/storage-pools.php">
-                                        <?php } else { ?>
-                                            <a class="nav-link" href="../storage/storage-pools-user.php"> <?php } ?>
                                             <span data-feather="database"></span>
                                             Storage
                                             </a></a>
@@ -161,10 +147,7 @@ require('../config/config.php');
                                     </a>
                                 </li>
                                 <li class="nav-item">
-
-                                    <?php if ($_SESSION['roles'] == "Enterprise") { ?>
-                                        <a class="nav-link" href="../gpu/gpubinder.php"> <?php } else { ?>
-                                            <a class="nav-link" href="../gpu/gpubinder_profiles.php"> <?php } ?>
+                                        <a class="nav-link" href="../gpu/gpubinder.php">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gpu-card" viewBox="0 0 16 16">
                                                 <path d="M4 8a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Zm7.5-1.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z" />
                                                 <path d="M0 1.5A.5.5 0 0 1 .5 1h1a.5.5 0 0 1 .5.5V4h13.5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5H2v2.5a.5.5 0 0 1-1 0V2H.5a.5.5 0 0 1-.5-.5Zm5.5 4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5ZM9 8a2.5 2.5 0 1 0 5 0 2.5 2.5 0 0 0-5 0Z" />
@@ -174,16 +157,13 @@ require('../config/config.php');
                                             </a>
                                 </li>
                                 <li class="nav-item">
-
-                                    <?php if ($_SESSION['roles'] == "Enterprise") { ?>
                                         <a class="nav-link" href="../modules/update_modules.php">
                                             <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-seam" viewBox="0 0 16 16">
                                                     <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2l-2.218-.887zm3.564 1.426L5.596 5 8 5.961 14.154 3.5l-2.404-.961zm3.25 1.7-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464L7.443.184z"></path>
                                                 </svg></span>
                                             Modules
-                                        </a> <?php } ?>
+                                        </a>
                                 </li>
-
                             </ul>
                         </li>
                     </ul>

@@ -1,4 +1,0 @@
-[Thu Oct 07 10:06:11.268684 2021] [php7:warn] [pid 1723] [client 169.56.141.30:55012] PHP Warning:  libvirt_connect(): Cannot create user runtime directory '/var/www/.cache/libvirt': Permission denied in /var/www/html/arclight/pages/domain/demo3.php on line 8
-[2021-10-07 10:06:11 libvirt-php/core ]: libvirt_connect: Cannot establish connection to (null)
-
-[Thu Oct 07 10:39:04.448754 2021] [php7:emerg] [pid 1723] [client 169.56.141.30:50489] PHP Parse error:  syntax error, unexpected end of file in /var/www/html/arclight/pages/domain/demo3.php on line 16
