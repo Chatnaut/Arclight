@@ -547,6 +547,15 @@ class Libvirt {
         return true;
     }
 
+    //Storage volume resize
+    function storagevolume_resize($path, $size) {
+        $vol = libvirt_storagevolume_lookup_by_path($this->conn, $path);
+        if (!libvirt_storagevolume_resize($vol, $size))
+            return $this->_set_last_error();
+
+        return true;
+    }
+
 
     function translate_volume_type($type) {
         if ($type == 1)

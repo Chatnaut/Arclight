@@ -48,7 +48,12 @@ require('../footer.php');
                             "<td><pre>Failed to Update libvirt.so</pre></td>" .
                             "</tr>";
                         }
-                        
+                        //apt install net-tools 
+                        $netTools = shell_exec('sudo apt install net-tools');
+                        echo "<tr>" .
+                        "<td><pre>Successfully Updated net-tools: {$result}</pre></td>" .
+                        "</tr>";
+
                     ?>
 
                 </div>
