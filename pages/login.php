@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $_SESSION['username'] = $username;
     $_SESSION['userid'] = $userid; //used to set items such as themeColor in index.php
 
-    $arrayLatest = file('https://chatnaut.com/version.php'); //Check for a newer version of Arclight
+    $arrayLatest = file('https://arclight.chatnaut.com/version/'); //Check for a newer version of Arclight
     $arrayExisting = file('config/version.php'); //Check the existing version of Arclight
     $latestExploded = explode('.', $arrayLatest[0]); //Seperate Major.Minor.Patch
     $existingExploded = explode('.', $arrayExisting[1]); //Seperate Major.Minor.Patch

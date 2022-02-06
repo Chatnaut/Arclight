@@ -81,15 +81,16 @@ if (isset($_SESSION['username'])) {
   if (empty($pools)) {
     header('Location: pages/storage/storage-pools.php');
   } else {
-    header('Location: pages/login.php');
+    header('Location: pages/domain/domain-list.php');
   }
 
-
-  //If user is not logged in check to make sure that the config.php setup file is created. If it does send them to login
-} else if (file_exists($path)) {
+//If user is not logged in check to make sure that the config.php setup file is created. If it does send them to login
+} elseif (file_exists($path)) {
   header('Location: pages/login.php');
 
-  //If the user is not logged in and the config.php has not yet been created send them to setup configuration.
+//If the user is not logged in and the config.php has not yet been created send them to setup configuration.
 } else {
-  header('Location: pages/config/setup-configuration.php');
+header('Location: pages/config/setup-configuration.php');
 }
+
+?>

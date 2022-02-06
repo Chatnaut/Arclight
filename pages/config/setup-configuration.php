@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         userid INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         username varchar(255),
         email varchar(255),
-        password varchar(255)";
+        password varchar(255))";
 
     //Test to see if we can create the table for users
     if ($conn->query($sql) === TRUE) {
