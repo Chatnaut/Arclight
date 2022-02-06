@@ -4,7 +4,6 @@
   </a>
 </p></br>
 <p align="center">
-
     <img alt="PR's Welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square">
   <a href="https://github.com/Chatnaut/Arclight/releases">
     <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/Chatnaut/Arclight">
