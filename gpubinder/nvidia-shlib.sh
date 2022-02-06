@@ -1,9 +1,5 @@
 #!/bin/bash
-#
-# Copyright (C) 2020 Dmitri Rubinstein
-# NVIDIA Shell Utility Library
-#
-# Documentation
+
 # https://cubiclenate.com/2019/10/31/power-cycling-pcie-devices-from-the-command-line/
 # https://nvidia.custhelp.com/app/answers/detail/a_id/3751/~/useful-nvidia-smi-queries
 
