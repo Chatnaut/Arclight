@@ -86,9 +86,9 @@
     }
 
     if ($action == 'domain-pause') {
-    $notification = $lv->domain_suspend($domName) ? "" : 'Error while pausing domain: '.$lv->get_last_error();
-    $description = ($notification) ? $notification : "guest paused";
-    $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
+    // $notification = $lv->domain_suspend($domName) ? "" : 'Error while pausing domain: '.$lv->get_last_error();
+    // $description = ($notification) ? $notification : "guest paused";
+    // $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
     $sql_action = $conn->query($sql);
     }
 

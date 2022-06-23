@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 require('config.php');
 
 // Creating table if necessary to store setttings
-$sql = "CREATE TABLE IF NOT EXISTS arclight_config ( name VARCHAR(255), value VARCHAR(255), userid int );";
+$sql = "CREATE TABLE IF NOT EXISTS arclight_config ( sno INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), value VARCHAR(255), userid int );";
 $result = $conn->query($sql);
 
 if (isset($_SESSION['cert_path'])) {
@@ -154,7 +154,7 @@ if ($_SESSION['password'] === $_SESSION['confirm_password'] && $_SESSION['passwo
                   <div class="form-group">
                     <select class="form-control" name="language">
                       <option value="english" <?php if ($_SESSION['language'] == "english") { echo "selected"; } ?> >English (English)</option>
-                  <!--    <option value="spanish" <?php if ($_SESSION['language'] == "spanish") { echo "selected"; } ?> >Spanish (Español)</option> -->
+                  <!--    <option value="spanish" <?php if ($_SESSION['language'] == "spanish") { echo "selected"; } ?> >Spanish (Espa ol)</option> -->
                     </select>
                   </div>
                 </div>

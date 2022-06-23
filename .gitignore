@@ -8,3 +8,4 @@ nvidia-devices.conf
 config.local.php
 novnc.log
 test.log
+.env

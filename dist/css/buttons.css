@@ -14,8 +14,6 @@ button {
   transition: all 0.3s ease;
   position: relative;
   display: inline-block;
-  /* box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5),
-    7px 7px 20px 0px rgba(0, 0, 0, 0.1), 4px 4px 5px 0px rgba(0, 0, 0, 0.1); */
   outline: none;
 }
 
@@ -32,8 +30,6 @@ button {
   transition: all 0.3s ease;
   position: relative;
   display: inline-block;
-  /* box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5),
-    7px 7px 20px 0px rgba(0, 0, 0, 0.1), 4px 4px 5px 0px rgba(0, 0, 0, 0.1); */
   outline: none;
 }
 
@@ -55,8 +51,6 @@ align-items: center;
   transition: all 0.3s ease;
   position: relative;
   display: inline-block;
-  /* box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5),
-    7px 7px 20px 0px rgba(0, 0, 0, 0.1), 4px 4px 5px 0px rgba(0, 0, 0, 0.1); */
   outline: none;
 }
 
@@ -138,7 +132,6 @@ color: #999;
 letter-spacing: -0.005em;   
 word-spacing:1px;  
 font-size: 1.75em;  
-/* font-weight: bold;   */
 }  
 
 #modalsv {
@@ -158,8 +151,6 @@ cursor: pointer;
 transition: all 0.3s ease;
 position: relative;
 display: inline-block;
-/* box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5),
-7px 7px 20px 0px rgba(0, 0, 0, 0.1), 4px 4px 5px 0px rgba(0, 0, 0, 0.1); */
 outline: none;
 }
 
@@ -181,7 +172,6 @@ width: 2px;
 
 #modalsv:hover {
 box-shadow: 4px 4px 6px 0 rgba(255, 255, 255, 0.5),
-/* -4px -4px 6px 0 rgba(116, 125, 136, 0.5), */
 inset -4px -4px 6px 0 rgba(255, 255, 255, 0.2),
 inset 4px 4px 6px 0 rgba(0, 0, 0, 0.4);
 }
@@ -201,8 +191,6 @@ inset 4px 4px 6px 0 rgba(0, 0, 0, 0.4);
   transition: all 0.3s ease;
   position: relative;
   display: inline-block;
-  /* box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5),
-    7px 7px 20px 0px rgba(0, 0, 0, 0.1), 4px 4px 5px 0px rgba(0, 0, 0, 0.1); */
   outline: none;
 }
 
@@ -229,3 +217,34 @@ inset 4px 4px 6px 0 rgba(0, 0, 0, 0.4);
   inset 4px 4px 6px 0 rgba(0, 0, 0, 0.4);
   }
   
+
+  .switch_advance {
+    appearance: none;
+    height: 2em;
+    width: 4em;
+    background-color: #c2c2c2;
+    cursor: pointer;
+    border-radius: 1em;
+    position: relative;
+    transition: background-color 0.3s ease;
+  }
+  
+  .switch_advance::before {
+    content: "";
+    height: 100%;
+    width: 50%;
+    background-color: white;
+    position: absolute;
+    border-radius: 50%;
+    border: #c2c2c2, solid 0.2em;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+  
+  .switch_advance:checked {
+    background-color: #826eff;
+  }
+  
+  .switch_advance:checked::before {
+    border-color: #826eff;
+    transform: translateX(100%);
+  }

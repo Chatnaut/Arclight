@@ -1,0 +1,94 @@
+[2022-06-04 18:31:36 libvirt-php/connection ]: php_libvirt_connection_dtor: virConnectClose(0x560da3736790) completed successfully
+
+[2022-06-04 18:32:12 libvirt-php/connection ]: php_libvirt_connection_dtor: virConnectClose(0x560da3738000) completed successfully
+
+[2022-06-04 18:35:13 libvirt-php/connection ]: php_libvirt_connection_dtor: virConnectClose(0x560da373d120) completed successfully
+
+[Sat Jun 04 18:35:18.037771 2022] [php7:notice] [pid 1475] [client 3.109.4.89:54999] PHP Notice:  Undefined index: userid in /var/www/html/arclight/index.php on line 32, referer: http://3.111.98.248/arclight/pages/domain/demo2.php
+[Sat Jun 04 18:35:18.038351 2022] [php7:notice] [pid 1475] [client 3.109.4.89:54999] PHP Notice:  Undefined variable: cert_path in /var/www/html/arclight/index.php on line 41, referer: http://3.111.98.248/arclight/pages/domain/demo2.php
+[Sat Jun 04 18:35:18.038616 2022] [php7:notice] [pid 1475] [client 3.109.4.89:54999] PHP Notice:  Undefined variable: key_path in /var/www/html/arclight/index.php on line 56, referer: http://3.111.98.248/arclight/pages/domain/demo2.php
+[Sat Jun 04 18:35:18.040405 2022] [php7:notice] [pid 1475] [client 3.109.4.89:54999] PHP Notice:  Undefined index: action in /var/www/html/arclight/index.php on line 70, referer: http://3.111.98.248/arclight/pages/domain/demo2.php
+[Sat Jun 04 18:35:18.050226 2022] [php7:warn] [pid 1475] [client 3.109.4.89:54999] PHP Warning:  mysqli_num_rows() expects parameter 1 to be mysqli_result, bool given in /var/www/html/arclight/pages/header.php on line 32, referer: http://3.111.98.248/arclight/pages/domain/demo2.php
+[Sat Jun 04 18:35:18.050610 2022] [php7:warn] [pid 1475] [client 3.109.4.89:54999] PHP Warning:  mysqli_num_rows() expects parameter 1 to be mysqli_result, bool given in /var/www/html/arclight/pages/header.php on line 39, referer: http://3.111.98.248/arclight/pages/domain/demo2.php
+[Sat Jun 04 18:35:18.050627 2022] [php7:notice] [pid 1475] [client 3.109.4.89:54999] PHP Notice:  Undefined index: language in /var/www/html/arclight/pages/header.php on line 45, referer: http://3.111.98.248/arclight/pages/domain/demo2.php
+[Sat Jun 04 18:35:18.050636 2022] [php7:notice] [pid 1475] [client 3.109.4.89:54999] PHP Notice:  Undefined index: language in /var/www/html/arclight/pages/header.php on line 47, referer: http://3.111.98.248/arclight/pages/domain/demo2.php
+[Sat Jun 04 18:35:18.052873 2022] [php7:notice] [pid 1475] [client 3.109.4.89:54999] PHP Notice:  Undefined index: uuid in /var/www/html/arclight/pages/domain/domain-list.php on line 67, referer: http://3.111.98.248/arclight/pages/domain/demo2.php
+[Sat Jun 04 18:35:18.052890 2022] [php7:notice] [pid 1475] [client 3.109.4.89:54999] PHP Notice:  Undefined index: action in /var/www/html/arclight/pages/domain/domain-list.php on line 68, referer: http://3.111.98.248/arclight/pages/domain/demo2.php
+[Sat Jun 04 18:35:18.052943 2022] [php7:warn] [pid 1475] [client 3.109.4.89:54999] PHP Warning:  Use of undefined constant themeColor - assumed 'themeColor' (this will throw an Error in a future version of PHP) in /var/www/html/arclight/pages/domain/domain-list.php on line 387, referer: http://3.111.98.248/arclight/pages/domain/demo2.php
+[Sat Jun 04 18:35:18.085229 2022] [php7:notice] [pid 1475] [client 3.109.4.89:54999] PHP Notice:  Undefined index: themeColor in /var/www/html/arclight/pages/navbar.php on line 38, referer: http://3.111.98.248/arclight/pages/domain/demo2.php
+[Sat Jun 04 18:35:18.085258 2022] [php7:notice] [pid 1475] [client 3.109.4.89:54999] PHP Notice:  Undefined index: themeColor in /var/www/html/arclight/pages/navbar.php on line 41, referer: http://3.111.98.248/arclight/pages/domain/demo2.php
+[Sat Jun 04 18:35:18.085268 2022] [php7:notice] [pid 1475] [client 3.109.4.89:54999] PHP Notice:  Undefined index: update_available in /var/www/html/arclight/pages/navbar.php on line 62, referer: http://3.111.98.248/arclight/pages/domain/demo2.php
+[Sat Jun 04 18:35:18.085278 2022] [php7:notice] [pid 1475] [client 3.109.4.89:54999] PHP Notice:  Undefined index: roles in /var/www/html/arclight/pages/navbar.php on line 83, referer: http://3.111.98.248/arclight/pages/domain/demo2.php
+[Sat Jun 04 18:35:18.085674 2022] [php7:notice] [pid 1475] [client 3.109.4.89:54999] PHP Notice:  Undefined index: themeColor in /var/www/html/arclight/pages/domain/domain-list.php on line 399, referer: http://3.111.98.248/arclight/pages/domain/demo2.php
+[Sat Jun 04 18:35:18.085684 2022] [php7:notice] [pid 1475] [client 3.109.4.89:54999] PHP Notice:  Undefined index: themeColor in /var/www/html/arclight/pages/domain/domain-list.php on line 417, referer: http://3.111.98.248/arclight/pages/domain/demo2.php
+[Sat Jun 04 18:35:18.086970 2022] [php7:warn] [pid 1475] [client 3.109.4.89:54999] PHP Warning:  libvirt_domain_memory_stats(): Requested operation is not valid: domain is not running in /var/www/html/arclight/pages/libvirt.php on line 940, referer: http://3.111.98.248/arclight/pages/domain/demo2.php
+[Sat Jun 04 18:35:18.086997 2022] [php7:notice] [pid 1475] [client 3.109.4.89:54999] PHP Notice:  Trying to access array offset on value of type bool in /var/www/html/arclight/pages/domain/domain-list.php on line 444, referer: http://3.111.98.248/arclight/pages/domain/demo2.php
+[Sat Jun 04 18:35:18.087007 2022] [php7:notice] [pid 1475] [client 3.109.4.89:54999] PHP Notice:  Trying to access array offset on value of type bool in /var/www/html/arclight/pages/domain/domain-list.php on line 444, referer: http://3.111.98.248/arclight/pages/domain/demo2.php
+[Sat Jun 04 18:35:18.087016 2022] [php7:warn] [pid 1475] [client 3.109.4.89:54999] PHP Warning:  Division by zero in /var/www/html/arclight/pages/domain/domain-list.php on line 444, referer: http://3.111.98.248/arclight/pages/domain/demo2.php
+[Sat Jun 04 18:35:18.097423 2022] [php7:warn] [pid 1475] [client 3.109.4.89:54999] PHP Warning:  libvirt_domain_memory_stats(): Requested operation is not valid: domain is not running in /var/www/html/arclight/pages/libvirt.php on line 940, referer: http://3.111.98.248/arclight/pages/domain/demo2.php
+[Sat Jun 04 18:35:18.097459 2022] [php7:notice] [pid 1475] [client 3.109.4.89:54999] PHP Notice:  Trying to access array offset on value of type bool in /var/www/html/arclight/pages/domain/domain-list.php on line 444, referer: http://3.111.98.248/arclight/pages/domain/demo2.php
+[Sat Jun 04 18:35:18.097469 2022] [php7:notice] [pid 1475] [client 3.109.4.89:54999] PHP Notice:  Trying to access array offset on value of type bool in /var/www/html/arclight/pages/domain/domain-list.php on line 444, referer: http://3.111.98.248/arclight/pages/domain/demo2.php
+[Sat Jun 04 18:35:18.097478 2022] [php7:warn] [pid 1475] [client 3.109.4.89:54999] PHP Warning:  Division by zero in /var/www/html/arclight/pages/domain/domain-list.php on line 444, referer: http://3.111.98.248/arclight/pages/domain/demo2.php
+[Sat Jun 04 18:35:18.107679 2022] [php7:warn] [pid 1475] [client 3.109.4.89:54999] PHP Warning:  libvirt_domain_memory_stats(): Requested operation is not valid: domain is not running in /var/www/html/arclight/pages/libvirt.php on line 940, referer: http://3.111.98.248/arclight/pages/domain/demo2.php
+[Sat Jun 04 18:35:18.107715 2022] [php7:notice] [pid 1475] [client 3.109.4.89:54999] PHP Notice:  Trying to access array offset on value of type bool in /var/www/html/arclight/pages/domain/domain-list.php on line 444, referer: http://3.111.98.248/arclight/pages/domain/demo2.php
+[Sat Jun 04 18:35:18.107724 2022] [php7:notice] [pid 1475] [client 3.109.4.89:54999] PHP Notice:  Trying to access array offset on value of type bool in /var/www/html/arclight/pages/domain/domain-list.php on line 444, referer: http://3.111.98.248/arclight/pages/domain/demo2.php
+[Sat Jun 04 18:35:18.107733 2022] [php7:warn] [pid 1475] [client 3.109.4.89:54999] PHP Warning:  Division by zero in /var/www/html/arclight/pages/domain/domain-list.php on line 444, referer: http://3.111.98.248/arclight/pages/domain/demo2.php
+[Sat Jun 04 18:35:18.111696 2022] [php7:warn] [pid 1475] [client 3.109.4.89:54999] PHP Warning:  libvirt_domain_get_block_info(): Failed to open file '/var/lib/libvirt/images/gta.img': No such file or directory in /var/www/html/arclight/pages/libvirt.php on line 283, referer: http://3.111.98.248/arclight/pages/domain/demo2.php
+[Sat Jun 04 18:35:18.111740 2022] [php7:warn] [pid 1475] [client 3.109.4.89:54999] PHP Warning:  libvirt_domain_get_block_info(): Cannot get domain block information in /var/www/html/arclight/pages/libvirt.php on line 283, referer: http://3.111.98.248/arclight/pages/domain/demo2.php
+[Sat Jun 04 18:35:18.112186 2022] [php7:notice] [pid 1475] [client 3.109.4.89:54999] PHP Notice:  Undefined index: themeColor in /var/www/html/arclight/pages/domain/domain-list.php on line 515, referer: http://3.111.98.248/arclight/pages/domain/demo2.php
+[Sat Jun 04 18:35:18.777654 2022] [php7:notice] [pid 1475] [client 3.109.4.89:54999] PHP Notice:  Undefined index: themeColor in /var/www/html/arclight/pages/domain/domain-list.php on line 832, referer: http://3.111.98.248/arclight/pages/domain/demo2.php
+[Sat Jun 04 18:35:18.777707 2022] [php7:notice] [pid 1475] [client 3.109.4.89:54999] PHP Notice:  Undefined variable: notification in /var/www/html/arclight/pages/footer.php on line 23, referer: http://3.111.98.248/arclight/pages/domain/demo2.php
+[Sat Jun 04 20:58:21.910057 2022] [php7:notice] [pid 1476] [client 34.140.248.32:53890] PHP Notice:  Undefined index: userid in /var/www/html/arclight/index.php on line 32
+[Sat Jun 04 20:58:21.910772 2022] [php7:notice] [pid 1476] [client 34.140.248.32:53890] PHP Notice:  Undefined variable: cert_path in /var/www/html/arclight/index.php on line 41
+[Sat Jun 04 20:58:21.911061 2022] [php7:notice] [pid 1476] [client 34.140.248.32:53890] PHP Notice:  Undefined variable: key_path in /var/www/html/arclight/index.php on line 56
+[Sat Jun 04 20:58:21.912833 2022] [php7:notice] [pid 1476] [client 34.140.248.32:53890] PHP Notice:  Undefined index: action in /var/www/html/arclight/index.php on line 70
+[Sat Jun 04 20:58:21.912862 2022] [php7:notice] [pid 1476] [client 34.140.248.32:53890] PHP Notice:  Undefined index: username in /var/www/html/arclight/index.php on line 76
+[Sun Jun 05 01:35:35.797777 2022] [php7:notice] [pid 1476] [client 20.81.128.107:65470] PHP Notice:  Undefined index: userid in /var/www/html/arclight/index.php on line 32
+[Sun Jun 05 01:35:35.798358 2022] [php7:notice] [pid 1476] [client 20.81.128.107:65470] PHP Notice:  Undefined variable: cert_path in /var/www/html/arclight/index.php on line 41
+[Sun Jun 05 01:35:35.798612 2022] [php7:notice] [pid 1476] [client 20.81.128.107:65470] PHP Notice:  Undefined variable: key_path in /var/www/html/arclight/index.php on line 56
+[Sun Jun 05 01:35:35.800511 2022] [php7:notice] [pid 1476] [client 20.81.128.107:65470] PHP Notice:  Undefined index: action in /var/www/html/arclight/index.php on line 70
+[Sun Jun 05 01:35:35.800541 2022] [php7:notice] [pid 1476] [client 20.81.128.107:65470] PHP Notice:  Undefined index: username in /var/www/html/arclight/index.php on line 76
+[Sun Jun 05 05:03:52.102005 2022] [php7:notice] [pid 1475] [client 193.106.191.48:53816] PHP Notice:  Undefined index: userid in /var/www/html/arclight/index.php on line 32
+[Sun Jun 05 05:03:52.102527 2022] [php7:notice] [pid 1475] [client 193.106.191.48:53816] PHP Notice:  Undefined variable: cert_path in /var/www/html/arclight/index.php on line 41
+[Sun Jun 05 05:03:52.102792 2022] [php7:notice] [pid 1475] [client 193.106.191.48:53816] PHP Notice:  Undefined variable: key_path in /var/www/html/arclight/index.php on line 56
+[Sun Jun 05 05:03:52.104721 2022] [php7:notice] [pid 1475] [client 193.106.191.48:53816] PHP Notice:  Undefined index: action in /var/www/html/arclight/index.php on line 70
+[Sun Jun 05 05:03:52.104750 2022] [php7:notice] [pid 1475] [client 193.106.191.48:53816] PHP Notice:  Undefined index: username in /var/www/html/arclight/index.php on line 76
+[Sun Jun 05 06:02:55.902192 2022] [php7:notice] [pid 1475] [client 193.106.191.48:41780] PHP Notice:  Undefined index: userid in /var/www/html/arclight/index.php on line 32
+[Sun Jun 05 06:02:55.902661 2022] [php7:notice] [pid 1475] [client 193.106.191.48:41780] PHP Notice:  Undefined variable: cert_path in /var/www/html/arclight/index.php on line 41
+[Sun Jun 05 06:02:55.902916 2022] [php7:notice] [pid 1475] [client 193.106.191.48:41780] PHP Notice:  Undefined variable: key_path in /var/www/html/arclight/index.php on line 56
+[Sun Jun 05 06:02:55.904840 2022] [php7:notice] [pid 1475] [client 193.106.191.48:41780] PHP Notice:  Undefined index: action in /var/www/html/arclight/index.php on line 70
+[Sun Jun 05 06:02:55.904868 2022] [php7:notice] [pid 1475] [client 193.106.191.48:41780] PHP Notice:  Undefined index: username in /var/www/html/arclight/index.php on line 76
+[Sun Jun 05 06:18:41.818559 2022] [php7:notice] [pid 1476] [client 112.79.198.13:15307] PHP Notice:  Undefined index: userid in /var/www/html/arclight/index.php on line 32
+[Sun Jun 05 06:18:41.819042 2022] [php7:notice] [pid 1476] [client 112.79.198.13:15307] PHP Notice:  Undefined variable: cert_path in /var/www/html/arclight/index.php on line 41
+[Sun Jun 05 06:18:41.819272 2022] [php7:notice] [pid 1476] [client 112.79.198.13:15307] PHP Notice:  Undefined variable: key_path in /var/www/html/arclight/index.php on line 56
+[Sun Jun 05 06:18:41.821218 2022] [php7:notice] [pid 1476] [client 112.79.198.13:15307] PHP Notice:  Undefined index: action in /var/www/html/arclight/index.php on line 70
+[Sun Jun 05 06:18:41.821248 2022] [php7:notice] [pid 1476] [client 112.79.198.13:15307] PHP Notice:  Undefined index: username in /var/www/html/arclight/index.php on line 76
+[Sun Jun 05 06:23:55.427440 2022] [php7:notice] [pid 1477] [client 49.36.90.168:62637] PHP Notice:  Undefined index: userid in /var/www/html/arclight/index.php on line 32
+[Sun Jun 05 06:23:55.427899 2022] [php7:notice] [pid 1477] [client 49.36.90.168:62637] PHP Notice:  Undefined variable: cert_path in /var/www/html/arclight/index.php on line 41
+[Sun Jun 05 06:23:55.428137 2022] [php7:notice] [pid 1477] [client 49.36.90.168:62637] PHP Notice:  Undefined variable: key_path in /var/www/html/arclight/index.php on line 56
+[Sun Jun 05 06:23:55.430081 2022] [php7:notice] [pid 1477] [client 49.36.90.168:62637] PHP Notice:  Undefined index: action in /var/www/html/arclight/index.php on line 70
+[Sun Jun 05 06:23:55.430111 2022] [php7:notice] [pid 1477] [client 49.36.90.168:62637] PHP Notice:  Undefined index: username in /var/www/html/arclight/index.php on line 76
+[Sun Jun 05 07:58:17.400304 2022] [php7:error] [pid 1477] [client 54.179.160.229:57698] script '/var/www/html/phpinfo.php' not found or unable to stat
+[Sun Jun 05 07:58:18.056902 2022] [php7:error] [pid 1475] [client 54.179.160.229:57950] script '/var/www/html/info.php' not found or unable to stat
+[Sun Jun 05 07:58:19.360271 2022] [php7:error] [pid 1475] [client 54.179.160.229:58660] script '/var/www/html/phpinfo.php' not found or unable to stat
+[Sun Jun 05 07:58:19.515291 2022] [php7:error] [pid 1476] [client 54.179.160.229:56893] script '/var/www/html/info.php' not found or unable to stat
+[Sun Jun 05 07:58:20.181408 2022] [php7:error] [pid 1477] [client 54.179.160.229:55415] script '/var/www/html/test.php' not found or unable to stat
+[Sun Jun 05 07:58:21.018808 2022] [php7:error] [pid 1475] [client 54.179.160.229:55994] script '/var/www/html/phpversion.php' not found or unable to stat
+[Sun Jun 05 07:58:21.197132 2022] [php7:error] [pid 1476] [client 54.179.160.229:56202] script '/var/www/html/time.php' not found or unable to stat
+[Sun Jun 05 07:58:21.603607 2022] [php7:error] [pid 1477] [client 54.179.160.229:57227] script '/var/www/html/old_phpinfo.php' not found or unable to stat
+[Sun Jun 05 07:58:22.698867 2022] [php7:error] [pid 1476] [client 54.179.160.229:55600] script '/var/www/html/a.php' not found or unable to stat
+[Sun Jun 05 07:58:23.450623 2022] [php7:error] [pid 1477] [client 54.179.160.229:55707] script '/var/www/html/123.php' not found or unable to stat
+[Sun Jun 05 07:58:24.343657 2022] [php7:error] [pid 1475] [client 54.179.160.229:56285] script '/var/www/html/new.php' not found or unable to stat
+[Sun Jun 05 07:58:25.242668 2022] [php7:error] [pid 1477] [client 54.179.160.229:56943] script '/var/www/html/phpinfos.php' not found or unable to stat
+[Sun Jun 05 07:58:25.921705 2022] [php7:error] [pid 1475] [client 54.179.160.229:55712] script '/var/www/html/qq.php' not found or unable to stat
+[Sun Jun 05 07:58:26.055416 2022] [php7:error] [pid 1476] [client 54.179.160.229:56392] script '/var/www/html/test0.php' not found or unable to stat
+[Sun Jun 05 07:58:27.248461 2022] [php7:error] [pid 1475] [client 54.179.160.229:55126] script '/var/www/html/test5.php' not found or unable to stat
+[Sun Jun 05 07:58:27.423679 2022] [php7:error] [pid 1476] [client 54.179.160.229:56376] script '/var/www/html/test6.php' not found or unable to stat
+[Sun Jun 05 07:58:28.346707 2022] [php7:error] [pid 1477] [client 54.179.160.229:56233] script '/var/www/html/test9.php' not found or unable to stat
+[Sun Jun 05 11:43:27.874020 2022] [php7:notice] [pid 1475] [client 51.142.155.144:53498] PHP Notice:  Undefined index: userid in /var/www/html/arclight/index.php on line 32
+[Sun Jun 05 11:43:27.874499 2022] [php7:notice] [pid 1475] [client 51.142.155.144:53498] PHP Notice:  Undefined variable: cert_path in /var/www/html/arclight/index.php on line 41
+[Sun Jun 05 11:43:27.874751 2022] [php7:notice] [pid 1475] [client 51.142.155.144:53498] PHP Notice:  Undefined variable: key_path in /var/www/html/arclight/index.php on line 56
+[Sun Jun 05 11:43:27.876668 2022] [php7:notice] [pid 1475] [client 51.142.155.144:53498] PHP Notice:  Undefined index: action in /var/www/html/arclight/index.php on line 70
+[Sun Jun 05 11:43:27.876696 2022] [php7:notice] [pid 1475] [client 51.142.155.144:53498] PHP Notice:  Undefined index: username in /var/www/html/arclight/index.php on line 76
+[Sun Jun 05 16:10:49.026357 2022] [php7:error] [pid 1476] [client 54.202.212.149:52158] script '/var/www/html/phpinfo.php' not found or unable to stat
+[Sun Jun 05 16:36:28.070644 2022] [php7:error] [pid 1476] [client 18.237.68.218:43812] script '/var/www/html/info.php' not found or unable to stat

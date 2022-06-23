@@ -7,12 +7,16 @@ if (!isset($_SESSION)) {
 //Sets the current web directory
 $fileDir = dirname(__FILE__);
 
-//Sets the filepath for the config.php file which should be created after successful setup
+//Sets the filepath for the config.php and .env file which should be created after successful setup
 $path = dirname(__FILE__) . "/pages/config/config.php";
+$envpath = dirname(__FILE__) . "/.env";
 
 //If the config.php file exists perform the following
-if (file_exists($path)) {
+if (file_exists($path) && file_exists($envpath)) {
   require('./pages/config/config.php');
+
+  //set localhost from config.php
+  echo '<script type="text/javascript"> localStorage.setItem("hostname", "' . $db_host . '"); </script>';
 
   //Create the arclight_events table
   $sql = "CREATE TABLE IF NOT EXISTS arclight_events (
@@ -25,7 +29,8 @@ if (file_exists($path)) {
   $event_result = $conn->query($sql);
 
   //Setting the SSL Certificate file path
-  $sql = "SELECT value FROM arclight_config WHERE name = 'cert_path' LIMIT 1;";
+  $userid = $_SESSION['userid'];
+  $sql = "SELECT value FROM arclight_config WHERE name = 'cert_path' AND userid = '$userid' LIMIT 1;";
   $result = $conn->query($sql);
   // Extracting the record
   if (mysqli_num_rows($result) != 0) {
@@ -40,7 +45,7 @@ if (file_exists($path)) {
   }
 
   //Setting the SSL Certificate file path
-  $sql = "SELECT value FROM arclight_config WHERE name = 'key_path' LIMIT 1;";
+  $sql = "SELECT value FROM arclight_config WHERE name = 'key_path' AND userid = '$userid' LIMIT 1;";
   $result = $conn->query($sql);
   // Extracting the record
   if (mysqli_num_rows($result) != 0) {
@@ -84,13 +89,13 @@ if (isset($_SESSION['username'])) {
     header('Location: pages/domain/domain-list.php');
   }
 
-//If user is not logged in check to make sure that the config.php setup file is created. If it does send them to login
-} elseif (file_exists($path)) {
+  //If user is not logged in check to make sure that the config.php setup file is created. If it does send them to login
+} elseif (file_exists($path) && file_exists($envpath)) {
   header('Location: pages/login.php');
 
-//If the user is not logged in and the config.php has not yet been created send them to setup configuration.
+  //If the user is not logged in and the config.php has not yet been created send them to setup configuration.
 } else {
-header('Location: pages/config/setup-configuration.php');
+  header('Location: pages/config/setup-configuration.php');
 }
 
 ?>
