@@ -80,29 +80,18 @@ if ($key_path) {
 ?>
 
 <script>
-    const hostname = window.location.hostname;
-
-      // change protocol according to the localhost protocol
-      var protocol = window.location.protocol;
-    if (protocol == "https:") {
-      var port = "3000";
-    } else {
-      var port = "3001";
-    }
 
   //send cert_option and key_option to backend via axios
   document.getElementById("start-ssh").onclick = async () => {
     try{
-    const data = await axios.post(`${protocol}//${hostname}:${port}/api/terminal/wssh`, {
+    const data = await axios.post(`/v1/api/terminal/wssh`, {
       cert_option: '<?php echo $cert_option; ?>',
       key_option: '<?php echo $key_option; ?>'
     });
     console.log(data);
-    }catch(error){
-      console.log(error);
-      
+    }catch(err){
+      console.log(err);
     }
-
 
   }
 </script>
