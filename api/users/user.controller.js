@@ -31,7 +31,7 @@ module.exports = {
                 console.log(err);
                 return res.status(500).json({
                     success: 0,
-                    message: "Database connection error"
+                    message: "Unable to create new instance"
                 });
             }
             return res.status(200).json({
