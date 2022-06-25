@@ -8,7 +8,7 @@ router.get("/arcuser/:id", getInstanceByUserId); //changed route path to not con
 router.patch("/", checkToken, updateUser);
 router.delete("/", checkToken, deleteUser);
 router.post("/login", login);
-router.post("/arcs", createNewInstance);
+router.post("/createinstance", createNewInstance);
 router.get("/a", checkToken, getArclightUsers);
 router.get("/auc/:email", checkToken, getArcUserConfig);
 
