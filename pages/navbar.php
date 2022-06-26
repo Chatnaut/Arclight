@@ -202,18 +202,20 @@ require('../config/config.php');
                         const newVersion = arraySplitVersion[0] + arraySplitVersion[1] + arraySplitVersion[2];
                         sessionStorage.setItem("state", tags.state)
                         if (newVersion > existingVersion) {
-                                const status = document.getElementById("update-status");
-                                //gradient border in status green if update available
-                                status.style.border = "1px solid rgb(0, 255, 0)";
-                                status.style.padding = "5px";
+                            const status = document.getElementById("update-status");
+                            //gradient border in status green if update available
+                            status.style.border = "1px solid rgb(0, 255, 0)";
+                            status.style.padding = "5px";
 
-                                status.innerText = "Update " + tags.version + " available";
-                                sessionStorage.setItem("update-available", true);
-                                sessionStorage.setItem("update-version", tags.version);
-                                sessionStorage.setItem("update-flag", tags.extension);
-                            }else{
-                                sessionStorage.setItem("update-available", false);
-                            }
+                            status.innerText = "Update " + tags.version + " available";
+                            sessionStorage.setItem("update-available", true);
+                            sessionStorage.setItem("update-version", tags.version);
+                            sessionStorage.setItem("update-flag", tags.extension);
+                        } else {
+                            sessionStorage.setItem("update-available", false);
+                        }
                     }, 3000);
                 })();
             </script>
+            <!-- axios library for AJAX calls -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
