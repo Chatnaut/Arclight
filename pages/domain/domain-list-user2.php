@@ -99,6 +99,7 @@ if (isset($_GET['action'])) {
 }
 
 require('../header.php');
+require('../navbar.php');
 
 $uuid = $_SESSION['uuid']; //grab the $uuid variable from $_GET, only used for actions below
 $action = $_SESSION['action']; //grab the $action variable from $_SESSION
@@ -489,9 +490,6 @@ if (isset($_SESSION[themeColor])) {
 }
 
 $random_mac = $lv->generate_random_mac_addr(); //used to set default mac address value in form field
-
-require('../navbar.php');
-
 ?>
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 <?php if ($_SESSION['themeColor'] == "dark-edition") {
