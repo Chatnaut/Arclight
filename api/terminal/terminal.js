@@ -1,25 +1,9 @@
 const router = require('express').Router();
 const { exec, spawn } = require("child_process");
 
-router.post('/wssh', async (req, res) => {
+router.post('/wssh', (req, res) => {
     const body = req.body;
-    // exec(`wssh "${body.cert_option}" --log-file-prefix=/var/www/html/arclight/logs/terminal.log`, (err, stdout, stderr) => {
-    //     if (err) {
-    //         console.log(stdout);
-    //         return res.status(500).json({
-    //             success: 0,
-    //             message: "SSH connection error",
-    //             error: stderr
-    //         });
-
-    //     }
-    //     return res.status(200).json({
-    //         success: 1,
-    //         data: stdout
-    //     });
-    // });
-
-    //use the spawn function to read output continuously, and without limit:
+    //using the spawn method to read output continuously, and without limit (future-use):
     const child = spawn('wssh', [`${body.cert_option}`, `${body.key_option}`, `--log-file-prefix=/var/www/html/arclight/logs/terminal.log`]);
 
     child.stdout.on('data', (data) => {
@@ -53,5 +37,6 @@ router.post('/wssh', async (req, res) => {
             console.log(`child process exited with signal ${signal}`);
         }
     });
+
 });
 module.exports = router;
