@@ -30,9 +30,9 @@ const terminalRouter = require("./api/terminal/terminal");
 //     console.log(`Listening to port ${port}`);
 // });
 
-app.use("/api/arc", userRouter);
-app.use("/api/status", healthRouter);
-app.use("/api/terminal/", terminalRouter);
+app.use("/v1/arc", userRouter);
+app.use("/v1/status", healthRouter);
+app.use("/v1/terminal/", terminalRouter);
 
 http.createServer(app).listen(3000, () => {
   console.log("Listening to port 3000");
