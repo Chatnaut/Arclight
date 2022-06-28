@@ -18,22 +18,21 @@ require('../config/config.php');
                                                                     echo "main-dark";
                                                                   } ?> ">
   <div class="d-flex flex-row-reverse flex-wrap flex-md-nowrap align-items-center">
-    <div class="btn-toolbar mb-md-0">
-      <div class="btn-group mr-2">
-        <button class="btn btn-sm btn-outline-secondary" id="start-ssh">Start ssh</button>
+    <div class="btn-toolbar mb-md-0 mr-3 pr-3">
+      <div class="btn-group mr-3 pr-3">
+        <button class="btn btn-sm btn-outline-secondary" id="start-ssh">Start SSH  <i class="fa-solid fa-terminal"></i></button>
       </div>
     </div>
   </div>
 
-    <div class="content" style="display:none;">
-      <div class="row">
-        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-            <div class="card-body" id="sshframe">
-            </div>
-        </div>
+  <div class="content" style="display:none;">
+    <div class="row">
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="card-body" id="sshframe"></div>
       </div>
     </div>
-    </div>
+  </div>
+  </div>
 </main>
 
 <?php
@@ -44,7 +43,7 @@ $result = $conn->query($sql);
 // Extracting the record
 if (mysqli_num_rows($result) != 0) {
   while ($row = $result->fetch_assoc()) {
-    $cert_path = $row['value']; 
+    $cert_path = $row['value'];
   }
 }
 if ($cert_path) {
@@ -59,19 +58,20 @@ $result = $conn->query($sql);
 // Extracting the record
 if (mysqli_num_rows($result) != 0) {
   while ($row = $result->fetch_assoc()) {
-    $key_path = $row['value']; 
+    $key_path = $row['value'];
   }
 }
 if ($key_path) {
-  $key_option = "--keyfile=" . $key_path; 
+  $key_option = "--keyfile=" . $key_path;
 } else {
-  $key_option = ""; 
+  $key_option = "";
 }
 ?>
 
 <script>
   const startssh = document.getElementById('start-ssh');
   const sshframe = document.getElementById('sshframe');
+  const sshicon = document.getElementsByClassName('fa-solid fa-terminal');
   const cert = '<?php echo $cert_option; ?>';
   const key = '<?php echo $key_option; ?>';
 
@@ -82,18 +82,21 @@ if ($key_path) {
         key_option: key
       })
       .then(function(response) {
-        if (response.data.success == 1) {
+        if (response.data.success == 1 && response.status == 200) {
           console.log(response);
-          //add iframe to page
           document.getElementsByClassName('content')[0].style.display = 'block';
           sshframe.style.display = 'block';
+          sshicon[0].style.color = '#32de84';
           sshframe.innerHTML = `<iframe src="${window.location.protocol}//${window.location.hostname}:4433/" height="538px" width="100%" frameborder="0"></iframe>`;
         } else {
           console.log(response.data.error);
+          sshicon[0].style.color = '#ff0000';
         }
       })
       .catch(function(error) {
         console.log(error);
+        sshicon[0].style.color = '#ff0000';
+
       });
   });
 </script>
