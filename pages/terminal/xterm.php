@@ -17,27 +17,24 @@ require('../config/config.php');
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 <?php if ($_SESSION['themeColor'] == "dark-edition") {
                                                                     echo "main-dark";
                                                                   } ?> ">
-  <form action="" method="POST">
-    <div class="content">
+  <div class="d-flex flex-row-reverse flex-wrap flex-md-nowrap align-items-center">
+    <div class="btn-toolbar mb-md-0">
+      <div class="btn-group mr-2">
+        <button class="btn btn-sm btn-outline-secondary" id="start-ssh">Start ssh</button>
+      </div>
+    </div>
+  </div>
+
+    <div class="content" style="display:none;">
       <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-          <div class="card <?php if ($_SESSION['themeColor'] == "dark-edition") {
-                              echo "card-dark";
-                            } ?>">
-            <!-- make button to start ssh -->
-            <button name="start_ssh" class="btn btn-primary" id="start-ssh">Start SSH</button>
-
             <div class="card-body" id="sshframe">
-              <!-- <iframe src="https://3.111.98.248:4433/" height="600px" width="100%" frameborder="0"></iframe> -->
             </div>
-          </div>
         </div>
       </div>
     </div>
     </div>
-  </form>
 </main>
-<!-- end content of physical GPUs -->
 
 <?php
 //Setting the SSL Certificate file path
@@ -47,13 +44,13 @@ $result = $conn->query($sql);
 // Extracting the record
 if (mysqli_num_rows($result) != 0) {
   while ($row = $result->fetch_assoc()) {
-    $cert_path = $row['value']; //sets value from database
+    $cert_path = $row['value']; 
   }
 }
 if ($cert_path) {
-  $cert_option = "--certfile=" . $cert_path; //--cert is option used in noVNC connection string
+  $cert_option = "--certfile=" . $cert_path;
 } else {
-  $cert_option = ""; //sets default location if nothing in database
+  $cert_option = "";
 }
 
 //Setting the SSL Certificate file path
@@ -62,36 +59,41 @@ $result = $conn->query($sql);
 // Extracting the record
 if (mysqli_num_rows($result) != 0) {
   while ($row = $result->fetch_assoc()) {
-    $key_path = $row['value']; //sets value from database
+    $key_path = $row['value']; 
   }
 }
 if ($key_path) {
-  $key_option = "--keyfile=" . $key_path; //--key is option used in noVNC connection string
+  $key_option = "--keyfile=" . $key_path; 
 } else {
-  $key_option = ""; //will ignore key file if nothing in database
+  $key_option = ""; 
 }
-
-// start a https server, certfile and keyfile must be passed e.g wssh --certfile='/path/to/cert.crt' --keyfile='/path/to/cert.key'
-
-// shell_exec("wssh $cert_option $key_option --log-file-prefix=../../logs/webssh.log -a 2>&1");
-
-// 'wssh --certfile=/etc/letsencrypt/live/arc.chatnaut.com/fullchain.pem --keyfile=/etc/letsencrypt/live/arc.chatnaut.com/privkey.pem'
-
 ?>
 
 <script>
+  const startssh = document.getElementById('start-ssh');
+  const sshframe = document.getElementById('sshframe');
+  const cert = '<?php echo $cert_option; ?>';
+  const key = '<?php echo $key_option; ?>';
 
-  //send cert_option and key_option to backend via axios
-  document.getElementById("start-ssh").onclick = async () => {
-    try{
-    const data = await axios.post(`/v1/api/terminal/wssh`, {
-      cert_option: '<?php echo $cert_option; ?>',
-      key_option: '<?php echo $key_option; ?>'
-    });
-    console.log(data);
-    }catch(err){
-      console.log(err);
-    }
-
-  }
+  startssh.addEventListener('click', function(e) {
+    e.preventDefault();
+    axios.post(`/api/v1/terminal/wssh`, {
+        cert_option: cert,
+        key_option: key
+      })
+      .then(function(response) {
+        if (response.data.success == 1) {
+          console.log(response);
+          //add iframe to page
+          document.getElementsByClassName('content')[0].style.display = 'block';
+          sshframe.style.display = 'block';
+          sshframe.innerHTML = `<iframe src="${window.location.protocol}//${window.location.hostname}:4433/" height="538px" width="100%" frameborder="0"></iframe>`;
+        } else {
+          console.log(response.data.error);
+        }
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  });
 </script>
