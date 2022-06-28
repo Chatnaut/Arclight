@@ -206,7 +206,7 @@ $_SESSION['hostname'] = $hostname;
     const dotapi = document.querySelector('.api-status-dot');
 
     //get arc api health status
-    axios.get(`/v1/api/status/health`)
+    axios.get(`/api/v1/status/health`)
       .then(function(response) {
         console.log(response);
         if (response.status == 200) {
@@ -229,7 +229,7 @@ $_SESSION['hostname'] = $hostname;
       try {
         const {
           data
-        } = await axios.post(`/v1/api/arc/login`, {
+        } = await axios.post(`/api/v1/arc/login`, {
           email,
           password
         });
@@ -256,7 +256,7 @@ $_SESSION['hostname'] = $hostname;
       try {
         const {
           data
-        } = await axios.get(`/v1/api/arc/auc/${email}`, {
+        } = await axios.get(`/api/v1/arc/auc/${email}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
