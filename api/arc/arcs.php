@@ -36,7 +36,7 @@
         const token = localStorage.getItem('token');
 
         try {
-            axios.post(`api/v1/arc/createinstance`, {
+            axios.post(`/api/v1/arc/createinstance`, {
                     userid: userid,
                     uuid: uuid,
                     action: action,
