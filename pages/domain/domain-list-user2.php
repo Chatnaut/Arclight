@@ -243,8 +243,8 @@ if ($action == "create-domain") {
     //trigger createInstance function in file api.php
     if (!$new_vm) {
         $notification = 'Error creating domain: ' . $lv->get_last_error(); //let the user know if there is an error
-    }else{
-    echo '<script>createInstance();</script>';
+    } else {
+        echo '<script>createInstance();</script>';
     }
     //--------------------- STORAGE VOLUME SECTION ---------------------//
     $storage_pool = $_SESSION['storage_pool']; //"default" storage pool is default choice
@@ -562,18 +562,19 @@ $random_mac = $lv->generate_random_mac_addr(); //used to set default mac address
                                             $diskdesc = '';
                                         }
                                         //get os type from tablename arclight_vm and set icon for each domain
-                                        $get_os = 'SELECT * FROM arclight_vm WHERE domain_name = "' . $name. '"';
+                                        $get_os = 'SELECT instance_type, os FROM arclight_vm WHERE domain_name = "' . $name . '"';
                                         $os_result = mysqli_query($conn, $get_os);
                                         $os_row = mysqli_fetch_assoc($os_result);
-                                        
-                                        if($os_row['os'] == 'windows'){
+                                        if ($os_row['os'] == 'windows') {
                                             $os_icon = "<i class='fab fa-windows'></i>";
-                                        }else if($os_row['os'] == 'linux'){
+                                        } else if ($os_row['os'] == 'linux') {
                                             $os_icon = "<i class='fab fa-linux'></i>";
-                                        }else if($os_row['os'] == 'mac'){
+                                        } else if ($os_row['os'] == 'mac') {
                                             $os_icon = "<i class='fab fa-apple'></i>";
-                                        }else if($os_row['os'] == 'unix'){
+                                        } else if ($os_row['os'] == 'unix') {
                                             $os_icon = "<i class='fab fa-uniregistry'></i>";
+                                        } else if ($os_row['os'] == 'other') {
+                                            $os_icon = "<i class='far fa-circle'></i>";
                                         } else {
                                             $os_icon = "<i class='fas fa-question'></i>";
                                         }
@@ -587,9 +588,14 @@ $random_mac = $lv->generate_random_mac_addr(); //used to set default mac address
                                             "<td> $cpu </td>" .
                                             "<td> $mem </td>" .
                                             "<td>";
-                                        if ($active) {
+                                        if ($os_row['instance_type'] == 'vm' && $active == true) {
                                             echo  "<div class=\"progress\">
                               <div class=\"progress-bar progress-bar-danger\" role=\"progressbar\" style=\"width: $mem_used%\" aria-valuenow=\"$mem_used\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>
+                              </div>";
+                                        } else if ($os_row['instance_type'] == 'bare_metal' && $active == true) {
+                                            //class added in dist\css\bootstrap.min.css
+                                            echo  "<div class=\"progresss\">
+                              <div class=\"progress progress-bar-baremetal\" role=\"progressbar\" style=\"width: $mem_used%\" aria-valuenow=\"$mem_used\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>
                               </div>";
                                         } else {
                                             echo "----";
