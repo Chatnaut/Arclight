@@ -48,7 +48,9 @@ $_SESSION['hostname'] = $hostname;
         <!-- Navbar -->
         <nav class="absolute top-0 left-0 right-0 z-30 flex flex-wrap items-center px-4 py-2 mx-0 my-0 shadow-soft-2xl bg-white/80 backdrop-blur-2xl backdrop-saturate-200 lg:flex-nowrap lg:justify-start">
           <div class="flex items-center justify-between w-full p-0 pl-6 mx-auto flex-wrap-inherit">
-            <a class="py-2.375 text-size-sm mr-4 ml-4 whitespace-nowrap font-bold text-slate-700 lg:ml-0" href="/arclight"> Arclight </a>
+          <img src="../assets/img/arclight-light.svg" class="mr-3 h-6 sm:h-9" alt="arclight Logo" />
+<!-- 
+            <a class="py-2.375 text-size-sm mr-4 ml-4 whitespace-nowrap font-bold text-slate-700 lg:ml-0" href="/arclight"> Arclight </a> -->
             <button navbar-trigger class="px-3 py-1 ml-2 leading-none transition-all bg-transparent border border-transparent border-solid rounded-lg shadow-none cursor-pointer text-size-lg ease-soft-in-out lg:hidden" type="button" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
               <span class="inline-block mt-2 align-middle bg-center bg-no-repeat bg-cover w-6-em h-6-em bg-none">
                 <span bar1 class="w-5.5 rounded-xs relative my-0 mx-auto block h-px bg-gray-600 transition-all duration-300"></span>
@@ -246,7 +248,6 @@ $_SESSION['hostname'] = $hostname;
         localStorage.removeItem('userid');
         localStorage.removeItem('username');
         error.innerHTML = error;
-        // console.log(error);
       }
     });
     //get auc inner join data
@@ -302,8 +303,5 @@ $_SESSION['hostname'] = $hostname;
     }
   </script>
 </body>
-<!-- plugin for scrollbar  -->
 <script src="../assets/js/plugins/perfect-scrollbar.min.js" async></script>
-<!-- main script file  -->
-
 </html>
