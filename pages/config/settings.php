@@ -6,7 +6,7 @@ if (!isset($_SESSION)) {
 
 // If there is no username, then we need to send them to the login
 if (!isset($_SESSION['username'])) {
-  header('Location: ../login.php');
+  header('Location: ../sign-in.php');
 }
 
 // This function is used to prevent any problems with user form input

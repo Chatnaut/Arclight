@@ -6,7 +6,7 @@ if (!isset($_SESSION)) {
 
 // If there is no username, then we need to send them to the login
 if (!isset($_SESSION['username'])){
-  header('Location: ../login.php');
+  header('Location: ../sign-in.php');
 }
 
 // We are now going to grab any POST data and put in in SESSION data, then clear it.

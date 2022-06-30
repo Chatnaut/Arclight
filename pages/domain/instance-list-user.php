@@ -7,7 +7,7 @@ if (!isset($_SESSION)) {
 // If there is no username, then we need to send them to the login
 if (!isset($_SESSION['username'])) {
     $_SESSION['return_location'] = $_SERVER['PHP_SELF']; //sets the return location used on login page
-    header('Location: ../login.php');
+    header('Location: ../sign-in.php');
 }
 
 // This function is used to prevent any problems with user form input
@@ -409,7 +409,7 @@ if ($action == "create-xml") {
 
     //Return back to the domain-single page if successful
     if (!$notification) {
-        header('Location: domain-list-user3.php');
+        header('Location: instance-list-user.php');
         exit;
     }
 } //end if $_SESSION
