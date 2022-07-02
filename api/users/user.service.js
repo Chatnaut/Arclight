@@ -60,6 +60,28 @@ module.exports = {
       }
     );
   },
+      //dynamically update arclight_vm table columns with only requested fields
+      updateUserInstance: (data, callback) => {
+          let query = `UPDATE arclight_vm SET `;
+          let queryValues = [];
+          for (let key in data) {
+            if (key !== "domain_name") {
+              query += `${key} = ?, `; //output will be like  'instance_type = ?, domain_name = ?
+              queryValues.push(data[key]); //output will be like  ['instance_type', 'domain_name']
+            }
+          }
+          query = query.slice(0, -2);
+          query += ` WHERE domain_name = ?`;
+          queryValues.push(data.domain_name);
+          pool.query(query, queryValues, (error, results, fields) => {
+            if (error) {
+              callback(error);
+            }
+            return callback(null, results);
+          }
+          );
+        },
+          
   //GET
   getUsers: (callback) => {
     pool.query(
@@ -114,7 +136,7 @@ module.exports = {
         if (error) {
           callback(error);
         }
-        return callback(null, results[0]);
+        return callback(null, results);
       }
     );
   },
@@ -128,11 +150,24 @@ module.exports = {
         if (error) {
           callback(error);
         }
-        return callback(null, results[0]);
+        return callback(null, results);
       }
     );
   },
 
+  //DELETE Instance
+  deleteUserInstance: (data, callback) => {
+    pool.query(
+      `DELETE FROM arclight_vm WHERE userid = ? AND domain_name = ?`,
+      [data.userid, data.domain_name],
+      (error, results, fields) => {
+        if (error) {
+          callback(error);
+        }
+        return callback(null, results);
+      }
+    );
+  },
   //Authorize users using JWT
   getUserByUserEmail: (email, callback) => {
     pool.query(
@@ -160,4 +195,6 @@ module.exports = {
       }
     );
   },
+
+  
 };
