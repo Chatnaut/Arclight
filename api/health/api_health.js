@@ -18,9 +18,8 @@ router.get('/health', async(req, res) => {
         res.status(200).send(data);
     }catch(error){
         data.message = "Offline";
-        res.status(503).send();
+        res.status(503).send(error);
     }
-    
 });
 
 module.exports = router;
