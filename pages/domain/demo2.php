@@ -111,18 +111,20 @@ echo "<strong>:</strong> {$ci['hypervisor_string']} <br>";
   $hostname = $lv->get_hostname();
   echo "Hostname: " . $hostname;
 
-// set libvirt logfile
-$logfile = "libvirtd.log";
-$set_logfile = $lv->set_logfile($logfile);
-if($set_logfile) {
-  echo "Logfile Set";
-} else {
-  echo "Logfile Not Set";
-}
+// // set libvirt logfile
+// $logfile = "libvirtd.log";
+// $set_logfile = $lv->set_logfile($logfile);
+// if($set_logfile) {
+//   echo "Logfile Set";
+// } else {
+//   echo "Logfile Not Set";
+// }
 
-
+$domObj = $lv->get_domain_object("Noob");
+print_r($domObj);
+$mydomainuuid = libvirt_domain_get_uuid_string($domObj);
+echo "Domain UUID: " . $mydomainuuid."<br>"."<br>";
                     ?>
- <iframe src="https://3.111.98.248:4433/" height="500" width="800" title="arclight ssh"></iframe> 
 
                   </div>
                 </div>
@@ -133,7 +135,3 @@ if($set_logfile) {
       </form>
     </main>
   <!-- end content of physical GPUs -->
-
-<script>
-console.log(localStorage.getItem("hostname"));
-</script>
