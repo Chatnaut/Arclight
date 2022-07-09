@@ -1,7 +1,7 @@
 <script>
     const createInstance = function() {
         const userid = '<?php echo $_SESSION['userid']; ?>';
-        const uuid = '<?php echo $_SESSION['uuid']; ?>';
+        const uuid = null;
         const action = '<?php echo $_SESSION['action']; ?>';
         const username = '<?php echo $_SESSION['username']; ?>';
         const instance_type = '<?php echo $_SESSION['instance_type']; ?>';
@@ -69,16 +69,17 @@
                     }
                 })
                 .then(function(response) {
-                    console.log(response);
                     if (response.status == 200 && response.data.success == 1) {
-                        alert('Instance created successfully');
+                        // alert('Instance created successfully');
+                        console.log(response);
                         // window.location.href = '/arc/instances';
                     } else {
-                        alert('Error creating instance');
+                        console.log(response);
                     }
                 })
         } catch (err) {
             console.log(err);
         }
     };
+
 </script>
