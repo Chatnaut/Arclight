@@ -13,7 +13,7 @@ router.get("/a", checkToken, getArclightUsers);
 router.get("/arcuser/:id", getInstanceByUserId); //changed route path to not conflict with other routes
 router.post("/createinstance", checkToken, createNewInstance);
 router.patch("/updateinstance", updateInstance);
-router.delete("/deleteinstance", deleteinstance);
+router.delete("/deleteinstance/:userid/:domain_name", deleteinstance);
 router.get("/auc/:email", checkToken, getArcUserConfig);
 
 module.exports = router;

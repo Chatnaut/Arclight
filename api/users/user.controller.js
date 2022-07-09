@@ -137,7 +137,8 @@ module.exports = {
     },
 
     deleteinstance: (req, res) => {
-        const data = req.body;
+        // get from data object in body
+        const data = req.params;
         deleteUserInstance(data, (err, results) => {
             if (err) {
                 console.log(err);
