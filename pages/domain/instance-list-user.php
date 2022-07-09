@@ -1,4 +1,5 @@
 <?php
+
 // If the SESSION has not been started, start it now
 if (!isset($_SESSION)) {
     session_start();
@@ -240,11 +241,42 @@ if ($action == "create-domain") {
 
     //--------------------- CREATE BASIC VIRTUAL MACHINE ---------------------//
     $new_vm = $lv->domain_define($vm_xml); //Define the new virtual machine using libvirt, based off the XML information 
-    //trigger createInstance function in file api.php
     if (!$new_vm) {
         $notification = 'Error creating domain: ' . $lv->get_last_error(); //let the user know if there is an error
-    } else {
-        echo '<script>createInstance();</script>';
+    }
+     else {
+        $domObj = $lv->get_domain_object($domain_name);         //get the domain object
+        $domainuuid = libvirt_domain_get_uuid_string($domObj);
+        echo "<script>createInstance();</script>";
+        echo "<script>
+        const updateuuid = function() {
+            try {
+                const uuid = '$domainuuid';
+                const domain_name = '$domain_name';
+                const token = localStorage.getItem('token');
+                axios.patch(`/api/v1/arc/updateinstance`, {
+                        uuid: uuid,
+                        domain_name: domain_name
+                    }, {
+                        headers: {
+                            'Access-Control-Allow-Origin': '*',
+                            'Authorization': 'Bearer ' + token
+                        }
+                    })
+                    .then(function(response) {
+                        if (response.status == 200 && response.data.success == 1) {
+                            console.log(response);
+                            // window.location.href = '/arc/instances';
+                        } else {
+                            // alert('Error updating UUID');
+                        }
+                    })
+            } catch (error) {
+                console.log('Axios ' + error);
+            }
+        };
+        updateuuid();
+        </script>";
     }
     //--------------------- STORAGE VOLUME SECTION ---------------------//
     $storage_pool = $_SESSION['storage_pool']; //"default" storage pool is default choice
@@ -581,8 +613,8 @@ $random_mac = $lv->generate_random_mac_addr(); //used to set default mac address
                                         unset($tmp);
                                         unset($dom);
 
-                                        //echo "<tr style=\"cursor: pointer;\" onclick=\"window.location.href='domain-single.php?uuid=$uuid';\">" .
-                                        echo "<tr style=\"cursor: pointer;\" data-href=\"domain-single.php?uuid=$uuid\" >" .
+                                        //echo "<tr style=\"cursor: pointer;\" onclick=\"window.location.href='instance-single.php?uuid=$uuid';\">" .
+                                        echo "<tr style=\"cursor: pointer;\" data-href=\"instance-single.php?uuid=$uuid\" >" .
                                             "<td>" . htmlentities($name) .  "</td>" .
                                             "<td> $os_icon </td>" .
                                             "<td> $cpu </td>" .
