@@ -40,7 +40,7 @@ require('../config/config.php');
     <nav class="navbar navbar-dark bg-dark sticky-top flex-md-nowrap p-0 <?php if ($_SESSION['themeColor'] == "dark-edition") {
                                                                                 echo "main-dark";
                                                                             } ?> ">
-        <a class="navbar-brand navbar-dark col-sm-3 col-md-2 mr-0" href="../../index.php"><img src="../../assets/img/arclight-dark.svg" width="28px"> &ensp; Dashboard</a>
+        <a class="navbar-brand navbar-dark col-sm-3 col-md-2 mr-0" href="../../index.php"><img src="../../assets/img/arclight-dark.svg" width="100px"> &ensp;</a>
         <!-- <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"> -->
         <ul class="navbar-nav px-3">
             <li class="nav-item dropdown">
@@ -126,7 +126,7 @@ require('../config/config.php');
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="../domain/domain-list.php">
+                                    <a class="nav-link" href="../domain/instance-list-user.php">
                                         <span data-feather="layers"></span>
                                         Virtual Machines
                                     </a>
