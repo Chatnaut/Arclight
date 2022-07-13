@@ -86,7 +86,7 @@ if (isset($_SESSION['username'])) {
   if (empty($pools)) {
     header('Location: pages/storage/storage-pools.php');
   } else {
-    header('Location: pages/domain/domain-list.php');
+    header('Location: pages/domain/instance-list-user.php');
   }
 
   //If user is not logged in check to make sure that the config.php setup file is created. If it does send them to login
