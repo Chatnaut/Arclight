@@ -38,12 +38,6 @@ $res2 = libvirt_domain_lookup_by_name($conn, $domain);
 print_r($res2); 
 echo "Domain resource ID buy its name Noob"."<br>"."<br>";
 
-$domain = "Noob";
-$res9 = libvirt_domain_lookup_by_name($conn, $domain);
-print_r($res9); 
-echo "Domain resource ID buy its name Noob"."<br>"."<br>";
-
-
 
 $res3 = libvirt_connect_get_hostname($conn);
 print_r($res9); 
@@ -108,19 +102,11 @@ print_r($win2019netinfo);
 echo "Domain network infor for Win2019"."<br>"."<br>";
 
 $datoz = libvirt_version();
-echo "Libvirt Version: " . $datoz['libvirt.major'] . "." . $datoz['libvirt.minor'] . "." . $datoz['libvirt.release'];
+echo "Libvirt Version: " . $datoz['libvirt.major'] . "." . $datoz['libvirt.minor'] . "." . $datoz['libvirt.release']."<br>"."<br>";
 
-$cmd = "sudo virt-clone --original lol--auto-clone";
+$domObj = $lv->get_domain_object("Noob");
+$mydomainuuid = libvirt_domain_get_uuid_string($domObj);
+echo "Domain UUID: " . $mydomainuuid."<br>"."<br>";
 
-while (@ ob_end_flush()); // end all output buffers if any
-
-$proc = popen($cmd, 'r');
-echo '<pre>';
-while (!feof($proc))
-{
-    echo fread($proc, 4096);
-    @ flush();
-}
-echo '</pre>';
 
 ?>
