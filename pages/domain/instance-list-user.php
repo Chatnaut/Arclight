@@ -124,36 +124,45 @@ if ($action == "create-domain") {
 
     $clock_offset = $_SESSION['clock_offset']; //hard coded as "localtime" for now
     $os_platform = $_SESSION['os_platform']; //determines if bios features need to be set, needed for Windows 
-    //--------------------- CREATE VIRTUAL MACHINE SECTION ---------------------//
-    $vm_xml = "
-      <domain type='$domain_type'>
-      <name>$domain_name</name>
-      <description>Instance Type: $instance_type | OS: $os_platform | $description</description>
-      <memory unit='$memory_unit'>$memory</memory>
-      <vcpu>$vcpu</vcpu>
-      <os>
-      <type>hvm</type>
-          <boot dev='hd'/>
-          <boot dev='cdrom'/>
-          <boot dev='network'/>
-      </os>
-      <features>
-        <acpi/>
-        <apic/>
-      </features>
-      <clock offset='localtime'/>
-      <devices>
-          <graphics type='vnc' port='-1' autoport='yes'/>
-          <video>
-            <model type='qxl'/>
-          </video>
-          <memballoon model='virtio'>
-              <stats period='10'/>
-          </memballoon>
-      </devices>
-      </domain> ";
+    //--------------------- XML IF Linux Bare Metal ---------------------//
+    if ($instance_type == "baremetal" && $os_platform != "windows") {
+        $vm_xml = "
+        <domain type='$domain_type'>
+        <name>$domain_name</name>
+        <description>Instance Type: $instance_type | OS: $os_platform | $description</description>
+        <memory unit='$memory_unit'>$memory</memory>
+        <vcpu>$vcpu</vcpu>
+        <os>
+        <type>hvm</type>
+            <boot dev='hd'/>
+            <boot dev='cdrom'/>
+            <boot dev='network'/>
+        </os>
+        <features>
+          <acpi/>
+          <apic/>
+        </features>
+        <cpu mode='host-passthrough' check='full'>
+        <cache mode='passthrough'/>";
+        if ($cpuTopology == $vcpu) {
+            $vm_xml .= "<topology sockets='1' cores='$tcores' threads='$tthreads'/>";
+        }
+        $vm_xml .= "
+        </cpu>
+        <clock offset='localtime'/>
+        <devices>
+            <graphics type='vnc' port='-1' autoport='yes'/>
+            <video>
+              <model type='qxl'/>
+            </video>
+            <memballoon model='virtio'>
+                <stats period='10'/>
+            </memballoon>
+        </devices>
+        </domain> ";
+    }
     //--------------------- XML IF WINDOWS VM ---------------------//  
-    if ($instance_type == "vm" && $os_platform == "windows") {
+    else if ($instance_type == "vm" && $os_platform == "windows") {
         $vm_xml = "
       <domain type='$domain_type'>
       <name>$domain_name</name>
@@ -167,6 +176,7 @@ if ($action == "create-domain") {
           <boot dev='network'/>
       </os>
       <features>
+        <pae/>
         <acpi/>
         <apic/>
         <hyperv>
@@ -194,11 +204,14 @@ if ($action == "create-domain") {
           <memballoon model='virtio'>
               <stats period='10'/>
           </memballoon>
+          <tpm model='tpm-tis'>
+            <backend type='emulator' version='2.0'/>
+          </tpm>
       </devices>
       </domain>";
     }
     //--------------------- XML IF WINDOWS + Bare metal ---------------------//  
-    if ($instance_type == "baremetal" && $os_platform == "windows") {
+    else if ($instance_type == "baremetal" && $os_platform == "windows") {
         $vm_xml = "
     <domain type='$domain_type'>
     <name>$domain_name</name>
@@ -212,15 +225,16 @@ if ($action == "create-domain") {
         <boot dev='network'/>
     </os>
     <features>
+      <pae/>
       <acpi/>
       <apic/>
       <hyperv>
       </hyperv>
     </features>
-        <cpu mode='custom' match='exact' check='partial'>
-        <model fallback='allow'>Skylake-Server-noTSX-IBRS</model>
-        <feature policy='disable' name='hypervisor'/>
-        <feature policy='require' name='vmx'/>";
+    <cpu mode='host-passthrough' check='full'>
+    <cache mode='passthrough'/>
+    <feature policy='disable' name='hypervisor'/>
+    <feature policy='require' name='vmx'/>";
         if ($cpuTopology == $vcpu) {
             $vm_xml .= "<topology sockets='1' cores='$tcores' threads='$tthreads'/>";
         }
@@ -237,14 +251,55 @@ if ($action == "create-domain") {
         </memballoon>
     </devices>
     </domain>";
+    } else {
+        $vm_xml = "
+      <domain type='$domain_type'>
+      <name>$domain_name</name>
+      <description>Instance Type: $instance_type | OS: $os_platform | $description</description>
+      <memory unit='$memory_unit'>$memory</memory>
+      <vcpu>$vcpu</vcpu>
+      <os>
+      <type>hvm</type>
+          <boot dev='hd'/>
+          <boot dev='cdrom'/>
+          <boot dev='network'/>
+      </os>
+      <features>
+        <acpi/>
+        <apic/>
+      </features>
+      <clock offset='localtime'/>
+      <devices>
+          <graphics type='vnc' port='-1' autoport='yes'/>
+          <video>
+            <model type='qxl'/>
+          </video>
+          <memballoon model='virtio'>
+              <stats period='10'/>
+          </memballoon>
+      </devices>
+      </domain> ";
+
+        /* winn 11 UEFI + tpm   
+            <os>
+                <type arch='x86_64' machine='pc-q35-5.1'>hvm</type>
+                <loader readonly='yes' type='rom'>/usr/share/ovmf/OVMF.fd</loader>
+                <boot dev='hd'/>
+                <boot dev='cdrom'/>
+                <boot dev='network'/>
+            </os>
+            <tpm model='tpm-crb'>
+                <backend type='emulator' version='2.0'/>
+            </tpm>
+        */
     }
+
 
     //--------------------- CREATE BASIC VIRTUAL MACHINE ---------------------//
     $new_vm = $lv->domain_define($vm_xml); //Define the new virtual machine using libvirt, based off the XML information 
     if (!$new_vm) {
         $notification = 'Error creating domain: ' . $lv->get_last_error(); //let the user know if there is an error
-    }
-     else {
+    } else {
         $domObj = $lv->get_domain_object($domain_name);         //get the domain object
         $domainuuid = libvirt_domain_get_uuid_string($domObj);
         echo "<script>createInstance();</script>";
@@ -626,7 +681,7 @@ $random_mac = $lv->generate_random_mac_addr(); //used to set default mac address
                               </div>";
                                         } else if ($os_row['instance_type'] == 'bare_metal' && $active == true) {
                                             //class added in dist\css\bootstrap.min.css
-                                            echo  "<div class=\"progresss\">
+                                            echo  "<div class=\"progress\">
                               <div class=\"progress progress-bar-baremetal\" role=\"progressbar\" style=\"width: $mem_used%\" aria-valuenow=\"$mem_used\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>
                               </div>";
                                         } else {
