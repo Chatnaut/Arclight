@@ -5,9 +5,8 @@ if (!isset($_SESSION)) {
 }
 
 // If the database config.php and env file exists already redirect to index.php
-$path = realpath(__DIR__) . "/config.php";
-$epath = realpath(__DIR__) . "../../.env";
-if (file_exists($path) && file_exists($epath)) {
+$path = realpath(__DIR__) . "../../.env";
+if (file_exists($path)) {
   header('Location: ../../index.php');
 }
 
@@ -29,15 +28,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $username = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
   $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
   $password = $_POST['password']; //do not need to sanitize because it will be hashed
-  $role = $_POST['role'];
-  $db_name = clean_input($_POST['db_name']);
-  $db_user = clean_input($_POST['db_user']);
-  $db_password = $_POST['db_password'];
-  $db_host = clean_input($_POST['db_host']);
 
-  //Test the database connection information
-  $conn = new mysqli($db_host, $db_user, $db_password, $db_name);
+  // include database file-----------------------------------------------------------------------
+  include_once 'config.php';
 
+  //DB connection
+  $db = new DbManager();
+  $conn = $db->getConnection();
+
+  //Hash and salt password with bcrypt
+  $hash = password_hash($password, PASSWORD_BCRYPT);
+
+  // insert record
+  $insert = new MongoDB\Driver\BulkWrite();
+  $insert->insert(['username' => $username, 'email' => $email, 'password' => $hash, 'role' => 'Enterprise']);
+  $result = $conn->executeBulkWrite("arclight.arclight_users", $insert);
+
+  if ($result->getInsertedCount() > 0) {
+    echo '{"message": "User added successfully"}';
+  } else {
+    echo '{"message": "User not added"}';
+  }
+  //-------------------------------------------------------------------------------------------------
   if ($conn->connect_error) {
     $error = "Unable to connect to database";
   } else {
@@ -68,38 +80,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       //Test the SQL statement for adding the admin user
       if ($conn->query($sql) === TRUE) {
 
-        // Create the connection information for config.php file
-        $config_string = "<?php
-            // Setting up the Database Connection
-            \$db_host = '$db_host';
-            \$db_user = '$db_user';
-            \$db_password = '$db_password';
-            \$db_name = '$db_name';
-            \$conn = new mysqli(\$db_host, \$db_user, \$db_password, \$db_name);
-            if (\$conn->connect_error) {
-              die(\"Connection failed: \" . \$conn->connect_error);
-            }
-            ?>";
-
         // Create the connection information for .env file
-        $env_string = "APP_PORT=3001
-            DB_HOST=$db_host
-            DB_USER=$db_user
-            DB_PASS=$db_password
-            MYSQL_DB=$db_name
-            AUTH_KEY=arclightsecretkey";
+        $env_string = "PORT=3000
+            AUTH_KEY=arclightsecretkey
+            MONGO_URI=mongodb://localhost:27017/arclight
+            SESSION_SECRET=MySuperSecretSession
+            ADMIN_EMAIL=$email";
 
-        //Create config.php and .env files
-        $config_file = "config.php";
+            //Create .env files
         $env_file = "../../.env";
-        $config_create = file_put_contents($config_file, $config_string);
         $env_create = file_put_contents($env_file, $env_string);
 
         //If config.php and .env files were created successfully redirect to index.php
-        if ($config_create && $env_create) {
+        if ($env_create) {
           header('Location: ../../index.php');
         } else {
-          $error = "Unable to create config.php/env. Check folder permissions";
+          $error = "Unable to create env. Check folder permissions";
         }
       } else {
         $error = "Error: " . $conn->error;
