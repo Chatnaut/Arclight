@@ -15,8 +15,6 @@ $envpath = dirname(__FILE__) . "/.env";
 if (file_exists($path) && file_exists($envpath)) {
   require('./pages/config/config.php');
 
-  //set localhost from config.php
-  echo '<script type="text/javascript"> localStorage.setItem("hostname", "' . $db_host . '"); </script>';
 
   //Create the arclight_events table
   $sql = "CREATE TABLE IF NOT EXISTS arclight_events (
