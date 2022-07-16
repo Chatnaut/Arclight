@@ -1,0 +1,110 @@
+<style>
+    h1.table {
+        text-decoration: underline;
+        margin: 16px 0;
+    }
+
+    table {
+        margin-top: 32px;
+        min-width: 600px;
+        border: none;
+        border-spacing: 0;
+        border: 4px solid #d1d5db;
+        padding: 16px;
+        border-radius: 16px;
+    }
+
+    thead {
+        font-size: 1.25rem;
+        color: #fff;
+    }
+
+    thead tr {
+        border-radius: 8px;
+        background-color: #db2777;
+        overflow: hidden;
+    }
+
+    thead th {
+        padding: 8px 0;
+        text-align: left;
+        padding-left: 16px;
+    }
+
+    table th:first-child {
+        border-radius: 10px 0 0 10px;
+    }
+
+    table th:last-child {
+        border-radius: 0 10px 10px 0;
+    }
+
+    thead th:nth-child(1) {
+        max-width: 44px;
+    }
+
+    tbody tr:hover {
+        /* background-color: #fdf2f8; */
+    }
+
+    tbody tr td {
+        padding: 8px 0;
+        margin: 8px 0;
+    }
+
+    .manage-user-form input[type='submit'] {
+        background: transparent;
+        color: #db2777;
+        border: none;
+        outline: none;
+        padding: 8px 16px;
+        cursor: pointer;
+        border-radius: 8px;
+    }
+
+    .manage-user-form input[type='submit']:hover {
+        background-color: #fdf2f8;
+    }
+
+    .manage-user-form select {
+        border: none;
+        font-size: 1.05rem;
+        padding: 6px 12px;
+        border-radius: 8px;
+        border: 2px solid #f3f4f6;
+    }
+</style>
+<%- include('./layouts/header') %>
+    <h1 class="table">Manage users</h1>
+    <table class="table">
+        <thead>
+            <th>id</th>
+            <th>email</th>
+            <th>role</th>
+        </thead>
+        <tbody>
+            <% users.forEach(user=> { %>
+                <tr>
+                    <td>
+                        <%= user.id %>
+                    </td>
+                    <td><a href="/admin/user/<%= user.id %>">
+                            <%= user.email %>
+                        </a></td>
+                    <td>
+                        <form action="/admin/update-role" method="post" class="manage-user-form">
+                            <input type="hidden" name="id" value="<%= user.id %>">
+                            <select name="role" id="role">
+                                <option value="ADMIN" <%=user.role==='ADMIN' ? 'selected' : '' %> >Admin</option>
+                                <option value="MODERATOR" <%=user.role==='MODERATOR' ? 'selected' : '' %>>Moderator
+                                </option>
+                                <option value="CLIENT" <%=user.role==='CLIENT' ? 'selected' : '' %>>Client</option>
+                            </select>
+                            <input type="submit" value="update">
+                        </form>
+                    </td>
+                </tr>
+                <% }) %>
+        </tbody>
+    </table>
+    <%- include('./layouts/footer') %>

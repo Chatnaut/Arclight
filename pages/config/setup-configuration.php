@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   // include database file-----------------------------------------------------------------------
   include_once 'config.php';
 
-  //cheack if database connection is successful
+  //check if database connection is successful
   $db = new DbManager();
   $conn = $db->getConnection();
 

@@ -1,0 +1,251 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #fff;
+  font-family: 'Space Mono', monospace;
+  font-family: 'Open Sans', sans-serif;
+
+  max-width: 760px;
+  margin: auto;
+  font-size: 1rem;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0;
+}
+
+nav > ul > li {
+  list-style: none;
+  display: inline-block;
+}
+
+nav > ul > li > a,
+a {
+  text-decoration: none;
+  color: #00ECFA;
+  padding: 8px 16px;
+  border-radius: 8px;
+}
+
+nav > ul > li > a:hover,
+a:hover {
+  background-color: #fdf2f8;
+}
+
+h1.title {
+  text-align: center;
+  margin: 1rem;
+  text-decoration: underline;
+}
+div.tutorial-info {
+  border: 4px solid #d1d5db;
+  padding: 32px;
+  border-radius: 16px;
+  margin-top: 32px;
+}
+ol.tutorial-info {
+  font-size: 1.5rem;
+  padding: 0 32px;
+  /* list-style-type: square; */
+  /* list-style: disc; */
+}
+
+.tutorial-info > li {
+  margin: 8px;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+form.lg-form {
+  margin: 16px;
+  padding: 32px;
+  border: 4px solid #d1d5db;
+  min-width: 400px;
+  border-radius: 16px;
+}
+
+.lg-form label,
+.lg-form input {
+  display: block;
+  min-width: 100%;
+  margin: 8px 0px;
+}
+
+.lg-form label {
+  font-weight: bold;
+}
+
+.lg-form input {
+  height: 44px;
+  border: none;
+  border-radius: 8px;
+  padding: 8px;
+  font-size: 1rem;
+  background-color: #f3f4f6;
+}
+
+.lg-form input[type='submit'] {
+  margin: 16px 0;
+  background-color: #00ECFA;
+  color: #fff;
+  cursor: pointer;
+}
+
+input:focus {
+  outline: none;
+  background-color: #fff;
+  border: 2px solid #f3f4f6;
+  /* box-shadow: 0 0 8px #fdf2f8; */
+}
+
+h1.table {
+  text-decoration: underline;
+  margin: 16px 0;
+}
+
+table {
+  margin-top: 32px;
+  min-width: 600px;
+  border: none;
+  border-spacing: 0;
+  border: 4px solid #d1d5db;
+  padding: 16px;
+  border-radius: 16px;
+}
+
+thead {
+  font-size: 1.25rem;
+  color: #fff;
+}
+
+thead tr {
+  border-radius: 8px;
+  background-color: #00ECFA;
+  overflow: hidden;
+}
+
+thead th {
+  padding: 8px 0;
+  text-align: left;
+  padding-left: 16px;
+}
+
+table th:first-child {
+  border-radius: 10px 0 0 10px;
+}
+
+table th:last-child {
+  border-radius: 0 10px 10px 0;
+}
+
+thead th:nth-child(1) {
+  max-width: 44px;
+}
+
+tbody tr:hover {
+  /* background-color: #fdf2f8; */
+}
+
+tbody tr td {
+  padding: 8px 0;
+  margin: 8px 0;
+}
+
+.manage-user-form input[type='submit'] {
+  background: transparent;
+  color: #00ECFA;
+  border: none;
+  outline: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.manage-user-form input[type='submit']:hover {
+  background-color: #fdf2f8;
+}
+
+.manage-user-form select {
+  border: none;
+  font-size: 1.05rem;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 2px solid #f3f4f6;
+}
+
+thead tr th:first-child,
+tbody tr td:first-child {
+  width: 6em;
+  min-width: 6em;
+  max-width: 6em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 8px;
+}
+
+.profile {
+  min-width: 600px;
+  padding: 16px;
+  border: 4px solid #d1d5db;
+  border-radius: 16px;
+  margin-top: 32px;
+}
+
+.profile > div {
+  padding: 16px;
+}
+
+.profile .title {
+  font-weight: bold;
+}
+
+.goback {
+  cursor: pointer;
+}
+
+div.messages {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+ul.messages {
+  list-style: none;
+  min-width: 600px;
+  max-width: 600px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 16px;
+}
+
+ul.messages * {
+  padding: 8px 12px;
+}
+
+.messages .error {
+  background-color: #f87171;
+}
+.messages .success {
+  background-color: #6ee7b7;
+}
+.messages .warning {
+  background-color: #fcd34d;
+}
+.messages .info {
+  background-color: #93c5fd;
+}

@@ -7,14 +7,17 @@ if (!isset($_SESSION)) {
 //Sets the current web directory
 $fileDir = dirname(__FILE__);
 
-//Sets the filepath for the config.php and .env file which should be created after successful setup
-$path = dirname(__FILE__) . "/pages/config/config.php";
+//Sets the filepath for the .env file which should be created after successful setup
+// $path = dirname(__FILE__) . "/pages/config/config.php";
 $envpath = dirname(__FILE__) . "/.env";
 
 //If the config.php file exists perform the following
-if (file_exists($path) && file_exists($envpath)) {
+if (file_exists($envpath)) {
   require('./pages/config/config.php');
 
+  //create a new instance of the DbManager class
+  $db = new DbManager();
+  $conn = $db->getConnection();
 
   //Create the arclight_events table
   $sql = "CREATE TABLE IF NOT EXISTS arclight_events (
@@ -95,5 +98,3 @@ if (isset($_SESSION['username'])) {
 } else {
   header('Location: pages/config/setup-configuration.php');
 }
-
-?>
