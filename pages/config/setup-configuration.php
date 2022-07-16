@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   // include database file-----------------------------------------------------------------------
   include_once 'config.php';
 
-  //DB connection
+  //cheack if database connection is successful
   $db = new DbManager();
   $conn = $db->getConnection();
 
@@ -45,66 +45,60 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $result = $conn->executeBulkWrite("arclight.arclight_users", $insert);
 
   if ($result->getInsertedCount() > 0) {
-    echo '{"message": "User added successfully"}';
-  } else {
-    echo '{"message": "User not added"}';
-  }
-  //-------------------------------------------------------------------------------------------------
-  if ($conn->connect_error) {
-    $error = "Unable to connect to database";
-  } else {
-    //Creating the SQL for the users tables
-    $sql = "CREATE TABLE arclight_users (
-        userid INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-        username varchar(255),
-        email varchar(255),
-        password varchar(255),
-        role varchar(255))";
 
-    //Test to see if we can create the table for users
-    if ($conn->query($sql) === TRUE) {
+    //-------------------------------------------------------------------------------------------------
+    // if ($conn->connect_error) {
+    //   $error = "Unable to connect to database";
+    // } else {
+    //   //Creating the SQL for the users tables
+    //   $sql = "CREATE TABLE arclight_users (
+    //       userid INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    //       username varchar(255),
+    //       email varchar(255),
+    //       password varchar(255),
+    //       role varchar(255))";
 
-      //Use apps/password_compat for PHP version 5.4. Needed for CentOS 7 default version of PHP
-      if (version_compare(PHP_VERSION, '5.5.0', '<')) {
-        require('../../apps/password_compat_vm/lib/password.php');
-      }
+    //   //Test to see if we can create the table for users
+    //   if ($conn->query($sql) === TRUE) {
 
-      //Hash and salt password with bcrypt
-      $hash = password_hash($password, PASSWORD_BCRYPT);
+    //     //Use apps/password_compat for PHP version 5.4. Needed for CentOS 7 default version of PHP
+    //     if (version_compare(PHP_VERSION, '5.5.0', '<')) {
+    //       require('../../apps/password_compat_vm/lib/password.php');
+    //     }
 
-      $role = "Enterprise";
+    //     //Hash and salt password with bcrypt
+    //     $hash = password_hash($password, PASSWORD_BCRYPT);
 
-      // Create the SQL to add the user
-      $sql = "INSERT INTO arclight_users (username, email, password, role) VALUES ('$username', '$email', '$hash', '$role')";
+    //     $role = "Enterprise";
 
-      //Test the SQL statement for adding the admin user
-      if ($conn->query($sql) === TRUE) {
+    //     // Create the SQL to add the user
+    //     $sql = "INSERT INTO arclight_users (username, email, password, role) VALUES ('$username', '$email', '$hash', '$role')";
 
-        // Create the connection information for .env file
-        $env_string = "PORT=3000
+    //     //Test the SQL statement for adding the admin user
+    //     if ($conn->query($sql) === TRUE) {
+
+    // Create the connection information for .env file
+    $env_string = "PORT=3000
             AUTH_KEY=arclightsecretkey
             MONGO_URI=mongodb://localhost:27017/arclight
             SESSION_SECRET=MySuperSecretSession
             ADMIN_EMAIL=$email";
 
-            //Create .env files
-        $env_file = "../../.env";
-        $env_create = file_put_contents($env_file, $env_string);
+    //Create .env files
+    $env_file = "../../.env";
+    $env_create = file_put_contents($env_file, $env_string);
 
-        //If config.php and .env files were created successfully redirect to index.php
-        if ($env_create) {
-          header('Location: ../../index.php');
-        } else {
-          $error = "Unable to create env. Check folder permissions";
-        }
-      } else {
-        $error = "Error: " . $conn->error;
-      }
+    //If config.php and .env files were created successfully redirect to index.php
+    if ($env_create) {
+      header('Location: ../../index.php');
     } else {
-      $error = "Error: " . $conn->error;
+      $error = "Unable to create env. Check folder permissions";
     }
-  } //End else statement checking for connection error
-} // End if statement for POST data
+  } else {
+    $error = "Unable to establish connection " . $conn->error;
+  }
+}
+
 ?>
 
 <!doctype html>
@@ -158,7 +152,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
 
     <!-- -------------- DATABASE CONFIGURATION INFORMATION -------------- -->
-    <div class="text-center mb-4">
+    <!-- <div class="text-center mb-4">
       <h1 class="h3 mb-3 font-weight-normal">Configure the database</h1>
     </div>
 
@@ -180,7 +174,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="form-label-group">
       <input type="text" name="db_host" id="inputDatabaseHost" class="form-control" placeholder="localhost" value="localhost" required autofocus>
       <label for="inputDatabaseHost">Database Host</label>
-    </div>
+    </div> -->
 
     <div class="center">
       <button class="log-btnlong btn-2" type="submit">Submit</button>
