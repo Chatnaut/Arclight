@@ -3,10 +3,6 @@
 if (!isset($_SESSION)) {
   session_start();
 }
-//Grab post infomation and add new drive
-// if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-require('config/config.php');
-$_SESSION['hostname'] = $hostname;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -231,22 +227,27 @@ $_SESSION['hostname'] = $hostname;
       try {
         const {
           data
-        } = await axios.post(`/api/v1/arc/login`, {
+        } = await axios.post(`/api/v1/auth/login`, {
           email,
           password
         });
         if (data.success == 1) {
           localStorage.setItem('token', data.token);
-          localStorage.setItem('userid', data.user.userid);
+          localStorage.setItem('userid', data.user._id);
           localStorage.setItem('username', data.user.username);
+          localStorage.setItem('email', data.user.email);
+          localStorage.setItem('role', data.user.role);
           setConfigSession();
         } else {
+          console.log(data.message);
           error.innerHTML = data.message;
         }
       } catch (error) {
         localStorage.removeItem('token');
         localStorage.removeItem('userid');
         localStorage.removeItem('username');
+        localStorage.removeItem('email');
+        localStorage.removeItem('role');
         error.innerHTML = error;
       }
     });
@@ -272,6 +273,8 @@ $_SESSION['hostname'] = $hostname;
           }
           userid = element.userid;
           username = element.username;
+          email = element.email;
+          role = element.role;
         });
         //sending data to store in php session
         axios.post('sessions.php', {
@@ -292,6 +295,8 @@ $_SESSION['hostname'] = $hostname;
         axios.post('sessions.php', {
           userid: localStorage.getItem('userid'),
           username: localStorage.getItem('username'),
+          email: localStorage.getItem('email'),
+          role: localStorage.getItem('role'),
           theme_color: "white",
           language: "english"
         }).then(function(response) {
