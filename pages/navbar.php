@@ -78,7 +78,7 @@ require('../config/config.php');
                     Hi, <?php echo $_SESSION['username']; ?><span class="caret"></span>
                 </a>
                 <div class="dropdown-menu position-absolute dropdown-menu-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href=""><?php echo $_SESSION['roles']; ?></a>
+                    <a class="dropdown-item" href=""><?php echo $_SESSION['role']; ?></a>
                     <a class="dropdown-item" href="">Profile</a>
                     <a class="dropdown-item" href="../config/preferences.php">Preferences</a>
                     <a class="dropdown-item" href="../config/settings.php">Settings</a>
