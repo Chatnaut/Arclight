@@ -9,92 +9,92 @@ if (!isset($_SESSION['username'])) {
   header('Location: ../sign-in.php');
 }
 
-// This function is used to prevent any problems with user form input
-function clean_input($data)
-{
-  $data = trim($data); //remove spaces at the beginning and end of string
-  $data = stripslashes($data);
-  $data = htmlspecialchars($data);
-  $data = str_replace(' ', '', $data); //remove any spaces within the string
-  $data = str_replace('--', '', $data); //remove -- within the string
-  $data = filter_var($data, FILTER_SANITIZE_STRING);
-  return $data;
-}
+// // This function is used to prevent any problems with user form input
+// function clean_input($data)
+// {
+//   $data = trim($data); //remove spaces at the beginning and end of string
+//   $data = stripslashes($data);
+//   $data = htmlspecialchars($data);
+//   $data = str_replace(' ', '', $data); //remove any spaces within the string
+//   $data = str_replace('--', '', $data); //remove -- within the string
+//   $data = filter_var($data, FILTER_SANITIZE_STRING);
+//   return $data;
+// }
 
-// We are now going to grab any POST data and put in in SESSION data, then clear it.
-// This will prevent and reloading the webpage to resubmit and action.
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  $_SESSION['cert_path'] = clean_input($_POST['cert_path']);
-  $_SESSION['key_path'] = clean_input($_POST['key_path']);
-  unset($_POST);
-  header("Location: " . $_SERVER['PHP_SELF']);
-  exit;
-}
+// // We are now going to grab any POST data and put in in SESSION data, then clear it.
+// // This will prevent and reloading the webpage to resubmit and action.
+// if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+//   $_SESSION['cert_path'] = clean_input($_POST['cert_path']);
+//   $_SESSION['key_path'] = clean_input($_POST['key_path']);
+//   unset($_POST);
+//   header("Location: " . $_SERVER['PHP_SELF']);
+//   exit;
+// }
 
-require('config.php');
+// include_once('config.php');
 
 //getting user id from session
 $userid = $_SESSION['userid'];
 
-// Creating table if necessary to store setttings
-$sql = "CREATE TABLE IF NOT EXISTS arclight_config ( id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), value VARCHAR(255), userid int, date datetime)";
-$result = $conn->query($sql);
+// // Creating table if necessary to store setttings
+// $sql = "CREATE TABLE IF NOT EXISTS arclight_config ( id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), value VARCHAR(255), userid int, date datetime)";
+// $result = $conn->query($sql);
 
-//If the VNC SSL Cert File Path has been updated or inserted------------------------------------------------------
-if (isset($_SESSION['cert_path'])) {
-  $cert_path = $_SESSION['cert_path'];
-  unset($_SESSION['cert_path']);
+// //If the VNC SSL Cert File Path has been updated or inserted------------------------------------------------------
+// if (isset($_SESSION['cert_path'])) {
+//   $cert_path = $_SESSION['cert_path'];
+//   unset($_SESSION['cert_path']);
 
-  $sql = "SELECT name FROM arclight_config WHERE name = 'cert_path';";
-  $result = $conn->query($sql);
+//   $sql = "SELECT name FROM arclight_config WHERE name = 'cert_path';";
+//   $result = $conn->query($sql);
 
-  if (mysqli_num_rows($result) == 0) {
-    $sql = "INSERT INTO arclight_config (name, value, userid) VALUES ('cert_path', '$cert_path', '$userid');";
-    $result = $conn->query($sql);
-  } else {
-    $sql = "UPDATE arclight_config SET value = '$cert_path' WHERE name = 'cert_path' AND userid = '$userid';";
-    $result = $conn->query($sql);
-  }
-}
+//   if (mysqli_num_rows($result) == 0) {
+//     $sql = "INSERT INTO arclight_config (name, value, userid) VALUES ('cert_path', '$cert_path', '$userid');";
+//     $result = $conn->query($sql);
+//   } else {
+//     $sql = "UPDATE arclight_config SET value = '$cert_path' WHERE name = 'cert_path' AND userid = '$userid';";
+//     $result = $conn->query($sql);
+//   }
+// }
 
-//If the VNC SSL Key File Path has been updated or inserted
-if (isset($_SESSION['key_path'])) {
-  $key_path = $_SESSION['key_path'];
-  unset($_SESSION['key_path']);
+// //If the VNC SSL Key File Path has been updated or inserted
+// if (isset($_SESSION['key_path'])) {
+//   $key_path = $_SESSION['key_path'];
+//   unset($_SESSION['key_path']);
 
-  $sql = "SELECT name FROM arclight_config WHERE name = 'key_path';";
-  $result = $conn->query($sql);
+//   $sql = "SELECT name FROM arclight_config WHERE name = 'key_path';";
+//   $result = $conn->query($sql);
 
-  if (mysqli_num_rows($result) == 0) {
-    $sql = "INSERT INTO arclight_config (name, value, userid) VALUES ('key_path', '$key_path', '$userid');";
-    $result = $conn->query($sql);
-  } else {
-    $sql = "UPDATE arclight_config SET value = '$key_path' WHERE name = 'key_path' AND userid = '$userid';";
-    $result = $conn->query($sql);
-  }
-}
+//   if (mysqli_num_rows($result) == 0) {
+//     $sql = "INSERT INTO arclight_config (name, value, userid) VALUES ('key_path', '$key_path', '$userid');";
+//     $result = $conn->query($sql);
+//   } else {
+//     $sql = "UPDATE arclight_config SET value = '$key_path' WHERE name = 'key_path' AND userid = '$userid';";
+//     $result = $conn->query($sql);
+//   }
+// }
 
-//Get the current noVNC cert path to use as placeholder for textbox------------------------------------------------------
-$sql = "SELECT value FROM arclight_config WHERE name = 'cert_path' LIMIT 1;";
-$result = $conn->query($sql);
-if (mysqli_num_rows($result) != 0) {
-  while ($row = $result->fetch_assoc()) {
-    $cert_path = $row['value'];
-  }
-} else {
-  $cert_path = "/etc/ssl/self.pem";
-}
+// //Get the current noVNC cert path to use as placeholder for textbox------------------------------------------------------
+// $sql = "SELECT value FROM arclight_config WHERE name = 'cert_path' LIMIT 1;";
+// $result = $conn->query($sql);
+// if (mysqli_num_rows($result) != 0) {
+//   while ($row = $result->fetch_assoc()) {
+//     $cert_path = $row['value'];
+//   }
+// } else {
+//   $cert_path = "/etc/ssl/self.pem";
+// }
 
-//Get the current noVNC key path to use as placeholder for textbox
-$sql = "SELECT value FROM arclight_config WHERE name = 'key_path' LIMIT 1;";
-$result = $conn->query($sql);
-if (mysqli_num_rows($result) != 0) {
-  while ($row = $result->fetch_assoc()) {
-    $key_path = $row['value'];
-  }
-} else {
-  $key_path = "";
-}
+// //Get the current noVNC key path to use as placeholder for textbox
+// $sql = "SELECT value FROM arclight_config WHERE name = 'key_path' LIMIT 1;";
+// $result = $conn->query($sql);
+// if (mysqli_num_rows($result) != 0) {
+//   while ($row = $result->fetch_assoc()) {
+//     $key_path = $row['value'];
+//   }
+// } else {
+//   $key_path = "";
+// }
 
 // Time to bring in the header and navigation
 require('../header.php');
@@ -112,7 +112,7 @@ require('../navbar.php');
     <!-- <h1 class="h2">Virtual Machine from XML</h1> -->
   </div>
 
-  <form action="" method="POST">
+  <form class="arcconfig" action="" method="POST">
 
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
 
@@ -129,7 +129,9 @@ require('../navbar.php');
             <label class="col-3 col-form-label text-right">SSL Certificate File Path (VNC): </label>
             <div class="col-6">
               <div class="form-group">
-                <input type="text" value="<?php echo $cert_path; ?>" class="form-control" name="cert_path" />
+                <input type="text" value="" class="form-control" name="cert_path" id="certpath"/>
+              <!-- refresh icon to update cert path -->
+              <i class="fas fa-sync-alt" id="refresh_cert"></i>
               </div>
             </div>
           </div>
@@ -138,7 +140,9 @@ require('../navbar.php');
             <label class="col-3 col-form-label text-right">SSL Key File Path (VNC): </label>
             <div class="col-6">
               <div class="form-group">
-                <input type="text" value="<?php echo $key_path; ?>" class="form-control" name="key_path" />
+                <input type="text" value="" class="form-control" name="key_path" id="keypath"/>
+              <!-- refresh icon to update key path -->
+              <i class="fas fa-sync-alt" id="refresh_key"></i>
               </div>
             </div>
           </div>
@@ -158,3 +162,40 @@ require('../navbar.php');
 <?php
 require('../footer.php');
 ?>
+
+<script>
+  const refresh_cert = document.getElementById('refresh_cert');
+  const certpath = document.getElementById('certpath');
+  const userid = localStorage.getItem('userid');
+  const refresh_key = document.getElementById('refresh_key');
+  const keypath = document.getElementById('keypath');
+
+  //request send to axios post to update cert path on click
+  refresh_cert.addEventListener('click', async() => {
+    try{
+    const response = await axios.post('/api/v1/config/arc_config', {
+      name: 'cert_path',
+      value: certpath.value,
+      userid: userid
+    });
+    console.log(response);
+    } catch(error) {
+      console.log(error);
+    }
+  });
+
+  //request send to axios post to update key path on click
+  refresh_key.addEventListener('click', async() => {
+    try{
+    const response = await axios.post('/api/v1/config/arc_config', {
+      name: 'key_path',
+      value: keypath.value,
+      userid: userid
+    });
+    console.log(response);
+    } catch(error) {
+      console.log(error);
+    }
+  });
+
+</script>
