@@ -46,37 +46,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   if ($result->getInsertedCount() > 0) {
 
-    //-------------------------------------------------------------------------------------------------
-    // if ($conn->connect_error) {
-    //   $error = "Unable to connect to database";
-    // } else {
-    //   //Creating the SQL for the users tables
-    //   $sql = "CREATE TABLE arclight_users (
-    //       userid INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    //       username varchar(255),
-    //       email varchar(255),
-    //       password varchar(255),
-    //       role varchar(255))";
-
-    //   //Test to see if we can create the table for users
-    //   if ($conn->query($sql) === TRUE) {
-
-    //     //Use apps/password_compat for PHP version 5.4. Needed for CentOS 7 default version of PHP
-    //     if (version_compare(PHP_VERSION, '5.5.0', '<')) {
-    //       require('../../apps/password_compat_vm/lib/password.php');
-    //     }
-
-    //     //Hash and salt password with bcrypt
-    //     $hash = password_hash($password, PASSWORD_BCRYPT);
-
-    //     $role = "Enterprise";
-
-    //     // Create the SQL to add the user
-    //     $sql = "INSERT INTO arclight_users (username, email, password, role) VALUES ('$username', '$email', '$hash', '$role')";
-
-    //     //Test the SQL statement for adding the admin user
-    //     if ($conn->query($sql) === TRUE) {
-
     // Create the connection information for .env file
     $env_string = "PORT=3000
             AUTH_KEY=arclightsecretkey
