@@ -20,7 +20,7 @@ require('../config/config.php');
   <div class="d-flex flex-row-reverse flex-wrap flex-md-nowrap align-items-center">
     <div class="btn-toolbar mb-md-0 mr-3 pr-3">
       <div class="btn-group mr-3 pr-3">
-        <button class="btn btn-sm btn-outline-secondary" id="start-ssh">Start SSH  <i class="fa-solid fa-terminal"></i></button>
+        <button class="btn btn-sm btn-outline-secondary" id="start-ssh">Start SSH <i class="fa-solid fa-terminal"></i></button>
       </div>
     </div>
   </div>
@@ -36,36 +36,72 @@ require('../config/config.php');
 </main>
 
 <?php
-//Setting the SSL Certificate file path
+
+//create a new instance of the DbManager class
+$db = new DbManager();
+$conn = $db->getConnection();
 $userid = $_SESSION['userid'];
-$sql = "SELECT value FROM arclight_config WHERE name = 'cert_path' AND userid = '$userid' LIMIT 1;";
-$result = $conn->query($sql);
-// Extracting the record
-if (mysqli_num_rows($result) != 0) {
-  while ($row = $result->fetch_assoc()) {
-    $cert_path = $row['value'];
-  }
-}
-if ($cert_path) {
-  $cert_option = "--certfile=" . $cert_path;
+
+//Setting the SSL Certificate file path
+$filter = ['_id' => new MongoDb\BSON\ObjectID($userid), 'name' => 'cert_path'];
+$option = [];
+$read = new MongoDB\Driver\Query($filter, $option);
+$result = $conn->executeQuery("arclight.arclight_config", $read);
+$result = $result->toArray();
+
+//get value from array
+$cert_path = $result[0]->value;
+if ($cert_path != "") {
+  $cert_option = "--certfile=" . $cert_path; //--cert is option used in noVNC connection string
 } else {
-  $cert_option = "";
+  $cert_option = ""; //sets default location if nothing in database
 }
 
 //Setting the SSL Certificate file path
-$sql = "SELECT value FROM arclight_config WHERE name = 'key_path' AND userid = '$userid' LIMIT 1;";
-$result = $conn->query($sql);
-// Extracting the record
-if (mysqli_num_rows($result) != 0) {
-  while ($row = $result->fetch_assoc()) {
-    $key_path = $row['value'];
-  }
-}
-if ($key_path) {
-  $key_option = "--keyfile=" . $key_path;
+$filter = ['_id' => new MongoDb\BSON\ObjectID($userid), 'name' => 'key_path'];
+$option = [];
+$read = new MongoDB\Driver\Query($filter, $option);
+$result = $conn->executeQuery("arclight.arclight_config", $read);
+$result = $result->toArray();
+
+//get value from array
+$key_path = $result[0]->value;
+if ($key_path != "") {
+  $key_option = "--keyfile=" . $key_path; //--key is option used in noVNC connection string
 } else {
-  $key_option = "";
+  $key_option = ""; //sets default location if nothing in database
 }
+
+// //Setting the SSL Certificate file path
+// $userid = $_SESSION['userid'];
+// $sql = "SELECT value FROM arclight_config WHERE name = 'cert_path' AND userid = '$userid' LIMIT 1;";
+// $result = $conn->query($sql);
+// // Extracting the record
+// if (mysqli_num_rows($result) != 0) {
+//   while ($row = $result->fetch_assoc()) {
+//     $cert_path = $row['value'];
+//   }
+// }
+// if ($cert_path) {
+//   $cert_option = "--certfile=" . $cert_path;
+// } else {
+//   $cert_option = "";
+// }
+
+// //Setting the SSL Certificate file path
+// $sql = "SELECT value FROM arclight_config WHERE name = 'key_path' AND userid = '$userid' LIMIT 1;";
+// $result = $conn->query($sql);
+// // Extracting the record
+// if (mysqli_num_rows($result) != 0) {
+//   while ($row = $result->fetch_assoc()) {
+//     $key_path = $row['value'];
+//   }
+// }
+// if ($key_path) {
+//   $key_option = "--keyfile=" . $key_path;
+// } else {
+//   $key_option = "";
+// }
 ?>
 
 <script>
