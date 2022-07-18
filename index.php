@@ -1,4 +1,5 @@
 <?php
+
 // If the SESSION has not been started, start it now
 if (!isset($_SESSION)) {
   session_start();
@@ -12,7 +13,7 @@ $envpath = dirname(__FILE__) . "/.env";
 
 //If the config.php file exists perform the following
 if (file_exists($envpath)) {
-  require('./pages/config/config.php');
+  include_once('pages/config/config.php');
 
   //create a new instance of the DbManager class
   $db = new DbManager();
@@ -23,7 +24,7 @@ if (file_exists($envpath)) {
   $filter = ['_id' => new MongoDb\BSON\ObjectID($userid), 'name' => 'cert_path'];
   $option = [];
   $read = new MongoDB\Driver\Query($filter, $option);
-  $result = $conn->executeQuery("arclight.arclight_config", $read);
+  $result = $conn->executeQuery("arclight.arclight_configs", $read);
   $result = $result->toArray();
 
   //get value from array
@@ -38,7 +39,7 @@ if (file_exists($envpath)) {
   $filter = ['_id' => new MongoDb\BSON\ObjectID($userid), 'name' => 'key_path'];
   $option = [];
   $read = new MongoDB\Driver\Query($filter, $option);
-  $result = $conn->executeQuery("arclight.arclight_config", $read);
+  $result = $conn->executeQuery("arclight.arclight_configs", $read);
   $result = $result->toArray();
 
   //get value from array
