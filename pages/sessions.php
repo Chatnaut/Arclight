@@ -12,6 +12,8 @@ $post = json_decode($post, true);
 // assign the needed data from the POST object
 $_SESSION["userid"] = $post["userid"];
 $_SESSION["username"] = $post["username"];
+$_SESSION["email"] = $post["email"];
+$_SESSION["role"] = $post["role"];
 $_SESSION["themeColor"] = $post["theme_color"];
 $_SESSION["language"] = $post["language"];
 
