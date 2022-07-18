@@ -12,7 +12,7 @@ if (!isset($_SESSION['username'])) {
 require('../header.php');
 require('../navbar.php');
 require('../footer.php');
-require('../config/config.php');
+include_once('../config/config.php');
 
 
 // This function is used to prevent any problems with user form input
