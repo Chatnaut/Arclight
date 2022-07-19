@@ -31,7 +31,7 @@ $arrayExisting = file('../config/version.php');
 $existingExploded = explode('.', $arrayExisting[1]); //Seperate Major.Minor.Patch
 $existingVersion = $existingExploded[0] . $existingExploded[1] . $existingExploded[2];
 
-require('../config/config.php');
+include_once('../config/config.php');
 ?>
 
 <body class=" <?php if ($_SESSION['themeColor'] == "dark-edition") {

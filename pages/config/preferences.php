@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     exit;
 }
 
-require('config.php');
+include_once('config.php');
 
 // Creating table if necessary to store setttings
 $sql = "CREATE TABLE IF NOT EXISTS arclight_config ( sno INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), value VARCHAR(255), userid int );";
