@@ -21,7 +21,7 @@ if (file_exists($envpath)) {
   $userid = $_SESSION['userid'];
 
 //find document 
-  $filter = ['_id' => new MongoDb\BSON\ObjectID($userid), 'name' => 'cert_path'];
+  $filter = ['userid' => $userid, 'name' => 'cert_path'];
   $option = [];
   $read = new MongoDB\Driver\Query($filter, $option);
   $result = $conn->executeQuery("arclight.arclight_configs", $read);
@@ -36,7 +36,7 @@ if (file_exists($envpath)) {
   }
 
   //find document 
-  $filter = ['_id' => new MongoDb\BSON\ObjectID($userid), 'name' => 'key_path'];
+  $filter = ['userid' => $userid, 'name' => 'key_path'];
   $option = [];
   $read = new MongoDB\Driver\Query($filter, $option);
   $result = $conn->executeQuery("arclight.arclight_configs", $read);
@@ -50,49 +50,6 @@ if (file_exists($envpath)) {
     $key_option = "--key /etc/ssl/privkey.pem"; //sets default location if nothing in database
   }
 
-  // $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
-  // //Create the arclight_events table
-  // $sql = "CREATE TABLE IF NOT EXISTS arclight_events (
-  //   eventid INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  //   description varchar(255),
-  //   host_uuid varchar(255),
-  //   domain_uuid varchar(255),
-  //   userid INT,
-  //   date datetime)";
-  // $event_result = $conn->query($sql);
-
-  // //Setting the SSL Certificate file path
-
-  // $sql = "SELECT value FROM arclight_config WHERE name = 'cert_path' AND userid = '$userid' LIMIT 1;";
-  // $result = $conn->query($sql);
-  // // Extracting the record
-  // if (mysqli_num_rows($result) != 0) {
-  //   while ($row = $result->fetch_assoc()) {
-  //     $cert_path = $row['value']; //sets value from database
-  //   }
-  // }
-  // if ($cert_path) {
-  //   $cert_option = "--cert=" . $cert_path; //--cert is option used in noVNC connection string
-  // } else {
-  //   $cert_option = "--cert /etc/ssl/self.pem"; //sets default location if nothing in database
-  // }
-
-  // //Setting the SSL Certificate file path
-  // $sql = "SELECT value FROM arclight_config WHERE name = 'key_path' AND userid = '$userid' LIMIT 1;";
-  // $result = $conn->query($sql);
-  // // Extracting the record
-  // if (mysqli_num_rows($result) != 0) {
-  //   while ($row = $result->fetch_assoc()) {
-  //     $key_path = $row['value']; //sets value from database
-  //   }
-  // }
-  // if ($key_path) {
-  //   $key_option = "--key=" . $key_path; //--key is option used in noVNC connection string
-  // } else {
-  //   $key_option = ""; //will ignore key file if nothing in database
-  // }
-
-  
 } //Ends if statement if config.php file exists
 
 //letsencrypt setup -> sudo certbot certonly --standalone -d host.example.com
