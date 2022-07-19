@@ -3,123 +3,36 @@
 if (!isset($_SESSION)) {
   session_start();
 }
+//echo session object
+echo '<pre>';
+print_r($_SESSION);
+echo '</pre>';
 
 // If there is no username, then we need to send them to the login
 if (!isset($_SESSION['username'])) {
   header('Location: ../sign-in.php');
 }
 
-// // This function is used to prevent any problems with user form input
-// function clean_input($data)
-// {
-//   $data = trim($data); //remove spaces at the beginning and end of string
-//   $data = stripslashes($data);
-//   $data = htmlspecialchars($data);
-//   $data = str_replace(' ', '', $data); //remove any spaces within the string
-//   $data = str_replace('--', '', $data); //remove -- within the string
-//   $data = filter_var($data, FILTER_SANITIZE_STRING);
-//   return $data;
-// }
-
-// // We are now going to grab any POST data and put in in SESSION data, then clear it.
-// // This will prevent and reloading the webpage to resubmit and action.
-// if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-//   $_SESSION['cert_path'] = clean_input($_POST['cert_path']);
-//   $_SESSION['key_path'] = clean_input($_POST['key_path']);
-//   unset($_POST);
-//   header("Location: " . $_SERVER['PHP_SELF']);
-//   exit;
-// }
-
-// include_once('config.php');
-
 //getting user id from session
 $userid = $_SESSION['userid'];
-
-// // Creating table if necessary to store setttings
-// $sql = "CREATE TABLE IF NOT EXISTS arclight_config ( id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), value VARCHAR(255), userid int, date datetime)";
-// $result = $conn->query($sql);
-
-// //If the VNC SSL Cert File Path has been updated or inserted------------------------------------------------------
-// if (isset($_SESSION['cert_path'])) {
-//   $cert_path = $_SESSION['cert_path'];
-//   unset($_SESSION['cert_path']);
-
-//   $sql = "SELECT name FROM arclight_config WHERE name = 'cert_path';";
-//   $result = $conn->query($sql);
-
-//   if (mysqli_num_rows($result) == 0) {
-//     $sql = "INSERT INTO arclight_config (name, value, userid) VALUES ('cert_path', '$cert_path', '$userid');";
-//     $result = $conn->query($sql);
-//   } else {
-//     $sql = "UPDATE arclight_config SET value = '$cert_path' WHERE name = 'cert_path' AND userid = '$userid';";
-//     $result = $conn->query($sql);
-//   }
-// }
-
-// //If the VNC SSL Key File Path has been updated or inserted
-// if (isset($_SESSION['key_path'])) {
-//   $key_path = $_SESSION['key_path'];
-//   unset($_SESSION['key_path']);
-
-//   $sql = "SELECT name FROM arclight_config WHERE name = 'key_path';";
-//   $result = $conn->query($sql);
-
-//   if (mysqli_num_rows($result) == 0) {
-//     $sql = "INSERT INTO arclight_config (name, value, userid) VALUES ('key_path', '$key_path', '$userid');";
-//     $result = $conn->query($sql);
-//   } else {
-//     $sql = "UPDATE arclight_config SET value = '$key_path' WHERE name = 'key_path' AND userid = '$userid';";
-//     $result = $conn->query($sql);
-//   }
-// }
-
-// //Get the current noVNC cert path to use as placeholder for textbox------------------------------------------------------
-// $sql = "SELECT value FROM arclight_config WHERE name = 'cert_path' LIMIT 1;";
-// $result = $conn->query($sql);
-// if (mysqli_num_rows($result) != 0) {
-//   while ($row = $result->fetch_assoc()) {
-//     $cert_path = $row['value'];
-//   }
-// } else {
-//   $cert_path = "/etc/ssl/self.pem";
-// }
-
-// //Get the current noVNC key path to use as placeholder for textbox
-// $sql = "SELECT value FROM arclight_config WHERE name = 'key_path' LIMIT 1;";
-// $result = $conn->query($sql);
-// if (mysqli_num_rows($result) != 0) {
-//   while ($row = $result->fetch_assoc()) {
-//     $key_path = $row['value'];
-//   }
-// } else {
-//   $key_path = "";
-// }
 
 // Time to bring in the header and navigation
 require('../header.php');
 require('../navbar.php');
-
 ?>
-
-
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 <?php if ($_SESSION['themeColor'] == "dark-edition") {
                                                                     echo "main-dark";
                                                                   } ?> ">
-
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
     <!-- <h1 class="h2">Virtual Machine from XML</h1> -->
   </div>
 
-  <form class="arcconfig" action="" method="POST">
-
+  <form class="" action="" method="">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-
       <div class="card <?php if ($_SESSION['themeColor'] == "dark-edition") {
                           echo "card-dark";
                         } ?> ">
-
         <div class="card-header text-center">
           <span class="card-title">Settings</span>
         </div>
@@ -129,28 +42,107 @@ require('../navbar.php');
             <label class="col-3 col-form-label text-right">SSL Certificate File Path (VNC): </label>
             <div class="col-6">
               <div class="form-group">
-                <input type="text" value="" class="form-control" name="cert_path" id="certpath"/>
-              <!-- refresh icon to update cert path -->
-              <i class="fas fa-sync-alt" id="refresh_cert"></i>
+                <input type="text" value="" class="form-control" name="cert_path" id="certpath" />
+                <!-- refresh icon to update cert path -->
+                <i class="fas fa-sync-alt" id="refresh_cert"></i>
               </div>
             </div>
           </div>
-
           <div class="row">
             <label class="col-3 col-form-label text-right">SSL Key File Path (VNC): </label>
             <div class="col-6">
               <div class="form-group">
-                <input type="text" value="" class="form-control" name="key_path" id="keypath"/>
-              <!-- refresh icon to update key path -->
-              <i class="fas fa-sync-alt" id="refresh_key"></i>
+                <input type="text" value="" class="form-control" name="key_path" id="keypath" />
+                <!-- refresh icon to update key path -->
+                <span><i class="fas fa-sync-alt" id="refresh_key"></i></span>
               </div>
             </div>
           </div>
+          <div class="row">
+            <label class="col-3 col-form-label text-right">API Bearer Token </label>
+            <div class="col-6">
+              <div class="form-group">
+                <input type="text" value="" class="form-control" name="apitoken" id="apitoken" readonly/>
+              </div>
+            </div>
+          </div>
+        </div> <!-- end card -->
+      </div>
+  </form>
+</main>
 
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 <?php if ($_SESSION['themeColor'] == "dark-edition") {
+                                                                    echo "main-dark";
+                                                                  } ?> ">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
+  </div>
+  <form action="" method="">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+      <div class="card <?php if ($_SESSION['themeColor'] == "dark-edition") {
+                          echo "card-dark";
+                        } ?> ">
+        <div class="card-header text-center">
+          <span class="card-title">User Preferences</span>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <label class="col-3 col-form-label text-right">Language: </label>
+            <div class="col-6">
+              <div class="form-group">
+                <select class="form-control" name="language">
+                  <option value="english" <?php if ($_SESSION['language'] == "english") {
+                                            echo "selected";
+                                          } ?>>English (English)</option>
+                  <!--    <option value="spanish" <?php if ($_SESSION['language'] == "spanish") {
+                                                    echo "selected";
+                                                  } ?> >Spanish (Espa ol)</option> -->
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <label class="col-3 col-form-label text-right">Theme: </label>
+            <div class="col-6 checkbox-radios">
+              <div class="form-check form-check-inline">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="radio" name="theme_color" value="white">Standard
+                  <span class="circle">
+                    <span class="check"></span>
+                  </span>
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <label class="form-check-label text-right">
+                  <input class="form-check-input" type="radio" name="theme_color" value="dark-edition">Dark
+                  <span class="circle">
+                    <span class="check"></span>
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+          <br /><br />
+          <div class="row">
+            <label class="col-3 col-form-label text-right">New Password: </label>
+            <div class="col-6">
+              <div class="form-group">
+                <input type="password" placeholder="New Password" class="form-control" name="password" id="pass1" onfocusout="checkPassword();" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <label class="col-3 col-form-label text-right">Confirm New Password: </label>
+            <div class="col-6">
+              <div class="form-group">
+                <input type="password" placeholder="Confirm Password" class="form-control" name="confirm_password" id="pass2" onkeyup="checkPassword();" />
+              </div>
+            </div>
+          </div>
+          <span id="confirmMessage" class="confirmMessage text-center"></span>
+        </div> <!-- end card body -->
         <div class="card-footer justify-content-center text-center">
           <button type="submit" class="btn btn-primary text-center">Submit</button>
         </div>
-
       </div> <!-- end card -->
     </div>
   </form>
@@ -169,33 +161,122 @@ require('../footer.php');
   const userid = localStorage.getItem('userid');
   const refresh_key = document.getElementById('refresh_key');
   const keypath = document.getElementById('keypath');
+  const theme = document.getElementById('themecolor');
+  const token = localStorage.getItem('token');
+  const apitoken = document.getElementById('apitoken'); 
 
   //request send to axios post to update cert path on click
-  refresh_cert.addEventListener('click', async() => {
-    try{
-    const response = await axios.post('/api/v1/config/arc_config', {
-      name: 'cert_path',
-      value: certpath.value,
-      userid: userid
-    });
-    console.log(response);
-    } catch(error) {
+  refresh_cert.addEventListener('click', async () => {
+    try {
+      const response = await axios.post('/api/v1/config/arc_config', {
+        name: 'cert_path',
+        value: certpath.value,
+        userid: userid
+      });
+      console.log(response);
+    } catch (error) {
       console.log(error);
     }
   });
 
   //request send to axios post to update key path on click
-  refresh_key.addEventListener('click', async() => {
-    try{
-    const response = await axios.post('/api/v1/config/arc_config', {
-      name: 'key_path',
-      value: keypath.value,
-      userid: userid
-    });
-    console.log(response);
-    } catch(error) {
+  refresh_key.addEventListener('click', async () => {
+    try {
+      const response = await axios.post('/api/v1/config/arc_config', {
+        name: 'key_path',
+        value: keypath.value,
+        userid: userid
+      });
+      console.log(response);
+    } catch (error) {
       console.log(error);
     }
   });
+
+  //request send to axios post to update theme on select
+  document.addEventListener('input', (e) => {
+    if (e.target.getAttribute('name') == 'theme_color') {
+      try {
+        const response = axios.post('/api/v1/config/arc_config', {
+          name: 'theme_color',
+          value: e.target.value,
+          userid: userid
+        });
+        console.log(`Response: ${response}`);
+        getConfig();
+      } catch (error) {
+        console.log(`Error: ${error}`);
+      }
+    }
+  });
+
+
+  //get cert path and key path from array inside result object and add to input values
+  const getConfig = async () => {
+        try {
+          apitoken.value = token;
+          const response = await axios.get(`/api/v1/config/arc_config/${userid}`);
+          response.data.result.forEach(element => {
+
+              switch (element.name) {
+                case 'cert_path':
+                  certpath.value = element.value;
+                  break;
+                case 'key_path':
+                  keypath.value = element.value;
+                  break;
+                case 'theme_color':
+                  if (element.value == 'dark-edition') {
+                    document.querySelector('input[value="dark-edition"]').setAttribute('checked', 'checked');
+                    //set php session variable to dark-edition
+                    <?php
+                    $_SESSION['themeColor'] = "dark-edition";
+                    ?>
+
+                    document.querySelector('input[value="white"]').removeAttribute('checked');
+                  } else {
+                    document.querySelector('input[value="white"]').setAttribute('checked', 'checked');
+                     <?php $_SESSION['themeColor'] = "white"; ?>
+                    document.querySelector('input[value="dark-edition"]').removeAttribute('checked');     
+                  }   
+                  break;
+              }
+          });
+
+              //   if (element.name == 'cert_path') {
+              //     certpath.value = element.value;
+              //   } else if (element.name == 'key_path') {
+              //     keypath.value = element.value;
+              //   }
+              // });
+
+              // //get theme color from array inside result object and add to input values using addventlistener
+              // response.data.result.forEach(element => {
+              //   if (element.name == 'theme_color') {
+              //     if (element.value == 'dark-edition') {
+              //       document.querySelector('input[value="dark-edition"]').setAttribute('checked', 'checked');
+              //       //set php session variable to dark-edition
+              //       <?php
+                        //       $_SESSION['themeColor'] = "dark-edition";
+                        //       
+                        ?>
+
+              //       document.querySelector('input[value="white"]').removeAttribute('checked');
+              //     }
+              //     if (element.value == 'white') {
+              //       document.querySelector('input[value="white"]').setAttribute('checked', 'checked');
+              //       <?php
+                        //       $_SESSION['themeColor'] = "white";
+                        //       
+                        ?>
+              //       document.querySelector('input[value="dark-edition"]').removeAttribute('checked');
+              //     }
+              //   }
+              // });
+            } catch (error) {
+              console.log(error);
+            }
+          }
+          getConfig();
 
 </script>
