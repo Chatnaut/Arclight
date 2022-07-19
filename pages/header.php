@@ -29,7 +29,7 @@
 
 <?php
 
-require('../config/config.php');
+include_once('../config/config.php');
 //bring in the language
 if ($_SESSION['language'] == "english") {
   require('../config/lang/english.php');

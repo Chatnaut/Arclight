@@ -12,7 +12,7 @@ if (!isset($_SESSION['username'])) {
 require('../header.php');
 require('../navbar.php');
 require('../footer.php');
-require('../config/config.php');
+include_once('../config/config.php');
 ?>
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 <?php if ($_SESSION['themeColor'] == "dark-edition") {
                                                                     echo "main-dark";
@@ -46,7 +46,7 @@ $userid = $_SESSION['userid'];
 $filter = ['_id' => new MongoDb\BSON\ObjectID($userid), 'name' => 'cert_path'];
 $option = [];
 $read = new MongoDB\Driver\Query($filter, $option);
-$result = $conn->executeQuery("arclight.arclight_config", $read);
+$result = $conn->executeQuery("arclight.arclight_configs", $read);
 $result = $result->toArray();
 
 //get value from array
@@ -61,7 +61,7 @@ if ($cert_path != "") {
 $filter = ['_id' => new MongoDb\BSON\ObjectID($userid), 'name' => 'key_path'];
 $option = [];
 $read = new MongoDB\Driver\Query($filter, $option);
-$result = $conn->executeQuery("arclight.arclight_config", $read);
+$result = $conn->executeQuery("arclight.arclight_configs", $read);
 $result = $result->toArray();
 
 //get value from array

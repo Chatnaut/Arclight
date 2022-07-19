@@ -17,11 +17,10 @@ class DbManager
 			echo nl2br("n");
         }
     }
-
+	
 	function getConnection() {
 		return $this->conn;
 	}
-
 }
 
 

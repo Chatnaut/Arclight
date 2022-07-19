@@ -206,7 +206,6 @@ if (!isset($_SESSION)) {
     //get arc api health status
     axios.get(`/api/v1/status/health`)
       .then(function(response) {
-        console.log(response);
         if (response.status == 200) {
           console.log("Arc API is healthy");
           dotapi.style.backgroundColor = "#3cb46e";
@@ -251,30 +250,30 @@ if (!isset($_SESSION)) {
         error.innerHTML = error;
       }
     });
-    //get auc inner join data
     const setConfigSession = async () => {
       const token = localStorage.getItem('token')
-      const email = emailInputDOM.value;
+      const userid = localStorage.getItem('userid')
+      const username = localStorage.getItem('username')
       try {
         const {
           data
-        } = await axios.get(`/api/v1/arc/auc/${email}`, {
+        } = await axios.get(`/api/v1/config/arc_config/${userid}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         })
         //iterate through array and set the config session
-        data.message.forEach(element => {
+        data.result.forEach(element => {
           if (element.name == "theme_color") {
             theme_color = element.value;
+          }else{
+            theme_color = "white";
           }
           if (element.name == "language") {
             language = element.value;
+          }else{
+            language = "english";
           }
-          userid = element.userid;
-          username = element.username;
-          email = element.email;
-          role = element.role;
         });
         //sending data to store in php session
         axios.post('sessions.php', {
@@ -287,6 +286,7 @@ if (!isset($_SESSION)) {
         })
       } catch (error) {
         //call setUserSession function
+        console.log(error);
         setUserSession();
       }
     }
