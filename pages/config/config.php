@@ -1,5 +1,5 @@
 <?php
-
+//Source: https://roytuts.com/rest-api-crud-example-in-php-and-mongodb/
 class DbManager
 {
 	//Database configuration
@@ -22,7 +22,6 @@ class DbManager
 		return $this->conn;
 	}
 }
-
 
 
 
