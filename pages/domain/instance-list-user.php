@@ -5,7 +5,7 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-// If there is no username, then we need to send them to the login
+//If there is no username, then we need to send them to the login
 if (!isset($_SESSION['username'])) {
     $_SESSION['return_location'] = $_SERVER['PHP_SELF']; //sets the return location used on login page
     header('Location: ../sign-in.php');
@@ -21,41 +21,15 @@ function clean_input($data)
     $data = filter_var($data, FILTER_SANITIZE_STRING);
     return $data;
 }
-require('../config/config.php');
-require('../../api/arc/arcs.php');
+require_once('../config/config.php');
+require('../../api/arc.php');
 
 $userid = $_SESSION['userid'];
 
-$sql = "CREATE TABLE IF NOT EXISTS arclight_vm (
-     sno INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-     userid INT,
-     uuid varchar(255),
-     action varchar(255),
-     username varchar(255),
-     instance_type varchar(255),
-     domain_name varchar(255),
-     os varchar(255),
-     vcpu INT,
-     cores varchar(255),
-     threads varchar(255),
-     memory INT,
-     memory_unit varchar(255),
-     source_file_volume varchar(255),
-     volume_image_name varchar(255),
-     volume_size INT,
-     driver_type varchar(255),
-     target_bus varchar(255),
-     storage_pool varchar(255),
-     existing_driver_type varchar(255),
-     existing_target_bus varchar(255),
-     source_file_cd varchar(255),
-     mac_address TEXT,
-     model_type varchar(255),
-     source_network varchar(255),
-     xml_data TEXT,
-     dt DATETIME)";
-$tablesql = $conn->query($sql);
-// We are now going to grab any GET/POST data and put in in SESSION data, then clear it.
+//create a new instance of the DbManager class
+$db = new DbManager();
+$conn = $db->getConnection();
+
 // This will prevent duplicating actions when page is reloaded.
 if (isset($_GET['action'])) {
     $_SESSION['uuid'] = $_GET['uuid'];
@@ -303,35 +277,35 @@ if ($action == "create-domain") {
         $domObj = $lv->get_domain_object($domain_name);         //get the domain object
         $domainuuid = libvirt_domain_get_uuid_string($domObj);
         echo "<script>createInstance();</script>";
-        echo "<script>
-        const updateuuid = function() {
-            try {
-                const uuid = '$domainuuid';
-                const domain_name = '$domain_name';
-                const token = localStorage.getItem('token');
-                axios.patch(`/api/v1/arc/updateinstance`, {
-                        uuid: uuid,
-                        domain_name: domain_name
-                    }, {
-                        headers: {
-                            'Access-Control-Allow-Origin': '*',
-                            'Authorization': 'Bearer ' + token
-                        }
-                    })
-                    .then(function(response) {
-                        if (response.status == 200 && response.data.success == 1) {
-                            console.log(response);
-                            // window.location.href = '/arc/instances';
-                        } else {
-                            // alert('Error updating UUID');
-                        }
-                    })
-            } catch (error) {
-                console.log('Axios ' + error);
-            }
-        };
-        updateuuid();
-        </script>";
+        // echo "<script>
+        // const updateuuid = function() {
+        //     try {
+        //         const uuid = '$domainuuid';
+        //         const domain_name = '$domain_name';
+        //         const token = localStorage.getItem('token');
+        //         axios.patch(`/api/v1/arc/updateinstance`, {
+        //                 uuid: uuid,
+        //                 domain_name: domain_name
+        //             }, {
+        //                 headers: {
+        //                     'Access-Control-Allow-Origin': '*',
+        //                     'Authorization': 'Bearer ' + token
+        //                 }
+        //             })
+        //             .then(function(response) {
+        //                 if (response.status == 200 && response.data.success == 1) {
+        //                     console.log(response);
+        //                     // window.location.href = '/arc/instances';
+        //                 } else {
+        //                     // alert('Error updating UUID');
+        //                 }
+        //             })
+        //     } catch (error) {
+        //         console.log('Axios ' + error);
+        //     }
+        // };
+        // updateuuid();
+        // </script>";
     }
     //--------------------- STORAGE VOLUME SECTION ---------------------//
     $storage_pool = $_SESSION['storage_pool']; //"default" storage pool is default choice
@@ -504,36 +478,57 @@ if ($action == "create-xml") {
 
 //This will turn a shutdown virtual machine on. This option in only given when a machine is shutdown
 if ($action == 'domain-start') {
-    $notification = $lv->domain_start($domName) ? "" : 'Error while starting domain: ' . $lv->get_last_error();
+    $notification = $lv->domain_start($domName) ? "" : 'Error while starting Instance: ' . $lv->get_last_error();
+    $description = ($notification) ? $notification : "Instance Started";
+    $insert = new MongoDB\Driver\BulkWrite();
+    $insert->insert(['description' => $description, 'host_uuid' => $host_uuid, 'domain_uuid' => $domain_uuid, 'userid' => $userid, 'date' => new MongoDB\BSON\UTCDateTime(new DateTime())]);
+    $result = $conn->executeBulkWrite("arclight.arclight_events", $insert);
 }
 
 //This will pause a virtual machine and temporaily save it's state
 if ($action == 'domain-pause') {
-    $notification = $lv->domain_suspend($domName) ? "" : 'Error while pausing domain: ' . $lv->get_last_error();
+    $notification = $lv->domain_suspend($domName) ? "" : 'Error while pausing Instance: ' . $lv->get_last_error();
+    $description = ($notification) ? $notification : "Instance Paused";
+    $insert = new MongoDB\Driver\BulkWrite();
+    $insert->insert(['description' => $description, 'host_uuid' => $host_uuid, 'domain_uuid' => $domain_uuid, 'userid' => $userid, 'date' => new MongoDB\BSON\UTCDateTime(new DateTime())]);
+    $result = $conn->executeBulkWrite("arclight.arclight_events", $insert);
 }
 
 //This will resume a paused virtual machine. Option is given only if a machine is paused
 if ($action == 'domain-resume') {
-    $notification = $lv->domain_resume($domName) ? "" : 'Error while resuming domain: ' . $lv->get_last_error();
+    $notification = $lv->domain_resume($domName) ? "" : 'Error while resuming Instance: ' . $lv->get_last_error();
+    $description = ($notification) ? $notification : "Instance Resumed";
+    $insert = new MongoDB\Driver\BulkWrite();
+    $insert->insert(['description' => $description, 'host_uuid' => $host_uuid, 'domain_uuid' => $domain_uuid, 'userid' => $userid, 'date' => new MongoDB\BSON\UTCDateTime(new DateTime())]);
+    $result = $conn->executeBulkWrite("arclight.arclight_events", $insert);
 }
 
 //This is used to gracefully shutdown the guest.
 //There are many reasons why a guest cannot gracefully shutdown so if it can't, let the user know that
 if ($action == 'domain-stop') {
-    $notification = $lv->domain_shutdown($domName) ? "" : 'Error while stopping domain: ' . $lv->get_last_error();
+    $notification = $lv->domain_shutdown($domName) ? "" : 'Error while stopping Instance: ' . $lv->get_last_error();
+    $description = ($notification) ? $notification : "Instance has been stopped";
+    $insert = new MongoDB\Driver\BulkWrite();
+    $insert->insert(['description' => $description, 'host_uuid' => $host_uuid, 'domain_uuid' => $domain_uuid, 'userid' => $userid, 'date' => new MongoDB\BSON\UTCDateTime(new DateTime())]);
+    $result = $conn->executeBulkWrite("arclight.arclight_events", $insert);
 }
 
 //This will forcefully shutdown the virtual machine guest
 if ($action == 'domain-destroy') {
-    $notification = $lv->domain_destroy($domName) ? "" : 'Error while destroying domain: ' . $lv->get_last_error();
+    $notification = $lv->domain_destroy($domName) ? "" : 'Error while destroying Instance: ' . $lv->get_last_error();
+    $description = ($notification) ? $notification : "Instance destroyed";
+    $insert = new MongoDB\Driver\BulkWrite();
+    $insert->insert(['description' => $description, 'host_uuid' => $host_uuid, 'domain_uuid' => $domain_uuid, 'userid' => $userid, 'date' => new MongoDB\BSON\UTCDateTime(new DateTime())]);
+    $result = $conn->executeBulkWrite("arclight.arclight_events", $insert);
 }
 
 //This will reboot the virtual machine guest
 if ($action == 'domain-reboot') {
-    $notification = $lv->domain_reboot($domName) ? "" : 'Error while rebooting domain: ' . $lv->get_last_error();
-    $description = ($notification) ? $notification : "guest rebooted";
-    $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
-    $sql_action = $conn->query($sql);
+    $notification = $lv->domain_reboot($domName) ? "" : 'Error while rebooting Instance: ' . $lv->get_last_error();
+    $description = ($notification) ? $notification : "Instance rebooted";
+    $insert = new MongoDB\Driver\BulkWrite();
+    $insert->insert(['description' => $description, 'host_uuid' => $host_uuid, 'domain_uuid' => $domain_uuid, 'userid' => $userid, 'date' => new MongoDB\BSON\UTCDateTime(new DateTime())]);
+    $result = $conn->executeBulkWrite("arclight.arclight_events", $insert);
 }
 
 
@@ -648,22 +643,26 @@ $random_mac = $lv->generate_random_mac_addr(); //used to set default mac address
                                             $disks = '----';
                                             $diskdesc = '';
                                         }
-                                        //get os type from tablename arclight_vm and set icon for each domain
-                                        $get_os = 'SELECT instance_type, os FROM arclight_vm WHERE domain_name = "' . $name . '"';
-                                        $os_result = mysqli_query($conn, $get_os);
-                                        $os_row = mysqli_fetch_assoc($os_result);
-                                        if ($os_row['os'] == 'windows') {
-                                            $os_icon = "<i class='fab fa-windows'></i>";
-                                        } else if ($os_row['os'] == 'linux') {
-                                            $os_icon = "<i class='fab fa-linux'></i>";
-                                        } else if ($os_row['os'] == 'mac') {
-                                            $os_icon = "<i class='fab fa-apple'></i>";
-                                        } else if ($os_row['os'] == 'unix') {
-                                            $os_icon = "<i class='fab fa-uniregistry'></i>";
-                                        } else if ($os_row['os'] == 'other') {
-                                            $os_icon = "<i class='far fa-circle'></i>";
-                                        } else {
-                                            $os_icon = "<i class='fas fa-question'></i>";
+
+                                        $filter = ['domain_name' => $name];
+                                        $read = new MongoDB\Driver\Query($filter);
+                                        $os_result = $conn->executeQuery('arclight.arclight_vms', $read);
+                                        $vm_info = $os_result->toArray();
+                                        foreach ($vm_info as $row) {
+
+                                            if ($row->os == "windows") {
+                                                $os_icon = "<i class='fab fa-windows'></i>";
+                                            } else if ($row->os == 'linux') {
+                                                $os_icon = "<i class='fab fa-linux'></i>";
+                                            } else if ($row->os == 'mac') {
+                                                $os_icon = "<i class='fab fa-apple'></i>";
+                                            } else if ($row->os == 'unix') {
+                                                $os_icon = "<i class='fab fa-uniregistry'></i>";
+                                            } else if ($row->os == 'other') {
+                                                $os_icon = "<i class='far fa-circle'></i>";
+                                            } else {
+                                                $os_icon = "<i class='fas fa-question'></i>";
+                                            }
                                         }
                                         unset($tmp);
                                         unset($dom);
@@ -675,11 +674,11 @@ $random_mac = $lv->generate_random_mac_addr(); //used to set default mac address
                                             "<td> $cpu </td>" .
                                             "<td> $mem </td>" .
                                             "<td>";
-                                        if ($os_row['instance_type'] == 'vm' && $active == true) {
+                                        if ($row->instance_type == 'vm' && $active == true) {
                                             echo  "<div class=\"progress\">
                               <div class=\"progress-bar progress-bar-danger\" role=\"progressbar\" style=\"width: $mem_used%\" aria-valuenow=\"$mem_used\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>
                               </div>";
-                                        } else if ($os_row['instance_type'] == 'bare_metal' && $active == true) {
+                                        } else if ($row->instance_type == 'bare_metal' && $active == true) {
                                             //class added in dist\css\bootstrap.min.css
                                             echo  "<div class=\"progress\">
                               <div class=\"progress progress-bar-baremetal\" role=\"progressbar\" style=\"width: $mem_used%\" aria-valuenow=\"$mem_used\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>
