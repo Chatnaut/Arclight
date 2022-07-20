@@ -30,7 +30,7 @@ $cert_path = $result[0]->value;
 if ($cert_path != "") {
   $cert_option = "--certfile=" . $cert_path; //--cert is option used in noVNC connection string
 } else {
-  $cert_option = ""; //sets default location if nothing in database
+  $cert_option = "--certfile=/etc/ssl/fullchain.pem"; //sets default location if nothing in database
 }
 
 //Setting the SSL Certificate file path
@@ -45,7 +45,7 @@ $key_path = $result[0]->value;
 if ($key_path != "") {
   $key_option = "--keyfile=" . $key_path; //--key is option used in noVNC connection string
 } else {
-  $key_option = ""; //sets default location if nothing in database
+  $key_option = "--keyfile=/etc/ssl/privkey.pem"; //sets default location if nothing in database
 }
 
 ?>
