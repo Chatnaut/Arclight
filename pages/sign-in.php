@@ -207,15 +207,16 @@ if (!isset($_SESSION)) {
     axios.get(`/api/v1/status/health`)
       .then(function(response) {
         if (response.status == 200) {
-          console.log("Arc API is healthy");
+          console.log("Arc api is healthy");
           dotapi.style.backgroundColor = "#3cb46e";
         } else {
-          console.log("Arc API is not healthy");
+          console.log("Arc api is not healthy");
           dotapi.style.backgroundColor = "#ff0000";
         }
       })
-      .catch(function(error) {
-        console.log(error);
+      .catch(function(err) {
+        console.log("Arc api is not healthy");
+        error.innerHTML = "Error: Arc api not running";
         dotapi.style.backgroundColor = "#a9a9a9";
       });
 
@@ -241,13 +242,13 @@ if (!isset($_SESSION)) {
           console.log(data.message);
           error.innerHTML = data.message;
         }
-      } catch (error) {
+      } catch (err) {
         localStorage.removeItem('token');
         localStorage.removeItem('userid');
         localStorage.removeItem('username');
         localStorage.removeItem('email');
         localStorage.removeItem('role');
-        error.innerHTML = error;
+        error.innerHTML = err.response.data.message;
       }
     });
     const setConfigSession = async () => {
@@ -284,13 +285,14 @@ if (!isset($_SESSION)) {
         }).then(function(response) {
           window.location.href = '../index.php';
         })
-      } catch (error) {
-        //call setUserSession function
-        console.log(error);
-        setUserSession();
+        console.log(data.message);
+      } catch (err) {
+        //call setDefaultSession function
+        console.log(err);
+        setDefaultSession();
       }
     }
-    const setUserSession = async () => {
+    const setDefaultSession = async () => {
       try {
         axios.post('sessions.php', {
           userid: localStorage.getItem('userid'),
@@ -302,8 +304,8 @@ if (!isset($_SESSION)) {
         }).then(function(response) {
           window.location.href = '../index.php';
         })
-      } catch (error) {
-        console.log(error);
+      } catch (err) {
+        console.log(err);
       }
     }
   </script>
