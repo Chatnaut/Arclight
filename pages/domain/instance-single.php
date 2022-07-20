@@ -146,7 +146,7 @@ if ($action == 'domain-delete') {
       try {
 
           const token = localStorage.getItem('token');
-          axios.delete(`/api/v1/arc/deleteinstance/${userid}/${domName}`, {
+          axios.delete(`/api/v1/instance/deleteinstance/${userid}/${domName}`, {
                   headers: {
                       'Access-Control-Allow-Origin': '*',
                       'Authorization': 'Bearer ' + token
