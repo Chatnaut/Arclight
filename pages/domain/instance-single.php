@@ -50,7 +50,12 @@ if (isset($_GET['action']) || isset($_GET['dev']) || isset($_GET['mac']) || isse
 // Add the header information
 require('../header.php');
 require('../navbar.php');
-require('../../api/arc/arcs.php');
+require('../../api/arc.php');
+require_once('../config/config.php');
+
+  //create a new instance of the DbManager class
+  $db = new DbManager();
+  $conn = $db->getConnection();
 
 function RandomString($length)
 {
@@ -82,52 +87,59 @@ $host_uuid = $hostXML->capability->hardware->uuid;
 
 // Domain Actions
 if ($action == 'domain-start') {
-  $notification = $lv->domain_start($domName) ? "" : 'Error while starting domain: ' . $lv->get_last_error();
-  $description = ($notification) ? $notification : "guest powered on";
-  $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
-  $sql_action = $conn->query($sql);
+  $notification = $lv->domain_start($domName) ? "" : 'Error while starting Instance: ' . $lv->get_last_error();
+  $description = ($notification) ? $notification : "Instance started successfully";
+  $insert = new MongoDB\Driver\BulkWrite();
+  $insert->insert(['description' => $description, 'host_uuid' => $host_uuid, 'domain_uuid' => $domain_uuid, 'userid' => $userid, 'date' => new MongoDB\BSON\UTCDateTime(new DateTime())]);
+  $result = $conn->executeBulkWrite("arclight.arclight_events", $insert);
 }
 
 if ($action == 'domain-pause') {
-  $notification = $lv->domain_suspend($domName) ? "" : 'Error while pausing domain: ' . $lv->get_last_error();
-  $description = ($notification) ? $notification : "guest paused";
-  $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
-  $sql_action = $conn->query($sql);
+  $notification = $lv->domain_suspend($domName) ? "" : 'Error while pausing Instance: ' . $lv->get_last_error();
+  $description = ($notification) ? $notification : "Instance paused successfully";
+  $insert = new MongoDB\Driver\BulkWrite();
+  $insert->insert(['description' => $description, 'host_uuid' => $host_uuid, 'domain_uuid' => $domain_uuid, 'userid' => $userid, 'date' => new MongoDB\BSON\UTCDateTime(new DateTime())]);
+  $result = $conn->executeBulkWrite("arclight.arclight_events", $insert);
 }
 
 if ($action == 'domain-resume') {
-  $notification = $lv->domain_resume($domName) ? "" : 'Error while resuming domain: ' . $lv->get_last_error();
-  $description = ($notification) ? $notification : "guest resumed";
-  $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
-  $sql_action = $conn->query($sql);
+  $notification = $lv->domain_resume($domName) ? "" : 'Error while resuming Instance: ' . $lv->get_last_error();
+  $description = ($notification) ? $notification : "Instance resumed successfully";
+  $insert = new MongoDB\Driver\BulkWrite();
+  $insert->insert(['description' => $description, 'host_uuid' => $host_uuid, 'domain_uuid' => $domain_uuid, 'userid' => $userid, 'date' => new MongoDB\BSON\UTCDateTime(new DateTime())]);
+  $result = $conn->executeBulkWrite("arclight.arclight_events", $insert);
 }
 
 if ($action == 'domain-stop') {
-  $notification = $lv->domain_shutdown($domName) ? "" : 'Error while stopping domain: ' . $lv->get_last_error();
-  $description = ($notification) ? $notification : "shutdown command sent";
-  $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
-  $sql_action = $conn->query($sql);
+  $notification = $lv->domain_shutdown($domName) ? "" : 'Error while stopping Instance: ' . $lv->get_last_error();
+  $description = ($notification) ? $notification : "Instance stopped successfully";
+  $insert = new MongoDB\Driver\BulkWrite();
+  $insert->insert(['description' => $description, 'host_uuid' => $host_uuid, 'domain_uuid' => $domain_uuid, 'userid' => $userid, 'date' => new MongoDB\BSON\UTCDateTime(new DateTime())]);
+  $result = $conn->executeBulkWrite("arclight.arclight_events", $insert);
 }
 
 if ($action == 'domain-destroy') {
-  $notification = $lv->domain_destroy($domName) ? "" : 'Error while destroying domain: ' . $lv->get_last_error();
-  $description = ($notification) ? $notification : "guest powered off";
-  $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
-  $sql_action = $conn->query($sql);
+  $notification = $lv->domain_destroy($domName) ? "" : 'Error while destroying Instance: ' . $lv->get_last_error();
+  $description = ($notification) ? $notification : "Instance destroyed successfully";
+  $insert = new MongoDB\Driver\BulkWrite();
+  $insert->insert(['description' => $description, 'host_uuid' => $host_uuid, 'domain_uuid' => $domain_uuid, 'userid' => $userid, 'date' => new MongoDB\BSON\UTCDateTime(new DateTime())]);
+  $result = $conn->executeBulkWrite("arclight.arclight_events", $insert);
 }
 
 if ($action == 'domain-reboot') {
   $notification = $lv->domain_reboot($domName) ? "" : 'Error while rebooting domain: ' . $lv->get_last_error();
-  $description = ($notification) ? $notification : "guest rebooted";
-  $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
-  $sql_action = $conn->query($sql);
+  $description = ($notification) ? $notification : "Instance rebooted successfully";
+  $insert = new MongoDB\Driver\BulkWrite();
+  $insert->insert(['description' => $description, 'host_uuid' => $host_uuid, 'domain_uuid' => $domain_uuid, 'userid' => $userid, 'date' => new MongoDB\BSON\UTCDateTime(new DateTime())]);
+  $result = $conn->executeBulkWrite("arclight.arclight_events", $insert);
 }
 
 if ($action == 'domain-delete') {
   $notification = $lv->domain_undefine($domName) ? "" : 'Error while deleting domain: ' . $lv->get_last_error();
-  $description = ($notification) ? $notification : "guest deleted";
-  $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
-  $sql_action = $conn->query($sql);
+  $description = ($notification) ? $notification : "Instance deleted successfully";
+  $insert = new MongoDB\Driver\BulkWrite();
+  $insert->insert(['description' => $description, 'host_uuid' => $host_uuid, 'domain_uuid' => $domain_uuid, 'userid' => $userid, 'date' => new MongoDB\BSON\UTCDateTime(new DateTime())]);
+  $result = $conn->executeBulkWrite("arclight.arclight_events", $insert);
   if ($notification == "") {
     echo "<script>
     const deleteInstance = function() {
@@ -171,8 +183,9 @@ if ($action == 'domain-disk-remove') {
     $newXML = str_replace('<?xml version="1.0"?>', '', $newXML);
     $notification = $lv->domain_change_xml($domName, $newXML) ? "" : 'Cannot remove disk: ' . $lv->get_last_error();
     $description = ($notification) ? $notification : "removed storage volume";
-    $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
-    $sql_action = $conn->query($sql);
+    $insert = new MongoDB\Driver\BulkWrite();
+    $insert->insert(['description' => $description, 'host_uuid' => $host_uuid, 'domain_uuid' => $domain_uuid, 'userid' => $userid, 'date' => new MongoDB\BSON\UTCDateTime(new DateTime())]);
+    $result = $conn->executeBulkWrite("arclight.arclight_events", $insert);
   }
 }
 
@@ -258,16 +271,18 @@ if ($action == 'add-storage-volume') {
     $driver = $driver_type;
     $notification = $lv->domain_disk_add($dom, $img, $dev, $typ, $driver) ? "" : "Cannot add volume to the guest: " . $lv->get_last_error();
     $description = ($notification) ? $notification : "added storage volume";
-    $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
-    $sql_action = $conn->query($sql);
+    $insert = new MongoDB\Driver\BulkWrite();
+    $insert->insert(['description' => $description, 'host_uuid' => $host_uuid, 'domain_uuid' => $domain_uuid, 'userid' => $userid, 'date' => new MongoDB\BSON\UTCDateTime(new DateTime())]);
+    $result = $conn->executeBulkWrite("arclight.arclight_events", $insert);
   }
 
   //add an existing disk to domain if selected
   if ($source_file != "new") {
     $notification = $lv->domain_disk_add($dom, $source_file, $target_dev, $target_bus, $driver_type) ? "" : "Cannot add volume to the guest: " . $lv->get_last_error();
     $description = ($notification) ? $notification : "added storage volume";
-    $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
-    $sql_action = $conn->query($sql);
+    $insert = new MongoDB\Driver\BulkWrite();
+    $insert->insert(['description' => $description, 'host_uuid' => $host_uuid, 'domain_uuid' => $domain_uuid, 'userid' => $userid, 'date' => new MongoDB\BSON\UTCDateTime(new DateTime())]);
+    $result = $conn->executeBulkWrite("arclight.arclight_events", $insert);
   }
 }
 
@@ -335,8 +350,9 @@ if ($action == 'add-optical-storage') {
 
   $notification = $lv->domain_change_xml($domName, $newXML) ? "" : "Cannot add ISO to the guest: " . $lv->get_last_error();
   $description = ($notification) ? $notification : "added optical storage";
-  $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
-  $sql_action = $conn->query($sql);
+  $insert = new MongoDB\Driver\BulkWrite();
+  $insert->insert(['description' => $description, 'host_uuid' => $host_uuid, 'domain_uuid' => $domain_uuid, 'userid' => $userid, 'date' => new MongoDB\BSON\UTCDateTime(new DateTime())]);
+  $result = $conn->executeBulkWrite("arclight.arclight_events", $insert);
 }
 
 
@@ -352,8 +368,9 @@ if ($action == 'domain-nic-remove') {
     $newXML = str_replace('<?xml version="1.0"?>', '', $newXML);
     $notification = $lv->domain_change_xml($domName, $newXML) ? "" : 'Cannot remove network interface: ' . $lv->get_last_error();
     $description = ($notification) ? $notification : "removed network interface";
-    $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
-    $sql_action = $conn->query($sql);
+    $insert = new MongoDB\Driver\BulkWrite();
+    $insert->insert(['description' => $description, 'host_uuid' => $host_uuid, 'domain_uuid' => $domain_uuid, 'userid' => $userid, 'date' => new MongoDB\BSON\UTCDateTime(new DateTime())]);
+    $result = $conn->executeBulkWrite("arclight.arclight_events", $insert);
   }
 }
 
@@ -364,8 +381,9 @@ if ($action == "add-network-adapter") {
 
   $notification = $lv->domain_nic_add($domName, $mac_address, $source_network, $model_type) ? "" : "Cannot add network to the guest: " . $lv->get_last_error();
   $description = ($notification) ? $notification : "added network interface";
-  $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
-  $sql_action = $conn->query($sql);
+  $insert = new MongoDB\Driver\BulkWrite();
+  $insert->insert(['description' => $description, 'host_uuid' => $host_uuid, 'domain_uuid' => $domain_uuid, 'userid' => $userid, 'date' => new MongoDB\BSON\UTCDateTime(new DateTime())]);
+  $result = $conn->executeBulkWrite("arclight.arclight_events", $insert);;
 }
 
 
@@ -373,24 +391,27 @@ if ($action == "add-network-adapter") {
 if ($action == 'domain-snapshot-create') {
   $notification = $lv->domain_snapshot_create($domName) ? "Snapshot for $domName successfully created" : 'Error while taking snapshot of domain: ' . $lv->get_last_error();
   $description = ($notification) ? $notification : "created snapshot";
-  $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
-  $sql_action = $conn->query($sql);
+  $insert = new MongoDB\Driver\BulkWrite();
+  $insert->insert(['description' => $description, 'host_uuid' => $host_uuid, 'domain_uuid' => $domain_uuid, 'userid' => $userid, 'date' => new MongoDB\BSON\UTCDateTime(new DateTime())]);
+  $result = $conn->executeBulkWrite("arclight.arclight_events", $insert);
 }
 
 if ($action == 'domain-snapshot-delete') {
   $snapshot = $_SESSION['snapshot'];
   $notification = $lv->domain_snapshot_delete($domName, $snapshot) ? "" : 'Error while deleting snapshot of domain: ' . $lv->get_last_error();
   $description = ($notification) ? $notification : "deleted snapshot";
-  $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
-  $sql_action = $conn->query($sql);
+  $insert = new MongoDB\Driver\BulkWrite();
+  $insert->insert(['description' => $description, 'host_uuid' => $host_uuid, 'domain_uuid' => $domain_uuid, 'userid' => $userid, 'date' => new MongoDB\BSON\UTCDateTime(new DateTime())]);
+  $result = $conn->executeBulkWrite("arclight.arclight_events", $insert);
 }
 
 if ($action == 'domain-snapshot-revert') {
   $snapshot = $_SESSION['snapshot'];
   $notification = $lv->domain_snapshot_revert($domName, $snapshot) ? "Snapshot $snapshot for $domName successfully applied" : 'Error while reverting snapshot of domain: ' . $lv->get_last_error();
   $description = ($notification) ? $notification : "reverted to previous snapshot";
-  $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
-  $sql_action = $conn->query($sql);
+  $insert = new MongoDB\Driver\BulkWrite();
+  $insert->insert(['description' => $description, 'host_uuid' => $host_uuid, 'domain_uuid' => $domain_uuid, 'userid' => $userid, 'date' => new MongoDB\BSON\UTCDateTime(new DateTime())]);
+  $result = $conn->executeBulkWrite("arclight.arclight_events", $insert);
 }
 
 if ($action == 'domain-snapshot-xml') {
@@ -409,19 +430,21 @@ if ($action == 'domain-edit') {
   $notification = $lv->domain_change_xml($domName, $xml) ? "XML for $domName has been updated" : 'Error changing domain XML: ' . $lv->get_last_error();
   $domName = $lv->domain_get_name_by_uuid($uuid); //If the name is changed in XML will need to get it again
   $description = $notification;
-  $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
-  $sql_action = $conn->query($sql);
+  $insert = new MongoDB\Driver\BulkWrite();
+  $insert->insert(['description' => $description, 'host_uuid' => $host_uuid, 'domain_uuid' => $domain_uuid, 'userid' => $userid, 'date' => new MongoDB\BSON\UTCDateTime(new DateTime())]);
+  $result = $conn->executeBulkWrite("arclight.arclight_events", $insert);
 }
 
 
 //Domain AutoStart Change
 if ($action == 'domain-set-autostart') {
   $val = ($autostart == "yes") ? null : 1; // null disables autostart, 1 enables it
-  $notification = $lv->domain_set_autostart($dom, $val) ? "" : 'Error changing domain autostart: ' . $lv->get_last_error();
+  $notification = $lv->domain_set_autostart($dom, $val) ? "" : 'Error changing instance autostart: ' . $lv->get_last_error();
   $autostart = ($lv->domain_get_autostart($dom)) ? "yes" : "no"; //Check status again to display status in general informaion
   $description = ($notification) ? $notification : "autostart value changed";
-  $sql = "INSERT INTO arclight_events (description, host_uuid, domain_uuid, userid, date) VALUES (\"$description\", '$host_uuid', '$domain_uuid', '$userid', '$currenttime')";
-  $sql_action = $conn->query($sql);
+  $insert = new MongoDB\Driver\BulkWrite();
+  $insert->insert(['description' => $description, 'host_uuid' => $host_uuid, 'domain_uuid' => $domain_uuid, 'userid' => $userid, 'date' => new MongoDB\BSON\UTCDateTime(new DateTime())]);
+  $result = $conn->executeBulkWrite("arclight.arclight_events", $insert);
 }
 
 
@@ -594,7 +617,8 @@ unset($_SESSION['model_type']);
           </div>
           <div class="card-body">
             <?php
-            echo "<div class='table-responsive'>" .
+            //make table scollable with max-height of 300px
+            echo "<div class='table-responsive' style='max-height:250px; overflow-y:scroll;'>".
               "<table class='table'>" .
               "<thead>" .
               "<tr>" .
@@ -604,13 +628,17 @@ unset($_SESSION['model_type']);
               "</thead>" .
               "<tbody>";
 
-            $sql = "SELECT * FROM arclight_events WHERE domain_uuid = '$uuid' ORDER BY eventid DESC LIMIT 3";
-            $result = $conn->query($sql);
+              //read data from mongodb database
+              $filter = ['domain_uuid' => $uuid];
+              $option = ['sort' => ['position' => -1]];
+              $read = new MongoDB\Driver\Query($filter, $option);
+              $result = $conn->executeQuery("arclight.arclight_events", $read);
+              $result = $result->toArray(); 
 
             foreach ($result as $row) {
               echo "<tr>";
-              echo "<td>" . $row['date'] . "</td>";
-              echo "<td>" . $row['description'] . "</td>";
+              echo "<td>" . $row->date->toDateTime()->format('Y-m-d H:i:s') . "</td>";
+              echo "<td>" . $row->description . "</td>";
               echo "</tr>";
             }
 
