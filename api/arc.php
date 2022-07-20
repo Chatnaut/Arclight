@@ -32,11 +32,10 @@
         const mac_address = '<?php echo $_SESSION['mac_address']; ?>';
         const model_type = '<?php echo $_SESSION['model_type']; ?>';
         const source_network = '<?php echo $_SESSION['source_network']; ?>';
-        const dt = "<?php echo date("Y-m-d H:i:s"); ?>";
         const token = localStorage.getItem('token');
 
         try {
-            axios.post(`/api/v1/arc/createinstance`, {
+            axios.post(`/api/v1/instance/createinstance`, {
                     userid: userid,
                     uuid: uuid,
                     action: action,
@@ -61,7 +60,6 @@
                     mac_address: mac_address,
                     model_type: model_type,
                     source_network: source_network,
-                    dt: dt,
                 }, {
                     headers: {
                         'Access-Control-Allow-Origin': '*',
