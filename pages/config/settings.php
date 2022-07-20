@@ -3,10 +3,6 @@
 if (!isset($_SESSION)) {
   session_start();
 }
-//echo session object
-echo '<pre>';
-print_r($_SESSION);
-echo '</pre>';
 
 // If there is no username, then we need to send them to the login
 if (!isset($_SESSION['username'])) {
@@ -19,6 +15,19 @@ $userid = $_SESSION['userid'];
 // Time to bring in the header and navigation
 require('../header.php');
 require('../navbar.php');
+require_once('config.php');
+
+//create a new instance of the DbManager class
+$db = new DbManager();
+$conn = $db->getConnection();
+$filter = ['userid' => $userid, 'name' => 'theme_color'];
+$read = new MongoDB\Driver\Query($filter, $option);
+$result = $conn->executeQuery("arclight.arclight_configs", $read);
+$result = $result->toArray();
+
+//set $_SESSION['themeColor'] to the value of the themeColor document in the database
+$_SESSION['themeColor'] = $result[0]->value;
+
 ?>
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 <?php if ($_SESSION['themeColor'] == "dark-edition") {
@@ -36,38 +45,43 @@ require('../navbar.php');
         <div class="card-header text-center">
           <span class="card-title">Settings</span>
         </div>
-        <div class="card-body">
+        <div class="card-body h-100">
           <!-- VNC Certificate -->
           <div class="row">
             <label class="col-3 col-form-label text-right">SSL Certificate File Path (VNC): </label>
             <div class="col-6">
               <div class="form-group">
-                <input type="text" value="" class="form-control" name="cert_path" id="certpath" />
-                <!-- refresh icon to update cert path -->
-                <i class="fas fa-sync-alt" id="refresh_cert"></i>
+                <div class="input-group">
+                  <input type="text" value="" class="form-control" name="cert_path" id="certpath" />
+                  <div class="input-group-addon">
+                    <i class="fas fa-sync-alt fa-xl" id="refresh_cert" style="margin: 20px 0px 0px 5px;"></i>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
           <div class="row">
             <label class="col-3 col-form-label text-right">SSL Key File Path (VNC): </label>
             <div class="col-6">
-              <div class="form-group">
+              <div class="input-group">
                 <input type="text" value="" class="form-control" name="key_path" id="keypath" />
-                <!-- refresh icon to update key path -->
-                <span><i class="fas fa-sync-alt" id="refresh_key"></i></span>
+                <div class="input-group-addon">
+                  <i class="fas fa-sync-alt fa-xl" id="refresh_key" style="margin: 20px 0px 0px 5px;"></i>
+                </div>
               </div>
             </div>
           </div>
-          <div class="row">
-            <label class="col-3 col-form-label text-right">API Bearer Token </label>
-            <div class="col-6">
-              <div class="form-group">
-                <input type="text" value="" class="form-control" name="apitoken" id="apitoken" readonly/>
-              </div>
+        </div>
+        <div class="row">
+          <label class="col-3 col-form-label text-right">API Bearer Token:  </label>
+          <div class="col-6">
+            <div class="input-group">
+              <input type="text" value="" class="form-control" name="apitoken" id="apitoken" readonly />
             </div>
           </div>
-        </div> <!-- end card -->
-      </div>
+        </div>
+      </div> <!-- end card -->
+    </div>
   </form>
 </main>
 
@@ -163,7 +177,7 @@ require('../footer.php');
   const keypath = document.getElementById('keypath');
   const theme = document.getElementById('themecolor');
   const token = localStorage.getItem('token');
-  const apitoken = document.getElementById('apitoken'); 
+  const apitoken = document.getElementById('apitoken');
 
   //request send to axios post to update cert path on click
   refresh_cert.addEventListener('click', async () => {
@@ -173,7 +187,13 @@ require('../footer.php');
         value: certpath.value,
         userid: userid
       });
-      console.log(response);
+      if (response.data.success == 1) {
+        refresh_cert.classList.remove('fa-sync-alt');
+        refresh_cert.classList.add('fa-check');
+        refresh_cert.style.color = '#32de84';
+      } else {
+        refresh_cert.style.color = 'red';
+      }
     } catch (error) {
       console.log(error);
     }
@@ -187,7 +207,13 @@ require('../footer.php');
         value: keypath.value,
         userid: userid
       });
-      console.log(response);
+      if (response.data.success == 1) {
+        refresh_key.classList.remove('fa-sync-alt');
+        refresh_key.classList.add('fa-check');
+        refresh_key.style.color = '#32de84';
+      } else {
+        refresh_key.style.color = 'red';
+      }
     } catch (error) {
       console.log(error);
     }
@@ -202,81 +228,43 @@ require('../footer.php');
           value: e.target.value,
           userid: userid
         });
-        console.log(`Response: ${response}`);
-        getConfig();
       } catch (error) {
         console.log(`Error: ${error}`);
       }
+      setTimeout(function() {
+        location.reload();
+      }, 1000);
     }
   });
 
-
   //get cert path and key path from array inside result object and add to input values
   const getConfig = async () => {
-        try {
-          apitoken.value = token;
-          const response = await axios.get(`/api/v1/config/arc_config/${userid}`);
-          response.data.result.forEach(element => {
+    try {
+      apitoken.value = token;
+      const response = await axios.get(`/api/v1/config/arc_config/${userid}`);
+      response.data.result.forEach(element => {
 
-              switch (element.name) {
-                case 'cert_path':
-                  certpath.value = element.value;
-                  break;
-                case 'key_path':
-                  keypath.value = element.value;
-                  break;
-                case 'theme_color':
-                  if (element.value == 'dark-edition') {
-                    document.querySelector('input[value="dark-edition"]').setAttribute('checked', 'checked');
-                    //set php session variable to dark-edition
-                    <?php
-                    $_SESSION['themeColor'] = "dark-edition";
-                    ?>
-
-                    document.querySelector('input[value="white"]').removeAttribute('checked');
-                  } else {
-                    document.querySelector('input[value="white"]').setAttribute('checked', 'checked');
-                     <?php $_SESSION['themeColor'] = "white"; ?>
-                    document.querySelector('input[value="dark-edition"]').removeAttribute('checked');     
-                  }   
-                  break;
-              }
-          });
-
-              //   if (element.name == 'cert_path') {
-              //     certpath.value = element.value;
-              //   } else if (element.name == 'key_path') {
-              //     keypath.value = element.value;
-              //   }
-              // });
-
-              // //get theme color from array inside result object and add to input values using addventlistener
-              // response.data.result.forEach(element => {
-              //   if (element.name == 'theme_color') {
-              //     if (element.value == 'dark-edition') {
-              //       document.querySelector('input[value="dark-edition"]').setAttribute('checked', 'checked');
-              //       //set php session variable to dark-edition
-              //       <?php
-                        //       $_SESSION['themeColor'] = "dark-edition";
-                        //       
-                        ?>
-
-              //       document.querySelector('input[value="white"]').removeAttribute('checked');
-              //     }
-              //     if (element.value == 'white') {
-              //       document.querySelector('input[value="white"]').setAttribute('checked', 'checked');
-              //       <?php
-                        //       $_SESSION['themeColor'] = "white";
-                        //       
-                        ?>
-              //       document.querySelector('input[value="dark-edition"]').removeAttribute('checked');
-              //     }
-              //   }
-              // });
-            } catch (error) {
-              console.log(error);
+        switch (element.name) {
+          case 'cert_path':
+            certpath.value = element.value;
+            break;
+          case 'key_path':
+            keypath.value = element.value;
+            break;
+          case 'theme_color':
+            if (element.value == 'dark-edition') {
+              document.querySelector('input[value="dark-edition"]').setAttribute('checked', 'checked');
+              document.querySelector('input[value="white"]').removeAttribute('checked');
+            } else {
+              document.querySelector('input[value="white"]').setAttribute('checked', 'checked');
+              document.querySelector('input[value="dark-edition"]').removeAttribute('checked');
             }
-          }
-          getConfig();
-
+            break;
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  getConfig();
 </script>
