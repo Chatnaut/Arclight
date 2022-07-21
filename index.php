@@ -13,7 +13,7 @@ $envpath = dirname(__FILE__) . "/.env";
 
 //If the config.php file exists perform the following
 if (file_exists($envpath)) {
-  include_once('pages/config/config.php');
+  include_once('./pages/config/config.php');
 
   //create a new instance of the DbManager class
   $db = new DbManager();
@@ -22,8 +22,7 @@ if (file_exists($envpath)) {
 
 //find document 
   $filter = ['userid' => $userid, 'name' => 'cert_path'];
-  $option = [];
-  $read = new MongoDB\Driver\Query($filter, $option);
+  $read = new MongoDB\Driver\Query($filter);
   $result = $conn->executeQuery("arclight.arclight_configs", $read);
   $result = $result->toArray();
 
@@ -32,24 +31,22 @@ if (file_exists($envpath)) {
   if($cert_path != ""){
     $cert_option = "--cert=" . $cert_path; //--cert is option used in noVNC connection string
   }else{
-    $cert_option = "--cert /etc/ssl/fullchain.pem"; //sets default location if nothing in database
+    $cert_option = "--cert=/etc/ssl/fullchain.pem"; //sets default location if nothing in database
   }
 
   //find document 
-  $filter = ['userid' => $userid, 'name' => 'key_path'];
-  $option = [];
-  $read = new MongoDB\Driver\Query($filter, $option);
-  $result = $conn->executeQuery("arclight.arclight_configs", $read);
-  $result = $result->toArray();
+  $filter1 = ['userid' => $userid, 'name' => 'key_path'];
+  $read1 = new MongoDB\Driver\Query($filter1);
+  $result1 = $conn->executeQuery("arclight.arclight_configs", $read1);
+  $result1 = $result1->toArray();
 
   //get value from array
-  $key_path = $result[0]->value;
+  $key_path = $result1[0]->value;
   if($key_path != ""){
     $key_option = "--key=" . $key_path; //--key is option used in noVNC connection string
   }else{
-    $key_option = "--key /etc/ssl/privkey.pem"; //sets default location if nothing in database
+    $key_option = "--key=/etc/ssl/privkey.pem"; //sets default location if nothing in database
   }
-
 } //Ends if statement if config.php file exists
 
 //letsencrypt setup -> sudo certbot certonly --standalone -d host.example.com
