@@ -9,6 +9,17 @@ if (!isset($_SESSION['username'])) {
   header('Location: ../sign-in.php');
 }
 
+// We are now going to grab any POST data and put in in SESSION data, then clear it.
+// This will prevent and reloading the webpage to resubmit and action.
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  // $_SESSION['language'] = $_POST['language'];
+  $_SESSION['password'] = $_POST['password'];
+  $_SESSION['confirm_password'] = $_POST['confirm_password'];
+  unset($_POST);
+  header("Location: " . $_SERVER['PHP_SELF']);
+  exit;
+}
+
 //getting user id from session
 $userid = $_SESSION['userid'];
 
@@ -21,13 +32,31 @@ require_once('config.php');
 $db = new DbManager();
 $conn = $db->getConnection();
 $filter = ['userid' => $userid, 'name' => 'theme_color'];
-$read = new MongoDB\Driver\Query($filter, $option);
+$read = new MongoDB\Driver\Query($filter);
 $result = $conn->executeQuery("arclight.arclight_configs", $read);
 $result = $result->toArray();
 
 //set $_SESSION['themeColor'] to the value of the themeColor document in the database
 $_SESSION['themeColor'] = $result[0]->value;
 
+//password check
+if ($_SESSION['password'] === $_SESSION['confirm_password'] && $_SESSION['password'] != "") {
+  $userid = $_SESSION['userid'];
+  $password = $_SESSION['password'];
+
+  // Hash and salt password with bcrypt
+  $hash = password_hash($password, PASSWORD_BCRYPT);
+
+  // Update the password in the database
+  $db1 = new DbManager();
+  $conn1 = $db1->getConnection();
+  $update = new MongoDB\Driver\BulkWrite();
+  $update->update(['_id' => new MongoDB\BSON\ObjectID($userid)], ['$set' => ['password' => $hash]]);
+  $result1 = $conn1->executeBulkWrite('arclight.arclight_users', $update);
+
+}
+unset($_SESSION['password']);
+unset($_SESSION['confirm_password']);
 ?>
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 <?php if ($_SESSION['themeColor'] == "dark-edition") {
@@ -73,7 +102,7 @@ $_SESSION['themeColor'] = $result[0]->value;
           </div>
         </div>
         <div class="row">
-          <label class="col-3 col-form-label text-right">API Bearer Token:  </label>
+          <label class="col-3 col-form-label text-right">API Bearer Token: </label>
           <div class="col-6">
             <div class="input-group">
               <input type="text" value="" class="form-control" name="apitoken" id="apitoken" readonly />
@@ -90,7 +119,7 @@ $_SESSION['themeColor'] = $result[0]->value;
                                                                   } ?> ">
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
   </div>
-  <form action="" method="">
+  <form action="" method="POST">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
       <div class="card <?php if ($_SESSION['themeColor'] == "dark-edition") {
                           echo "card-dark";
@@ -163,11 +192,6 @@ $_SESSION['themeColor'] = $result[0]->value;
 </main>
 </div>
 </div> <!-- end content -->
-
-
-<?php
-require('../footer.php');
-?>
 
 <script>
   const refresh_cert = document.getElementById('refresh_cert');
@@ -267,4 +291,26 @@ require('../footer.php');
     }
   }
   getConfig();
+
+  //check if passwords match
+  function checkPassword() {
+    var pass1 = document.getElementById('pass1');
+    var pass2 = document.getElementById('pass2');
+    var message = document.getElementById('confirmMessage');
+    var goodColor = "#66cc66";
+    var badColor = "#ff6666";
+    if (pass1.value == pass2.value) {
+      pass2.style.backgroundColor = "#ffffff";
+      message.style.color = goodColor;
+      message.innerHTML = "<p>Passwords Match!</p>"
+    } else {
+      pass2.style.backgroundColor = badColor;
+      message.style.color = badColor;
+      message.innerHTML = "<p>Passwords Do Not Match!</p>"
+    }
+  }
 </script>
+
+<?php
+require('../footer.php');
+?>
