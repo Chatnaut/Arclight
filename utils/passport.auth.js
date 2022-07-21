@@ -1,6 +1,6 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const User = require('../models/user.model');
+const {User} = require('../models/user.model');
 
 const passportJWT = require("passport-jwt");
 const JWTStrategy = passportJWT.Strategy;
@@ -17,8 +17,7 @@ passport.use(
                 return done(null, false, { message: "Username/Email not registered" }) //error, usernameexists, message
             }
             //email exists let's verify the password and assign jwt token
-            const resultHashPassword = password.replace("$2y$", "$2b$"); //php hash generates $2y$ while node generates the $2b$
-            const isMatch = await user.isvalidPassword(resultHashPassword);
+            const isMatch = await user.isvalidPassword(password);
             if (isMatch) {
                 return done(null, user)
 

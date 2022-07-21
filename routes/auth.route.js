@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const User = require('../models/user.model');
+const {User} = require('../models/user.model');
 const { body, validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
@@ -9,33 +9,45 @@ const { ensureLoggedIn, ensureLoggedOut } = require('connect-ensure-login');
 //     res.render("login");
 // })
 
-router.get('/register', ensureLoggedOut({ redirectTo: '/' }), async (req, res, next) => {
-    // req.flash('error', "Some error")
-    // req.flash('error', "Some error2")
-    // req.flash('key', 'some value')
-    // const messages = req.flash() //object
-    // res.render("register", {messages});
-    res.render("register");
-})
+// router.get('/register', ensureLoggedOut({ redirectTo: '/' }), async (req, res, next) => {
+//     // req.flash('error', "Some error")
+//     // req.flash('error', "Some error2")
+//     // req.flash('key', 'some value')
+//     // const messages = req.flash() //object
+//     // res.render("register", {messages});
+//     res.render("register");
+// })
 
 router.post('/login', function (req, res, next) {
     passport.authenticate('local', { session: false }, (err, user, info) => {
         if (err || !user) {
             return res.status(400).json({
+                success: 0,
                 message: info.message,
                 user: user
             });
+
         }
         req.login(user, { session: false }, (err) => {
             if (err) {
-                res.send(err);
-                return;
+                return res.status(500).json({
+                    success: 0,
+                    message: info.message,
+                    user: user
+                });
             }
             // generate a token for the user
             const token = jwt.sign({ user }, process.env.AUTH_KEY, { expiresIn: '1h' });
-            return res.status(200).json({ user, token });
-        });
-    })(req, res);
+            return res.status(200).json({ 
+                success: 1,
+                message: "User logged in successfully",
+                user: user,
+                token: token
+            });
+        }
+        );
+    }
+    )(req, res, next);
 }
 );
 

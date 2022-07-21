@@ -7,5 +7,5 @@ web.config
 nvidia-devices.conf
 *.log
 .env
-node_modules
+#node_modules
 
