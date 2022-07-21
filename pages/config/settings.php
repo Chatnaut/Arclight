@@ -53,7 +53,6 @@ if ($_SESSION['password'] === $_SESSION['confirm_password'] && $_SESSION['passwo
   $update = new MongoDB\Driver\BulkWrite();
   $update->update(['_id' => new MongoDB\BSON\ObjectID($userid)], ['$set' => ['password' => $hash]]);
   $result1 = $conn1->executeBulkWrite('arclight.arclight_users', $update);
-
 }
 unset($_SESSION['password']);
 unset($_SESSION['confirm_password']);
@@ -68,13 +67,13 @@ unset($_SESSION['confirm_password']);
 
   <form class="" action="" method="">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-      <div class="card <?php if ($_SESSION['themeColor'] == "dark-edition") {
-                          echo "card-dark";
-                        } ?> ">
+      <div class="card h-200 <?php if ($_SESSION['themeColor'] == "dark-edition") {
+                                echo "card-dark";
+                              } ?> ">
         <div class="card-header text-center">
           <span class="card-title">Settings</span>
         </div>
-        <div class="card-body h-100">
+        <div class="card-body">
           <!-- VNC Certificate -->
           <div class="row">
             <label class="col-3 col-form-label text-right">SSL Certificate File Path (VNC): </label>
@@ -100,16 +99,16 @@ unset($_SESSION['confirm_password']);
               </div>
             </div>
           </div>
-        </div>
-        <div class="row">
-          <label class="col-3 col-form-label text-right">API Bearer Token: </label>
-          <div class="col-6">
-            <div class="input-group">
-              <input type="text" value="" class="form-control" name="apitoken" id="apitoken" readonly />
+          <div class="row pt-5 pb-5">
+            <label class="col-3 col-form-label text-right">API Bearer Token: </label>
+            <div class="col-6">
+              <div class="input-group">
+                <input type="text" value="" class="form-control" name="apitoken" id="apitoken" readonly />
+              </div>
             </div>
           </div>
-        </div>
-      </div> <!-- end card -->
+        </div> <!-- end card -->
+      </div>
     </div>
   </form>
 </main>
@@ -184,7 +183,7 @@ unset($_SESSION['confirm_password']);
           <span id="confirmMessage" class="confirmMessage text-center"></span>
         </div> <!-- end card body -->
         <div class="card-footer justify-content-center text-center">
-          <button type="submit" class="btn btn-primary text-center">Submit</button>
+          <button type="submit" class="btn btn-primary btn-sm text-center">Change Password</button>
         </div>
       </div> <!-- end card -->
     </div>
