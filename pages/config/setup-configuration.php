@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $password = $_POST['password']; //do not need to sanitize because it will be hashed
 
   // include database file-----------------------------------------------------------------------
-  include_once 'config.php';
+  include_once './config.php';
 
   //check if database connection is successful
   $db = new DbManager();
