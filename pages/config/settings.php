@@ -47,12 +47,9 @@ if ($_SESSION['password'] === $_SESSION['confirm_password'] && $_SESSION['passwo
   // Hash and salt password with bcrypt
   $hash = password_hash($password, PASSWORD_BCRYPT);
 
-  // Update the password in the database
-  $db1 = new DbManager();
-  $conn1 = $db1->getConnection();
   $update = new MongoDB\Driver\BulkWrite();
   $update->update(['_id' => new MongoDB\BSON\ObjectID($userid)], ['$set' => ['password' => $hash]]);
-  $result1 = $conn1->executeBulkWrite('arclight.arclight_users', $update);
+  $result1 = $conn->executeBulkWrite('arclight.arclight_users', $update);
 }
 unset($_SESSION['password']);
 unset($_SESSION['confirm_password']);
