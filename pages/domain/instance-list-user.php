@@ -285,7 +285,7 @@ if ($action == "create-domain") {
                 const domain_name = '$domain_name';
                 const userid = '$userid';
                 const token = localStorage.getItem('token');
-                axios.patch(`/api/v1/instance/updateinstance`, {
+                axios.post(`/api/v1/instance/updateinstance`, {
                         userid: userid,
                         domain_name: domain_name,
                         uuid: uuid
@@ -1250,7 +1250,6 @@ $random_mac = $lv->generate_random_mac_addr(); //used to set default mac address
 </script>
 
 <?php
- ob_end_flush();
 require('../footer.php');
 ?>
 
