@@ -1,4 +1,5 @@
 <?php
+ob_start();
 
 // If the SESSION has not been started, start it now
 if (!isset($_SESSION)) {
@@ -22,11 +23,11 @@ function clean_input($data)
     return $data;
 }
 require_once('../config/config.php');
-require('../../api/arc.php');
+require_once('../../api/arc.php');
 
 $userid = $_SESSION['userid'];
 
-//create a new instance of the DbManager class
+// //create a new instance of the DbManager class
 $db = new DbManager();
 $conn = $db->getConnection();
 
@@ -277,35 +278,37 @@ if ($action == "create-domain") {
         $domObj = $lv->get_domain_object($domain_name);         //get the domain object
         $domainuuid = libvirt_domain_get_uuid_string($domObj);
         echo "<script>createInstance();</script>";
-        // echo "<script>
-        // const updateuuid = function() {
-        //     try {
-        //         const uuid = '$domainuuid';
-        //         const domain_name = '$domain_name';
-        //         const token = localStorage.getItem('token');
-        //         axios.patch(`/api/v1/arc/updateinstance`, {
-        //                 uuid: uuid,
-        //                 domain_name: domain_name
-        //             }, {
-        //                 headers: {
-        //                     'Access-Control-Allow-Origin': '*',
-        //                     'Authorization': 'Bearer ' + token
-        //                 }
-        //             })
-        //             .then(function(response) {
-        //                 if (response.status == 200 && response.data.success == 1) {
-        //                     console.log(response);
-        //                     // window.location.href = '/arc/instances';
-        //                 } else {
-        //                     // alert('Error updating UUID');
-        //                 }
-        //             })
-        //     } catch (error) {
-        //         console.log('Axios ' + error);
-        //     }
-        // };
-        // updateuuid();
-        // </script>";
+        echo "<script>
+        const updateuuid = function() {
+            try {
+                const uuid = '$domainuuid';
+                const domain_name = '$domain_name';
+                const userid = '$userid';
+                const token = localStorage.getItem('token');
+                axios.patch(`/api/v1/instance/updateinstance`, {
+                        userid: userid,
+                        domain_name: domain_name,
+                        uuid: uuid
+                    }, {
+                        headers: {
+                            'Access-Control-Allow-Origin': '*',
+                            'Authorization': 'Bearer ' + token
+                        }
+                    })
+                    .then(function(response) {
+                        if (response.status == 200 && response.data.success == 1) {
+                            console.log(response);
+                            // window.location.href = '/arc/instances';
+                        } else {
+                            // alert('Error updating UUID');
+                        }
+                    })
+            } catch (error) {
+                console.log('Axios ' + error);
+            }
+        };
+        updateuuid();
+        </script>";
     }
     //--------------------- STORAGE VOLUME SECTION ---------------------//
     $storage_pool = $_SESSION['storage_pool']; //"default" storage pool is default choice
@@ -576,7 +579,7 @@ $random_mac = $lv->generate_random_mac_addr(); //used to set default mac address
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 <?php if ($_SESSION['themeColor'] == "dark-edition") {
                                                                         echo "main-dark";
-                                                                    } ?> ">
+                                                                    } ?>">
 
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
         <h3 class="h3">Virtual Machines</h3>
@@ -598,7 +601,7 @@ $random_mac = $lv->generate_random_mac_addr(); //used to set default mac address
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                 <div class="card <?php if ($_SESSION['themeColor'] == "dark-edition") {
                                         echo "card-dark";
-                                    } ?> ">
+                                    } ?>">
                     <div class="card-body">
 
                         <div class="table-responsive">
@@ -649,7 +652,6 @@ $random_mac = $lv->generate_random_mac_addr(); //used to set default mac address
                                         $os_result = $conn->executeQuery('arclight.arclight_vms', $read);
                                         $vm_info = $os_result->toArray();
                                         foreach ($vm_info as $row) {
-
                                             if ($row->os == "windows") {
                                                 $os_icon = "<i class='fab fa-windows'></i>";
                                             } else if ($row->os == 'linux') {
@@ -1246,22 +1248,9 @@ $random_mac = $lv->generate_random_mac_addr(); //used to set default mac address
         document.getElementById("cpu_title").innerText = "vCPUs";
     }
 </script>
-<!-- <script>
-       document.getElementById("createDomainForm").addEventListener('load', changename) 
-
-    function changename() {
-        var instance_name = document.getElementById("domain_name").value;
-        var instance_type = document.getElementById("instance_type").value;
-        var r = (Math.random() + 1).toString(36).substring(7);
-        if (instance_name == "" && instance_type == "vm") {
-            instance_name = `newVM${r}`;
-        }if (instance_name == "" && instance_type == "bare_metal") {
-            instance_name = `newBM${r}`;
-        }
-    }
-</script> -->
 
 <?php
+ ob_end_flush();
 require('../footer.php');
 ?>
 
