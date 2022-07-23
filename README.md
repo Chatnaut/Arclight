@@ -59,9 +59,10 @@ Arclight is a server virtualization management solution based on KVM. It is desi
 </br></br>
 
 ## Arclight Features
+  - Simple and Minimalist UI 
   - Create virtual machines on bare-metal servers or in your home lab.
   - Nested virtualization including Bare-Metal provisioning (Vms inside Vms).
-  - Create private networks and public networks for your VMs.
+  - Create private and public networks for your VMs.
   - Create storage pools.
   - Create volumes for your VMs.
   - Create snapshots.
@@ -69,8 +70,9 @@ Arclight is a server virtualization management solution based on KVM. It is desi
   - Provide a web interface for your Host server.
   - Integrated monitoring.
   - In-Built SSH client and VNC console to manage VMs.
-  </br></br>
-  </br></br>
+  - Get automatic updates for Arclight.
+    </br></br>
+    </br></br>
 
 ## 🏁 Getting Started
 
