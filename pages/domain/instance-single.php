@@ -628,16 +628,16 @@ unset($_SESSION['model_type']);
               "</thead>" .
               "<tbody>";
 
-              //read data from mongodb database
+              //read events from database and sort them by recent first
               $filter = ['domain_uuid' => $uuid];
-              $option = ['sort' => ['position' => -1]];
+              $option = ['sort' => ['date' => -1]];
               $read = new MongoDB\Driver\Query($filter, $option);
               $result = $conn->executeQuery("arclight.arclight_events", $read);
               $result = $result->toArray(); 
 
             foreach ($result as $row) {
               echo "<tr>";
-              echo "<td>" . $row->date->toDateTime()->format('Y-m-d H:i:s') . "</td>";
+              echo "<td>" . $row->date->toDateTime()->format('d-m-Y H:i:s') . "</td>";
               echo "<td>" . $row->description . "</td>";
               echo "</tr>";
             }
