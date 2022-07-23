@@ -6,6 +6,19 @@ clear='\033[0m'
 bg_red='\033[0;41m'
 bg_green='\033[0;42m'
 
+echo -e "\n"
+cat << "EOF"
+.--------------------------------------------.
+|   ___              __ _        __   __     |
+|  / _ |  ____ ____ / /(_)___ _ / /  / /_    |
+| / __ | / __// __// // // _ `// _ \/ __/    |
+|/_/ |_|/_/   \__//_//_/ \_, //_//_/\__/     |
+|                       /___/                |
+'--------------------------------------------'
+EOF
+#create ascii arclight logo in terminal
+
+
 #Check that your CPU supports hardware virtualization
 # if [ $(cat /proc/cpuinfo | grep -c "vmx") -eq 0 ]
 # then
@@ -23,20 +36,23 @@ while read -r p; do sudo apt-get install -y "$p"; done < <(
     cat <<"EOF"
     curl
     wget
+    
     qemu-kvm
     libvirt-daemon-system
     libvirt-clients
     bridge-utils
     xauth
     zip unzip
+
     apache2 
     lsb-core
     php
     libapache2-mod-php
 EOF
 )
-#install the following packages according to the linux distribution
+#install the following packages according to the linux distro
 if [ "$(lsb_release -a | grep -c 20.04)" -eq 2 ]; then
+    echo -e "${green}Working on MongoDB Database${clear}"
     apt install php-dev php-pear -y
     apt-get install mongodb
     sudo apt install -y php-dev
@@ -51,7 +67,7 @@ EOF
     )
 
 elif [ "$(lsb_release -a | grep -c 18.04)" -eq 2 ]; then
-    echo -e "${green}Installing packages for for Ubuntu 18.04${clear}"
+    echo -e "${green}Installing packages for Ubuntu 18.04${clear}"
     while read -r p; do sudo apt-get install -y "$p"; done < <(
         cat <<"EOF"
     mongodb
@@ -85,13 +101,6 @@ else
 fi
 
 pip install webssh
-
-#add extension=mongodb.so to php.ini file
-
-# composer
-# composer require mongodb/mongodb
-
-#add "extension=mongodb.so" to php.ini file using the following command:
 
 curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
 apt install nodejs
@@ -142,7 +151,13 @@ else
     echo -e "${green}Restarting only the required services in order to apply changes...${clear}"
     sleep 3
     service apache2 restart
-    service mongodb restart
+    if [ "$(lsb_release -a | grep -c 20.04)" -eq 2 ]; then
+        service mongodb restart
+    elif [ "$(lsb_release -a | grep -c 18.04)" -eq 2 ]; then
+        service mongodb restart
+    elif [ "$(lsb_release -a | grep -c 22.04)" -eq 2 ]; then
+        service mongod start
+    fi
 
     echo "Bye!"
     exit 0
