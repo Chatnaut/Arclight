@@ -11,7 +11,7 @@
   </a>
   <!-- add shield badge for open issues -->
   <a href="https://github.com/Chatnaut/Arclight/issues">
-    <img alt="GitHub open issues" src="https://img.shields.io/bitbucket/issues/Chatnaut/Arclight?color=yellow&style=flat-square" />
+    <img alt="GitHub issues" src="https://img.shields.io/github/issues/Chatnaut/Arclight?style=flat-square">
   </a>
   <a href="https://twitter.com/intent/follow?screen_name=chatnaut">
     <img src="https://img.shields.io/twitter/follow/chatnaut?style=social" alt="Follow @chatnaut" >
