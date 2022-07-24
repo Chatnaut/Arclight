@@ -9,33 +9,30 @@ function getOSInformation()
     if (false == function_exists("shell_exec") || false == is_readable("/etc/os-release")) {
         return null;
     }
-
     $os         = shell_exec('cat /etc/os-release');
     $listIds    = preg_match_all('/.*=/', $os, $matchListIds);
     $listIds    = $matchListIds[0];
-
     $listVal    = preg_match_all('/=.*/', $os, $matchListVal);
     $listVal    = $matchListVal[0];
 
     array_walk($listIds, function (&$v, $k) {
         $v = strtolower(str_replace('=', '', $v));
     });
-
     array_walk($listVal, function (&$v, $k) {
         $v = preg_replace('/=|"/', '', $v);
     });
-
     return array_combine($listIds, $listVal);
 }
 
 $os_info = getOSInformation();
 $host_os = $os_info['name'];
 
-require('../config/config.php');
+$arrayExisting = file('../config/version.php');
+$existingExploded = explode('.', $arrayExisting[1]); //Seperate Major.Minor.Patch
+$existingVersion = $existingExploded[0] . $existingExploded[1] . $existingExploded[2];
 
-
+include_once('../config/config.php');
 ?>
-
 
 <body class=" <?php if ($_SESSION['themeColor'] == "dark-edition") {
                     echo "main-dark";
@@ -43,12 +40,10 @@ require('../config/config.php');
     <nav class="navbar navbar-dark bg-dark sticky-top flex-md-nowrap p-0 <?php if ($_SESSION['themeColor'] == "dark-edition") {
                                                                                 echo "main-dark";
                                                                             } ?> ">
-        <a class="navbar-brand navbar-dark col-sm-3 col-md-2 mr-0" href="../../index.php"><img src="../../assets/img/arclight-dark.svg" width="28px"> &ensp; Dashboard</a>
+        <a class="navbar-brand navbar-dark col-sm-3 col-md-2 mr-0" href="../../index.php"><img src="../../assets/img/arclight-dark.svg" width="100px"> &ensp;</a>
         <!-- <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"> -->
         <ul class="navbar-nav px-3">
-
-
-            <!-- <li class="nav-item dropdown">
+            <li class="nav-item dropdown">
                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                     Manage<span class="caret"></span>
                 </a>
@@ -58,22 +53,33 @@ require('../config/config.php');
                     <a class="dropdown-item" href="">Access (IAM)</a>
 
                 </div>
-            </li> -->
+            </li>
             <li class="nav-item">
                 <?php
-                if ($_SESSION['update_available'] == true) {
-                    echo "<a class=\"nav-link\" style=\"color:orange;\" href=\"../config/update.php\">Update</a>";
-                } else {
-                    echo "<a class=\"nav-link\" href=\"../config/update.php\">Update</a>";
-                }
+                // if ($_SESSION['update_available'] == true) {
+                //     echo "<a class=\"nav-link\" id=\"update-status\" style=\"color:orange;\" href=\"../config/update.php\">Update</a>";
+                // } else {
+                //     echo "<a class=\"nav-link\" id=\"update-status\"  href=\"../config/update.php\">Update</a>";
+                // }
                 ?>
+                <a class="nav-link" id="update-status" href="../config/update.php">Update</a>
             </li>
+
+            <!-- <li class="nav-item">
+          <a class="nav-link" href="../config/settings.php">Settings</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="../config/preferences.php">Preferences</a>
+        </li> -->
 
             <li class="nav-item dropdown">
                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                     Hi, <?php echo $_SESSION['username']; ?><span class="caret"></span>
                 </a>
                 <div class="dropdown-menu position-absolute dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href=""><?php echo $_SESSION['role']; ?></a>
+                    <a class="dropdown-item" href="">Profile</a>
                     <a class="dropdown-item" href="../config/preferences.php">Preferences</a>
                     <a class="dropdown-item" href="../config/settings.php">Settings</a>
                     <a class="dropdown-item" href="../../index.php?action=logout">Sign out</a>
@@ -120,17 +126,16 @@ require('../config/config.php');
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="../domain/domain-list.php">
+                                    <a class="nav-link" href="../domain/instance-list-user.php">
                                         <span data-feather="layers"></span>
                                         Virtual Machines
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                        <a class="nav-link" href="../storage/storage-pools.php">
-                                            <span data-feather="database"></span>
-                                            Storage
-                                            </a></a>
-
+                                    <a class="nav-link" href="../storage/storage-pools.php">
+                                        <span data-feather="database"></span>
+                                        Storage
+                                    </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="../network/network-list.php">
@@ -140,32 +145,77 @@ require('../config/config.php');
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" target="blank" href="../monitoring/index.php">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-activity" viewBox="0 0 16 16">
-                                            <path fill-rule="evenodd" d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2Z"></path>
-                                        </svg>
+                                        <span data-feather="activity"></span>
                                         Monitoring
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                        <a class="nav-link" href="../gpu/gpubinder.php">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gpu-card" viewBox="0 0 16 16">
-                                                <path d="M4 8a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Zm7.5-1.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z" />
-                                                <path d="M0 1.5A.5.5 0 0 1 .5 1h1a.5.5 0 0 1 .5.5V4h13.5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5H2v2.5a.5.5 0 0 1-1 0V2H.5a.5.5 0 0 1-.5-.5Zm5.5 4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5ZM9 8a2.5 2.5 0 1 0 5 0 2.5 2.5 0 0 0-5 0Z" />
-                                                <path d="M3 12.5h3.5v1a.5.5 0 0 1-.5.5H3.5a.5.5 0 0 1-.5-.5v-1Zm4 1v-1h4v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5Z" />
-                                            </svg>
-                                            GPU
-                                            </a>
+                                    <a class="nav-link" href="../gpu/gpubinder.php">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gpu-card" viewBox="0 0 16 16">
+                                            <path d="M4 8a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Zm7.5-1.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z" />
+                                            <path d="M0 1.5A.5.5 0 0 1 .5 1h1a.5.5 0 0 1 .5.5V4h13.5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5H2v2.5a.5.5 0 0 1-1 0V2H.5a.5.5 0 0 1-.5-.5Zm5.5 4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5ZM9 8a2.5 2.5 0 1 0 5 0 2.5 2.5 0 0 0-5 0Z" />
+                                            <path d="M3 12.5h3.5v1a.5.5 0 0 1-.5.5H3.5a.5.5 0 0 1-.5-.5v-1Zm4 1v-1h4v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5Z" />
+                                        </svg>
+                                        GPU
+                                    </a>
                                 </li>
                                 <li class="nav-item">
-                                        <a class="nav-link" href="../modules/update_modules.php">
-                                            <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-seam" viewBox="0 0 16 16">
-                                                    <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2l-2.218-.887zm3.564 1.426L5.596 5 8 5.961 14.154 3.5l-2.404-.961zm3.25 1.7-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464L7.443.184z"></path>
-                                                </svg></span>
-                                            Modules
-                                        </a>
+                                    <a class="nav-link" href="../modules/update_modules.php">
+                                        <span data-feather="box"></span>
+                                        Modules
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="../terminal/xterm.php">
+                                        <span data-feather="terminal"></span>
+                                        Terminal
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="../ami/amis.php">
+                                        <span data-feather="image"></span>
+                                        AMIs
+                                    </a>
                                 </li>
                             </ul>
                         </li>
                     </ul>
                 </div>
             </nav>
+            <script>
+                //check from https://docs.chatnaut.com/update.json object for updates and compare to current version from config/version.php
+                async function get() {
+                    let url = 'https://docs.chatnaut.com/update.json'
+                    let obj = await (await fetch(url)).json();
+
+                    // console.log(obj);
+                    return obj;
+                }
+                var tags;
+                (async () => {
+                    //set interval to check for updates every 24 hours
+                    tags = await get()
+                    setTimeout(async () => {
+                        //console.log(tags)
+                        const existingVersion = `<?php echo $existingVersion ?>`;
+                        const arraySplitVersion = tags.version.split(".");
+                        const newVersion = arraySplitVersion[0] + arraySplitVersion[1] + arraySplitVersion[2];
+                        sessionStorage.setItem("state", tags.state)
+                        if (newVersion > existingVersion) {
+                            const status = document.getElementById("update-status");
+                            //gradient border in status green if update available
+                            status.style.border = "1px solid rgb(0, 255, 0)";
+                            status.style.padding = "5px";
+
+                            status.innerText = "Update " + tags.version + " available";
+                            sessionStorage.setItem("update-available", true);
+                            sessionStorage.setItem("update-version", tags.version);
+                            sessionStorage.setItem("update-flag", tags.extension);
+                        } else {
+                            sessionStorage.setItem("update-available", false);
+                        }
+                    }, 3000);
+                })();
+            </script>
+            <!-- axios library for AJAX calls -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

@@ -1,0 +1,47 @@
+<style>
+    div.messages {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+ul.messages {
+  list-style: none;
+  min-width: 600px;
+  max-width: 600px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 16px;
+}
+
+ul.messages * {
+  padding: 8px 12px;
+}
+
+.messages .error {
+  background-color: #f87171;
+}
+.messages .success {
+  background-color: #6ee7b7;
+}
+.messages .warning {
+  background-color: #fcd34d;
+}
+.messages .info {
+  background-color: #93c5fd;
+}
+
+</style>
+<% if(locals.messages){ %>
+    <div class="messages">
+        <ul class="messages">
+            <% Object.keys(messages).forEach((key)=> { %>
+                <% messages[key].forEach((message=> { %>
+                    <li class="<%= key %>">
+                        <%= message %>
+                    </li>
+                <% })) %>
+            <% }) %>    
+        </ul>
+    </div>
+<% } %>
