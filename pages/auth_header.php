@@ -35,13 +35,14 @@
       list-style: none;
       /* min-width: 600px; */
       max-width: 600px;
-      border-radius: 8px;
       overflow: hidden;
       margin: 16px;
     }
     ul.messages * {
       padding: 8px 12px;
       color: black;
+      border-radius: 8px;
+
     }
     .messages .error {
       background-color: #f87171;
