@@ -1,41 +1,4 @@
-<?php
-// If the SESSION has not been started, start it now
-// if (!isset($_SESSION)) {
-//   session_start();
-// }
-?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/favicon.png" />
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
-  <title>Arclight Dashboard - Login Page</title>
-  <!-- Fonts and icons -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
-  <!-- Font Awesome Icons -->
-  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-  <!-- Nucleo Icons -->
-  <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
-  <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
-  <!-- Main Styling -->
-  <link href="../assets/css/styles.css?v=1.0.2" rel="stylesheet" />
-  <style>
-    .api-status-dot {
-      display: inline-block;
-      width: 5px;
-      height: 5px;
-      vertical-align: 9px;
-      pointer-events: none;
-      border-radius: 50%;
-      /* background-color: #a9a9a9; */
-    }
-  </style>
-</head>
-
+<?php include('auth_header.php'); ?>
 <body class="m-0 font-sans antialiased font-normal bg-white text-start text-size-base leading-default text-slate-500">
 
   <div class="container sticky top-0 z-sticky">
@@ -45,8 +8,6 @@
         <nav class="absolute top-0 left-0 right-0 z-30 flex flex-wrap items-center px-4 py-2 mx-0 my-0 shadow-soft-2xl bg-white/80 backdrop-blur-2xl backdrop-saturate-200 lg:flex-nowrap lg:justify-start">
           <div class="flex items-center justify-between w-full p-0 pl-6 mx-auto flex-wrap-inherit">
           <img src="../assets/img/arclight-light.svg" class="mr-3 h-6 sm:h-9" alt="arclight Logo" />
-<!-- 
-            <a class="py-2.375 text-size-sm mr-4 ml-4 whitespace-nowrap font-bold text-slate-700 lg:ml-0" href="/arclight"> Arclight </a> -->
             <button navbar-trigger class="px-3 py-1 ml-2 leading-none transition-all bg-transparent border border-transparent border-solid rounded-lg shadow-none cursor-pointer text-size-lg ease-soft-in-out lg:hidden" type="button" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
               <span class="inline-block mt-2 align-middle bg-center bg-no-repeat bg-cover w-6-em h-6-em bg-none">
                 <span bar1 class="w-5.5 rounded-xs relative my-0 mx-auto block h-px bg-gray-600 transition-all duration-300"></span>
@@ -150,48 +111,9 @@
       </div>
     </section>
   </main>
-  <footer class="py-12">
-    <div class="container">
-      <div class="flex flex-wrap -mx-3">
-        <div class="flex-shrink-0 w-full max-w-full mx-auto mb-6 text-center lg:flex-0 lg:w-8/12">
-          <!-- <a href="javascript:;" target="_blank" class="mb-2 mr-4 text-slate-400 sm:mb-0 xl:mr-12"> Company </a>
-          <a href="javascript:;" target="_blank" class="mb-2 mr-4 text-slate-400 sm:mb-0 xl:mr-12"> About Us </a>
-          <a href="javascript:;" target="_blank" class="mb-2 mr-4 text-slate-400 sm:mb-0 xl:mr-12"> Team </a>
-          <a href="javascript:;" target="_blank" class="mb-2 mr-4 text-slate-400 sm:mb-0 xl:mr-12"> Products </a>
-          <a href="javascript:;" target="_blank" class="mb-2 mr-4 text-slate-400 sm:mb-0 xl:mr-12"> Blog </a>
-          <a href="javascript:;" target="_blank" class="mb-2 mr-4 text-slate-400 sm:mb-0 xl:mr-12"> Pricing </a> -->
-        </div>
-        <div class="flex-shrink-0 w-full max-w-full mx-auto mt-2 mb-6 text-center lg:flex-0 lg:w-8/12">
-          <a href="https://chatnaut.com/" target="_blank" class="mr-6 text-slate-400">
-            <span class="text-size-lg fas fa-building"></span>
-          </a>
-
-          <a href="https://twitter.com/chatnaut" target="_blank" class="mr-6 text-slate-400">
-            <span class="text-size-lg fab fa-twitter"></span>
-          </a>
-
-          <a href="https://www.instagram.com/chatnaut/" target="_blank" class="mr-6 text-slate-400">
-            <span class="text-size-lg fab fa-instagram"></span>
-          </a>
-
-          <a href="https://github.com/Chatnaut" target="_blank" class="text-slate-400">
-            <span class="text-size-lg fab fa-github"></span>
-          </a>
-        </div>
-      </div>
-      <div class="flex flex-wrap -mx-3">
-        <div class="w-8/12 max-w-full px-3 mx-auto mt-1 text-center flex-0">
-          <p class="mb-0 text-slate-400">
-            Copyright &copy;
-            <script>
-              document.write(new Date().getFullYear());
-            </script>
-            Chatnaut Cloud
-          </p>
-        </div>
-      </div>
-    </div>
-  </footer>
+    <!-- -------- START FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
+    <?php include 'auth_footer.php'; ?>
+    <!-- -------- END FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
   <script src="../assets/js/windy-tailwind.js?v=1.0.2" async></script>
   <!-- <script src="https://cdn.tailwindcss.com"></script> -->
   <!-- getting axios library  -->

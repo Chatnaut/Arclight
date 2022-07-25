@@ -1,67 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/favicon.png" />
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
-  <title>Arclight Dashboard - Login Page</title>
-  <!-- Fonts and icons -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
-  <!-- Font Awesome Icons -->
-  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-  <!-- Nucleo Icons -->
-  <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
-  <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
-  <!-- Main Styling -->
-  <link href="../assets/css/styles.css?v=1.0.2" rel="stylesheet" />
-  <style>
-    div.messages {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    ul.messages {
-      list-style: none;
-      /* min-width: 600px; */
-      max-width: 600px;
-      border-radius: 8px;
-      overflow: hidden;
-      margin: 16px;
-    }
-
-    ul.messages * {
-      padding: 8px 12px;
-      color: black;
-    }
-
-    .messages .error {
-      background-color: #f87171;
-    }
-
-    .messages .success {
-      background-color: #6ee7b7;
-    }
-
-    .messages .warning {
-      background-color: #fcd34d;
-    }
-
-    .messages .info {
-      background-color: #93c5fd;
-    }
-  </style>
-</head>
-
+<?php include('auth_header.php'); ?>
 <body class="m-0 font-sans antialiased font-normal bg-white text-start text-size-base leading-default text-slate-500">
-
   <!-- Navbar -->
   <nav class="absolute top-0 z-30 flex flex-wrap items-center justify-between w-full px-4 py-2 mt-6 mb-4 shadow-none lg:flex-nowrap lg:justify-start">
     <div class="container flex items-center justify-between py-0 flex-wrap-inherit">
-      <a class="py-2.375 text-size-sm mr-4 ml-4 whitespace-nowrap font-bold text-white lg:ml-0" href="/arclight"> Arclight </a>
+      <img src="../assets/img/arclight-dark.svg" class="mr-3 h-6 sm:h-9" alt="arclight Logo" />
       <button navbar-trigger class="px-3 py-1 ml-2 leading-none transition-all bg-transparent border border-transparent border-solid rounded-lg shadow-none cursor-pointer text-size-lg ease-soft-in-out lg:hidden" type="button" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
         <span class="inline-block mt-2 align-middle bg-center bg-no-repeat bg-cover w-6-em h-6-em bg-none">
           <span bar1 class="w-5.5 rounded-xs duration-350 relative my-0 mx-auto block h-px bg-white transition-all"></span>
@@ -71,18 +13,6 @@
       </button>
       <div navbar-menu class="items-center flex-grow transition-all ease-soft duration-350 lg-max:bg-white lg-max:max-h-0 lg-max:overflow-hidden basis-full rounded-xl lg:flex lg:basis-auto">
         <ul class="flex flex-col pl-0 mx-auto mb-0 list-none lg:flex-row xl:ml-auto">
-          <!-- <li>
-            <a class="flex items-center px-4 py-2 mr-2 font-normal text-white transition-all duration-250 lg-max:opacity-0 lg-max:text-slate-700 ease-soft-in-out text-size-sm lg:px-2 lg:hover:text-white/75" aria-current="page" href="../pages/dashboard.html">
-              <i class="mr-1 text-white lg-max:text-slate-700 fa fa-chart-pie opacity-60"></i>
-              API
-            </a>
-          </li>
-          <li>
-            <a class="block px-4 py-2 mr-2 font-normal text-white transition-all duration-250 lg-max:opacity-0 lg-max:text-slate-700 ease-soft-in-out text-size-sm lg:px-2 lg:hover:text-white/75" href="../pages/profile.html">
-              <i class="mr-1 text-white lg-max:text-slate-700 fa fa-user opacity-60"></i>
-              Profile
-            </a>
-          </li> -->
           <li>
             <a class="block px-4 py-2 mr-2 font-normal text-white transition-all duration-250 lg-max:opacity-0 lg-max:text-slate-700 ease-soft-in-out text-size-sm lg:px-2 lg:hover:text-white/75" href="../pages/sign-up.php">
               <i class="mr-1 text-white lg-max:text-slate-700 fas fa-user-circle opacity-60"></i>
@@ -96,10 +26,14 @@
             </a>
           </li>
           <li>
-            <a class="block px-4 py-2 mr-2 font-normal text-white transition-all duration-250 lg-max:opacity-0 lg-max:text-slate-700 ease-soft-in-out text-size-sm lg:px-2 lg:hover:text-white/75" href="../pages/profile.html">
-              <i class="mr-1 text-white lg-max:text-slate-700 fa fa-user opacity-60"></i>
-              API
-            </a>
+            <a class="block px-4 py-2 mr-2 font-normal text-white transition-all duration-250 lg-max:opacity-0 lg-max:text-slate-700 ease-soft-in-out text-size-sm lg:px-2 lg:hover:text-white/75">
+              <i class="mr-1 fa fa-chart-pie opacity-60"></i>
+              API Status
+              <span class="api-status-dot"></span></a>
+            <div class="z-50 hidden px-2 py-1 text-center text-white bg-black rounded-lg max-w-46 text-size-sm" id="tooltip" role="tooltip" data-popper-placement="bottom">
+              My tooltip
+              <div id="arrow" class="invisible absolute h-2 w-2 bg-inherit before:visible before:absolute before:h-2 before:w-2 before:rotate-45 before:bg-inherit before:content-['']" data-popper-arrow></div>
+            </div>
           </li>
           <li>
           <li>
@@ -215,48 +149,7 @@
       </div>
     </section>
     <!-- -------- START FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
-    <footer class="py-12">
-      <div class="container">
-        <div class="flex flex-wrap -mx-3">
-          <!-- <div class="flex-shrink-0 w-full max-w-full mx-auto mb-6 text-center lg:flex-0 lg:w-8/12">
-            <a href="javascript:;" target="_blank" class="mb-2 mr-4 text-slate-400 sm:mb-0 xl:mr-12"> Company </a>
-            <a href="javascript:;" target="_blank" class="mb-2 mr-4 text-slate-400 sm:mb-0 xl:mr-12"> About Us </a>
-            <a href="javascript:;" target="_blank" class="mb-2 mr-4 text-slate-400 sm:mb-0 xl:mr-12"> Team </a>
-            <a href="javascript:;" target="_blank" class="mb-2 mr-4 text-slate-400 sm:mb-0 xl:mr-12"> Products </a>
-            <a href="javascript:;" target="_blank" class="mb-2 mr-4 text-slate-400 sm:mb-0 xl:mr-12"> Blog </a>
-            <a href="javascript:;" target="_blank" class="mb-2 mr-4 text-slate-400 sm:mb-0 xl:mr-12"> Pricing </a>
-          </div> -->
-          <div class="flex-shrink-0 w-full max-w-full mx-auto mt-2 mb-6 text-center lg:flex-0 lg:w-8/12">
-            <a href="https://chatnaut.com/" target="_blank" class="mr-6 text-slate-400">
-              <span class="text-size-lg fas fa-building"></span>
-            </a>
-
-            <a href="https://twitter.com/chatnaut" target="_blank" class="mr-6 text-slate-400">
-              <span class="text-size-lg fab fa-twitter"></span>
-            </a>
-
-            <a href="https://www.instagram.com/chatnaut/" target="_blank" class="mr-6 text-slate-400">
-              <span class="text-size-lg fab fa-instagram"></span>
-            </a>
-
-            <a href="https://github.com/Chatnaut" target="_blank" class="text-slate-400">
-              <span class="text-size-lg fab fa-github"></span>
-            </a>
-          </div>
-        </div>
-        <div class="flex flex-wrap -mx-3">
-          <div class="w-8/12 max-w-full px-3 mx-auto mt-1 text-center flex-0">
-            <p class="mb-0 text-slate-400">
-              Copyright &copy;
-              <script>
-                document.write(new Date().getFullYear());
-              </script>
-              Chatnaut Cloud
-            </p>
-          </div>
-        </div>
-      </div>
-    </footer>
+<?php include 'auth_footer.php'; ?>
     <!-- -------- END FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
   </main>
   <!-- getting axios library  -->
@@ -268,6 +161,24 @@
     const emailInputDOM = document.querySelector('#email');
     const passwordInputDOM = document.querySelector('#password');
     const flashMessages = document.querySelector('.messages');
+    const dotapi = document.querySelector('.api-status-dot');
+
+    //get arc api health status
+    axios.get(`/api/v1/status/health`)
+      .then(function(response) {
+        if (response.status == 200) {
+          console.log("Arc api is healthy");
+          dotapi.style.backgroundColor = "#3cb46e";
+        } else {
+          console.log("Arc api is not healthy");
+          dotapi.style.backgroundColor = "#ff0000";
+        }
+      })
+      .catch(function(err) {
+        console.log("Arc api is not healthy");
+        error.innerHTML = "Error: Arc api not running";
+        dotapi.style.backgroundColor = "#a9a9a9";
+      });
 
 
     formDOM.addEventListener('submit', (e) => {
