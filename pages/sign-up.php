@@ -17,7 +17,43 @@
   <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- Main Styling -->
   <link href="../assets/css/styles.css?v=1.0.2" rel="stylesheet" />
+  <style>
+    div.messages {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
+    ul.messages {
+      list-style: none;
+      /* min-width: 600px; */
+      max-width: 600px;
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 16px;
+    }
+
+    ul.messages * {
+      padding: 8px 12px;
+      color: black;
+    }
+
+    .messages .error {
+      background-color: #f87171;
+    }
+
+    .messages .success {
+      background-color: #6ee7b7;
+    }
+
+    .messages .warning {
+      background-color: #fcd34d;
+    }
+
+    .messages .info {
+      background-color: #93c5fd;
+    }
+  </style>
 </head>
 
 <body class="m-0 font-sans antialiased font-normal bg-white text-start text-size-base leading-default text-slate-500">
@@ -54,15 +90,13 @@
             </a>
           </li>
           <li>
-            <a class="block px-4 py-2 mr-2 font-normal text-white transition-all duration-250 lg-max:opacity-0 lg-max:text-slate-700 ease-soft-in-out text-size-sm lg:px-2 lg:hover:text-white/75"
-              href="../pages/profile.html">
+            <a class="block px-4 py-2 mr-2 font-normal text-white transition-all duration-250 lg-max:opacity-0 lg-max:text-slate-700 ease-soft-in-out text-size-sm lg:px-2 lg:hover:text-white/75" href="../pages/profile.html">
               <i class="mr-1 text-white lg-max:text-slate-700 fa fa-user opacity-60"></i>
               Profile
             </a>
           </li>
           <li>
-            <a class="block px-4 py-2 mr-2 font-normal text-white transition-all duration-250 lg-max:opacity-0 lg-max:text-slate-700 ease-soft-in-out text-size-sm lg:px-2 lg:hover:text-white/75"
-              href="../pages/profile.html">
+            <a class="block px-4 py-2 mr-2 font-normal text-white transition-all duration-250 lg-max:opacity-0 lg-max:text-slate-700 ease-soft-in-out text-size-sm lg:px-2 lg:hover:text-white/75" href="../pages/profile.html">
               <i class="mr-1 text-white lg-max:text-slate-700 fa fa-user opacity-60"></i>
               API
             </a>
@@ -83,7 +117,6 @@
       </div>
     </div>
   </nav>
-
   <main class="mt-0 transition-all duration-200 ease-soft-in-out">
     <section class="min-h-screen mb-32">
       <div class="relative flex items-start pt-12 pb-56 m-4 overflow-hidden bg-center bg-cover min-h-50-screen rounded-xl" style="background-image: url('../assets/img/signupclip.jpg')">
@@ -93,10 +126,15 @@
             <div class="w-full max-w-full px-3 mx-auto mt-0 text-center lg:flex-0 shrink-0 lg:w-5/12">
               <h1 class="mt-12 mb-2 text-white">Welcome To!</h1>
               <p class="text-white">Arclight Console Dashboard</p>
+              <div class="error-messages">
+                <ul class="messages">
+                </ul>
+              </div>
             </div>
           </div>
         </div>
       </div>
+
       <div class="container">
         <div class="flex flex-wrap -mx-3 -mt-48 md:-mt-56 lg:-mt-48">
           <div class="w-full max-w-full px-3 mx-auto mt-0 md:flex-0 shrink-0 md:w-7/12 lg:w-5/12 xl:w-4/12">
@@ -149,15 +187,15 @@
                 </div>
               </div>
               <div class="flex-auto p-6">
-                <form role="form text-left">
+                <form role="form text-left" action="/api/v1/auth/register" method="post" class="form-signup">
                   <div class="mb-4">
-                    <input type="text" class="text-size-sm focus:shadow-soft-primary-outline leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow" placeholder="Name" aria-label="Name" aria-describedby="email-addon" />
+                    <input type="text" class="text-size-sm focus:shadow-soft-primary-outline leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow" placeholder="Name" aria-label="Name" aria-describedby="email-addon" id="name" name="name" />
                   </div>
                   <div class="mb-4">
-                    <input type="email" class="text-size-sm focus:shadow-soft-primary-outline leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow" placeholder="Email" aria-label="Email" aria-describedby="email-addon" />
+                    <input type="email" class="text-size-sm focus:shadow-soft-primary-outline leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow" placeholder="Email Address" aria-label="Email" aria-describedby="email-addon" id="email" name="email" />
                   </div>
                   <div class="mb-4">
-                    <input type="password" class="text-size-sm focus:shadow-soft-primary-outline leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow" placeholder="Password" aria-label="Password" aria-describedby="password-addon" />
+                    <input type="password" class="text-size-sm focus:shadow-soft-primary-outline leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow" placeholder="Create a password" aria-label="Password" aria-describedby="password-addon" id="password" name="password" />
                   </div>
                   <div class="min-h-6 pl-6.92-em mb-0.5 block">
                     <input id="terms" class="w-4.92-em h-4.92-em ease-soft -ml-6.92-em rounded-1.4 checked:bg-gradient-dark-gray after:text-size-fa-check after:font-awesome after:duration-250 after:ease-soft-in-out duration-250 relative float-left mt-1 cursor-pointer appearance-none border border-solid border-slate-200 bg-white bg-contain bg-center bg-no-repeat align-top transition-all after:absolute after:flex after:h-full after:w-full after:items-center after:justify-center after:text-white after:opacity-0 after:transition-all after:content-['\f00c'] checked:border-0 checked:border-transparent checked:bg-transparent checked:after:opacity-100" type="checkbox" value="" checked />
@@ -165,7 +203,7 @@
                         Conditions</a> </label>
                   </div>
                   <div class="text-center">
-                    <button type="button" class="inline-block w-full px-6 py-3 mt-6 mb-2 font-bold text-center text-white uppercase align-middle transition-all bg-transparent border-0 rounded-lg cursor-pointer active:opacity-85 hover:scale-102 hover:shadow-soft-xs leading-pro text-size-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 bg-gradient-dark-gray hover:border-slate-700 hover:bg-slate-700 hover:text-white">Sign
+                    <button type="submit" class="inline-block w-full px-6 py-3 mt-6 mb-2 font-bold text-center text-white uppercase align-middle transition-all bg-transparent border-0 rounded-lg cursor-pointer active:opacity-85 hover:scale-102 hover:shadow-soft-xs leading-pro text-size-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 bg-gradient-dark-gray hover:border-slate-700 hover:bg-slate-700 hover:text-white">Sign
                       up</button>
                   </div>
                   <p class="mt-4 mb-0 leading-normal text-size-sm">Already have an account? <a href="../pages/sign-in.php" class="font-bold text-slate-700">Sign in</a></p>
@@ -221,6 +259,47 @@
     </footer>
     <!-- -------- END FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
   </main>
+  <!-- getting axios library  -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script>
+    const formDOM = document.querySelector('.form-signup');
+    const nameInputDOM = document.querySelector('#name');
+    const emailInputDOM = document.querySelector('#email');
+    const passwordInputDOM = document.querySelector('#password');
+    const flashMessages = document.querySelector('.messages');
+
+
+    formDOM.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = nameInputDOM.value;
+      const email = emailInputDOM.value;
+      const password = passwordInputDOM.value;
+      const data = {
+        name,
+        email,
+        password
+      };
+      axios.post('/api/v1/auth/register', data)
+        .then(res => {
+          console.log(res.data.message);
+          // window.location.href = '/pages/sign-in.php';
+          getFlashMessage(res.data.message);
+        })
+        .catch(err => {
+          console.log(err);
+          getFlashMessage(err.data.message);
+        });
+    });
+
+    function getFlashMessage(message) {
+      const messageArray = Object.keys(message).forEach((key) => {
+        message[key].forEach((value => {
+          flashMessages.innerHTML += `<li class="${key}">${value}</li><br>`;
+        }));
+      })
+    }
+  </script>
 </body>
 <!-- plugin for scrollbar  -->
 <script src="../assets/js/plugins/perfect-scrollbar.min.js" async></script>
