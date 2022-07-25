@@ -19,12 +19,12 @@ EOF
 #create ascii arclight logo in terminal
 
 
-#Check that your CPU supports hardware virtualization
-# if [ $(cat /proc/cpuinfo | grep -c "vmx") -eq 0 ]
-# then
-#     echo -e "Arclight ERROR: ${bg_red} Your CPU does not support hardware virtualization ${clear}"
-#     exit 1
-# fi
+# Check that your CPU supports hardware virtualization
+if [ $(cat /proc/cpuinfo | grep -c "vmx") -eq 0 ]
+then
+    echo -e "Arclight ERROR: ${bg_red} Your CPU does not support hardware virtualization ${clear}"
+    exit 1
+fi
 
 set -eu -o pipefail # fail on error and report it, debug all lines
 
