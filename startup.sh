@@ -7,7 +7,7 @@ bg_red='\033[0;41m'
 bg_green='\033[0;42m'
 
 echo -e "\n"
-cat << "EOF"
+cat <<"EOF"
 .--------------------------------------------.
 |   ___              __ _        __   __     |
 |  / _ |  ____ ____ / /(_)___ _ / /  / /_    |
@@ -16,14 +16,17 @@ cat << "EOF"
 |                       /___/                |
 '--------------------------------------------'
 EOF
-#create ascii arclight logo in terminal
-
 
 # Check that your CPU supports hardware virtualization
-if [ $(cat /proc/cpuinfo | grep -c "vmx") -eq 0 ]
-then
+if [ $(egrep -c '(vmx|svm)' /proc/cpuinfo) -eq 0 ]; then
     echo -e "Arclight ERROR: ${bg_red} Your CPU does not support hardware virtualization ${clear}"
+    echo -e "${red}Please enable virtualization in your BIOS${clear}"
+    echo -e "${red}Exiting...${clear}"
     exit 1
+
+    else echo -e "Arclight: ${bg_green} Your CPU supports hardware virtualization ${clear}"
+    echo -e "${green}Continuing Setup...${clear}"
+    sleep 4
 fi
 
 set -eu -o pipefail # fail on error and report it, debug all lines
@@ -42,7 +45,8 @@ while read -r p; do sudo apt-get install -y "$p"; done < <(
     libvirt-clients
     bridge-utils
     xauth
-    zip unzip
+    zip
+    unzip
 
     apache2 
     lsb-core
@@ -56,7 +60,7 @@ if [ "$(lsb_release -a | grep -c 20.04)" -eq 2 ]; then
     apt install php-dev php-pear -y
     apt-get install mongodb
     sudo apt install -y php-dev
-    pecl install mongodb
+    pecl install mongodb    
     echo -e "\n; MongoDB PHP driver\nextension=mongodb.so" | sudo tee -a /etc/php/7.4/apache2/php.ini
     echo -e "${green}Installing packages for Ubuntu 20.04${clear}"
     while read -r p; do sudo apt-get install -y "$p"; done < <(
@@ -108,23 +112,24 @@ apt install nodejs
 #Configuring files and permissions
 echo -e "${green}Configuring files and permissions...${clear}"
 #Add user to libvirt group
-# adduser www-data libvirtd
+adduser www-data libvirt
 cd /var/www/html
 echo -e "${green}Getting the latest version of arclight...${clear}"
 sleep 4
-wget https://github.com/Chatnaut/Arclight/archive/refs/tags/v1.0.0.tar.gz
+wget https://github.com/S4nfs/Arclight/archive/refs/tags/test.tar.gz
 echo -e "${green}Extracting the archive...${clear}"
-tar -xvzf v1.0.0.tar.gz
-mv Arclight-1.0.0 arclight
-# chown -R www-data:www-data /var/www/html
+tar -xvzf test.tar.gz
+mv Arclight-test arclight
+chown -R www-data:www-data /var/www/html
 
 #Setup PM2 process manager to keep your app running
-# npm i pm2 -g
-# npm install
-# pm2 start app.js
+echo -e "${green}Configuring API...${clear}"
+npm i pm2 -g
+#npm install
+pm2 start /var/www/html/arclight/app.js
 
 # To make sure app starts when reboot
-# pm2 startup
+pm2 startup
 
 echo "You're good now :)"
 
