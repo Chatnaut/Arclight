@@ -1,4 +1,5 @@
 <?php include('auth_header.php'); ?>
+
 <body class="m-0 font-sans antialiased font-normal bg-white text-start text-size-base leading-default text-slate-500">
 
   <div class="container sticky top-0 z-sticky">
@@ -7,7 +8,7 @@
         <!-- Navbar -->
         <nav class="absolute top-0 left-0 right-0 z-30 flex flex-wrap items-center px-4 py-2 mx-0 my-0 shadow-soft-2xl bg-white/80 backdrop-blur-2xl backdrop-saturate-200 lg:flex-nowrap lg:justify-start">
           <div class="flex items-center justify-between w-full p-0 pl-6 mx-auto flex-wrap-inherit">
-          <img src="../assets/img/arclight-light.svg" class="mr-3 h-6 sm:h-9" alt="arclight Logo" />
+            <img src="../assets/img/arclight-light.svg" class="mr-3 h-6 sm:h-9" alt="arclight Logo" />
             <button navbar-trigger class="px-3 py-1 ml-2 leading-none transition-all bg-transparent border border-transparent border-solid rounded-lg shadow-none cursor-pointer text-size-lg ease-soft-in-out lg:hidden" type="button" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
               <span class="inline-block mt-2 align-middle bg-center bg-no-repeat bg-cover w-6-em h-6-em bg-none">
                 <span bar1 class="w-5.5 rounded-xs relative my-0 mx-auto block h-px bg-gray-600 transition-all duration-300"></span>
@@ -63,6 +64,10 @@
           <div class="flex flex-wrap mt-0 -mx-3">
             <div class="flex flex-col w-full max-w-full px-3 mx-auto md:flex-0 shrink-0 md:w-6/12 lg:w-5/12 xl:w-4/12">
               <div class="relative flex flex-col min-w-0 mt-32 break-words bg-transparent border-0 shadow-none rounded-2xl bg-clip-border">
+                <div class="error-messages">
+                  <ul class="messages">
+                  </ul>
+                </div>
                 <div class="p-6 pb-0 mb-0 bg-transparent border-b-0 rounded-t-2xl">
                   <h3 class="relative z-10 font-bold text-transparent bg-gradient-cyan bg-clip-text">Welcome back</h3>
                   <p class="mb-0">Enter your email and password to sign in</p>
@@ -80,13 +85,7 @@
                     <div class="min-h-6 mb-0.5 block pl-12">
                       <input id="rememberMe" class="mt-0.54 rounded-10 duration-250 ease-soft-in-out after:rounded-circle after:shadow-soft-2xl after:duration-250 checked:after:translate-x-5.25 h-5-em relative float-left -ml-12 w-10 cursor-pointer appearance-none border border-solid border-gray-200 bg-slate-800/10 bg-none bg-contain bg-left bg-no-repeat align-top transition-all after:absolute after:top-px after:h-4 after:w-4 after:translate-x-px after:bg-white after:content-[''] checked:border-slate-800/95 checked:bg-slate-800/95 checked:bg-none checked:bg-right" type="checkbox" checked="" />
                       <label class="mb-2 ml-1 font-normal cursor-pointer select-none text-size-sm text-slate-700" for="rememberMe">Remember me</label>
-
                     </div>
-                    <!-- error message if any-->
-                    <div class="text-red-500 text-sm italic">
-                      <p id="error-message"></p>
-                    </div>
-
                     <div class="text-center">
                       <button type="submit" class="inline-block w-full px-6 py-3 mt-6 mb-2 font-bold text-center text-white uppercase align-middle transition-all bg-transparent border-0 rounded-lg cursor-pointer active:opacity-85 hover:scale-102 hover:shadow-soft-xs leading-pro text-size-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 bg-gradient-dark-gray hover:border-slate-700 hover:bg-slate-700 hover:text-white">Sign
                         in</button>
@@ -111,9 +110,9 @@
       </div>
     </section>
   </main>
-    <!-- -------- START FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
-    <?php include 'auth_footer.php'; ?>
-    <!-- -------- END FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
+  <!-- -------- START FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
+  <?php include 'auth_footer.php'; ?>
+  <!-- -------- END FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
   <script src="../assets/js/windy-tailwind.js?v=1.0.2" async></script>
   <!-- <script src="https://cdn.tailwindcss.com"></script> -->
   <!-- getting axios library  -->
@@ -122,7 +121,7 @@
     const formDOM = document.querySelector('.form-signin');
     const emailInputDOM = document.querySelector('#inputEmail');
     const passwordInputDOM = document.querySelector('#inputPassword');
-    const error = document.querySelector('#error-message');
+    const flashMessages = document.querySelector('.messages');
     const dotapi = document.querySelector('.api-status-dot');
 
     //get arc api health status
@@ -138,8 +137,8 @@
       })
       .catch(function(err) {
         console.log("Arc api is not healthy");
-        error.innerHTML = "Error: Arc api not running";
         dotapi.style.backgroundColor = "#a9a9a9";
+        flashMessages.innerHTML += `<li class="error">Error: Arc api not running</li><br>`;
       });
 
     formDOM.addEventListener('submit', async (e) => {
@@ -162,7 +161,7 @@
           setConfigSession();
         } else {
           console.log(data.message);
-          error.innerHTML = data.message;
+          getFlashMessage(data.message);
         }
       } catch (err) {
         localStorage.removeItem('token');
@@ -170,7 +169,7 @@
         localStorage.removeItem('username');
         localStorage.removeItem('email');
         localStorage.removeItem('role');
-        error.innerHTML = err.response.data.message;
+        getFlashMessage(err.response.data.message);
       }
     });
     const setConfigSession = async () => {
@@ -189,12 +188,12 @@
         data.result.forEach(element => {
           if (element.name == "theme_color") {
             theme_color = element.value;
-          }else{
+          } else {
             theme_color = "white";
           }
           if (element.name == "language") {
             language = element.value;
-          }else{
+          } else {
             language = "english";
           }
         });
@@ -230,7 +229,20 @@
         console.log(err);
       }
     }
+
+    function getFlashMessage(message) {
+      const messageArray = Object.keys(message).forEach((key) => {
+        message[key].forEach((value => {
+          flashMessages.innerHTML += `<li class="${key}">${value}</li><br>`;
+        }));
+      })
+    }
+
+    setTimeout(function() {
+      flashMessages.innerHTML = '';
+    }, 10000);
   </script>
 </body>
 <script src="../assets/js/plugins/perfect-scrollbar.min.js" async></script>
+
 </html>
