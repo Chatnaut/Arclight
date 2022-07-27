@@ -176,8 +176,10 @@
       })
       .catch(function(err) {
         console.log("Arc api is not healthy");
-        error.innerHTML = "Error: Arc api not running";
+        // error.innerHTML = "Error: Arc api not running";
         dotapi.style.backgroundColor = "#a9a9a9";
+        flashMessages.innerHTML += `<li class="error">Error: Arc api not running</li><br>`;
+
       });
 
 
@@ -210,6 +212,10 @@
         }));
       })
     }
+
+    setTimeout(function() {
+      flashMessages.innerHTML = '';
+    }, 10000);
   </script>
 </body>
 <!-- plugin for scrollbar  -->
