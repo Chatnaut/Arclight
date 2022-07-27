@@ -52,6 +52,8 @@ while read -r p; do sudo apt-get install -y "$p"; done < <(
     lsb-core
     php
     libapache2-mod-php
+    php-xml
+    php-libvirt-php
 EOF
 )
 #install the following packages according to the linux distro
