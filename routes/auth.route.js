@@ -21,26 +21,29 @@ const { ensureLoggedIn, ensureLoggedOut } = require('connect-ensure-login');
 router.post('/login', function (req, res, next) {
     passport.authenticate('local', { session: false }, (err, user, info) => {
         if (err || !user) {
+            req.flash('error', info.message)
             return res.status(400).json({
                 success: 0,
-                message: info.message,
+                message: req.flash(),
                 user: user
             });
 
         }
         req.login(user, { session: false }, (err) => {
             if (err) {
+                req.flash('error', info.message)
                 return res.status(500).json({
                     success: 0,
-                    message: info.message,
+                    message: req.flash(),
                     user: user
                 });
             }
             // generate a token for the user
             const token = jwt.sign({ user }, process.env.AUTH_KEY, { expiresIn: '1h' });
+            req.flash('success', "User logged in successfully")
             return res.status(200).json({ 
                 success: 1,
-                message: "User logged in successfully",
+                message: req.flash(),
                 user: user,
                 token: token
             });
