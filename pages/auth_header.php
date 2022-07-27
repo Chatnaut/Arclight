@@ -45,7 +45,8 @@
 
     }
     .messages .error {
-      background-color: #f87171;
+      background-color: #ff0038;
+      color: white;
     }
     .messages .success {
       background-color: #6ee7b7;
