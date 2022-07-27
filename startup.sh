@@ -127,7 +127,7 @@ echo -e "${green}Configuring API...${clear}"
 npm i pm2 -g
 #npm install
 pm2 start /var/www/html/arclight/app.js
-
+pm2 save
 # To make sure app starts when reboot
 pm2 startup
 
