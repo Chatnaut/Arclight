@@ -39,7 +39,7 @@ router.post('/login', function (req, res, next) {
                 });
             }
             // generate a token for the user
-            const token = jwt.sign({ user }, process.env.AUTH_KEY, { expiresIn: '1h' });
+            const token = jwt.sign({ user }, process.env.AUTH_KEY, { expiresIn: '5h' });
             req.flash('success', "User logged in successfully")
             return res.status(200).json({ 
                 success: 1,
@@ -55,7 +55,7 @@ router.post('/login', function (req, res, next) {
 );
 
 router.post('/register', ensureLoggedOut({ redirectTo: '/' }), [
-    body('name').not().isEmpty().withMessage('Name is required'),
+    body('username').not().isEmpty().withMessage('Name is required'),
     body('email').trim().isEmail().withMessage('Email must be a valid email').normalizeEmail().toLowerCase(),
     body('password').trim().isLength(4).withMessage('Password must be of 4 characters and above'),
     // body('confirmpassword').custom((value, { req }) => {
@@ -88,7 +88,7 @@ router.post('/register', ensureLoggedOut({ redirectTo: '/' }), [
             });
         }
         const user = new User(req.body);
-        // await user.save()
+        await user.save()
         req.flash('success', `${user.email} registered successfully, you can now sign in`)
         return res.status(200).json({
             success: 1,
