@@ -181,11 +181,11 @@
 
     formDOM.addEventListener('submit', (e) => {
       e.preventDefault();
-      const name = nameInputDOM.value;
+      const username = nameInputDOM.value;
       const email = emailInputDOM.value;
       const password = passwordInputDOM.value;
       const data = {
-        name,
+        username,
         email,
         password
       };
