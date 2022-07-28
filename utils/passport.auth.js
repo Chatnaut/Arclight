@@ -13,6 +13,9 @@ passport.use(
     }, async (email, password, done) => {
         try {
             const user = await User.findOne({ email: email });
+            if(user.status === 'inactive') {
+                return done(null, false, { message: 'Only members are authorized to login' });
+            }
             if (!user) {
                 return done(null, false, { message: "Username/Email not registered" }) //error, usernameexists, message
             }
