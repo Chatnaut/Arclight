@@ -148,12 +148,10 @@
         </div>
       </div>
     </section>
+  </main>
     <!-- -------- START FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
 <?php include 'auth_footer.php'; ?>
     <!-- -------- END FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
-  </main>
-  <!-- getting axios library  -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
   <script>
     const formDOM = document.querySelector('.form-signup');
@@ -209,11 +207,12 @@
           flashMessages.innerHTML += `<li class="${key}">${value}</li><br>`;
         }));
       })
-    }
-
-    setTimeout(function() {
+      setTimeout(function() {
       flashMessages.innerHTML = '';
     }, 10000);
+    }
+
+
   </script>
 </body>
 <!-- plugin for scrollbar  -->

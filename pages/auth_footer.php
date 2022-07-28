@@ -40,3 +40,7 @@
         </div>
       </div>
     </footer>
+    <script src="../assets/js/windy-tailwind.js?v=1.0.2" async></script>
+  <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+  <!-- getting axios library  -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
