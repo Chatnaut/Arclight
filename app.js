@@ -43,6 +43,7 @@ require('./utils/passport.auth');
 
 app.use((req, res, next) => {
     res.locals.user = req.user;
+    console.log(res.locals.user)
     next();
 })
 
@@ -57,8 +58,9 @@ app.use((req, res, next) => {
 app.use('/', require('./routes/config.route'));
 app.use('/v1/auth', require('./routes/auth.route'));
 
-app.use('/v1/user',  passport.authenticate('jwt', {session: false}), require('./routes/user.route'));
-app.use('/v1/admin', require('./routes/admin.route'));
+app.use('/v1/profile', require('./routes/user.route'));
+app.use('/v1/admin', ensureAdmin, require('./routes/admin.route'));
+app.use('/v1/user', passport.authenticate('jwt', {session: false}), ensureAdmin, require('./routes/user.route'));
 
 app.use("/v1/status", require('./routes/api_health'));
 app.use("/v1/terminal", require('./routes/terminal'));
@@ -95,14 +97,14 @@ const start = async () => {
 //     }
 // };
 
-// function ensureAdmin(req, res, next) {
-//     if (req.user.role === roles.admin) {
-//         next()
-//     } else {
-//         req.flash('warning', 'You are not an authorised user to see this page')
-//         res.redirect('/')
-//     }
-// }
+function ensureAdmin(req, res, next) {
+    if (req.user.role === roles.admin || req.user.role === roles.enterprise) {
+        next()
+    } else {
+        req.flash('warning', 'You are not an authorised user to see this page')
+        res.send('You are not an authorised user to see this page')
+    }
+}
 
 // function ensureModerator(req, res, next) {
 //     if (req.user.role === roles.moderator) {
