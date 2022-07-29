@@ -1,8 +1,8 @@
 module.exports= {
     roles: {
-        enterprise: "ENTERPRISE",
-        admin: "ADMIN",
-        moderator: "MODERATOR",
-        client: "CLIENT",
+        enterprise: "Enterprise",
+        admin: "Admin",
+        moderator: "Moderator",
+        client: "Client",
     }
 }
