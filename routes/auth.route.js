@@ -5,19 +5,6 @@ const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const { ensureLoggedIn, ensureLoggedOut } = require('connect-ensure-login');
 
-// router.get('/login', ensureLoggedOut({redirectTo: '/'}), async (req, res, next) => {
-//     res.render("login");
-// })
-
-// router.get('/register', ensureLoggedOut({ redirectTo: '/' }), async (req, res, next) => {
-//     // req.flash('error', "Some error")
-//     // req.flash('error', "Some error2")
-//     // req.flash('key', 'some value')
-//     // const messages = req.flash() //object
-//     // res.render("register", {messages});
-//     res.render("register");
-// })
-
 router.post('/login', function (req, res, next) {
     passport.authenticate('local', { session: false }, (err, user, info) => {
         if (err || !user) {
@@ -71,7 +58,6 @@ router.post('/register', ensureLoggedOut({ redirectTo: '/' }), [
             errors.array().forEach(error => {
                 req.flash('error', error.msg)
             })
-            // res.send('register', { email: req.body.email, messages: req.flash() })
             return res.status(200).json({
                 success: 0,
                 message: req.flash(),
