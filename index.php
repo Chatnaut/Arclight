@@ -31,7 +31,7 @@ if (file_exists($envpath)) {
   if($cert_path != ""){
     $cert_option = "--cert=" . $cert_path; //--cert is option used in noVNC connection string
   }else{
-    $cert_option = "--cert=/etc/ssl/fullchain.pem"; //sets default location if nothing in database
+    $cert_option = ""; //sets default location if nothing in database
   }
 
   //find document 
@@ -45,7 +45,7 @@ if (file_exists($envpath)) {
   if($key_path != ""){
     $key_option = "--key=" . $key_path; //--key is option used in noVNC connection string
   }else{
-    $key_option = "--key=/etc/ssl/privkey.pem"; //sets default location if nothing in database
+    $key_option = ""; //sets default location if nothing in database
   }
 } //Ends if statement if config.php file exists
 
