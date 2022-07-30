@@ -177,6 +177,12 @@ include_once('../config/config.php');
                                         AMIs
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="../logging/logs.php">
+                                        <span data-feather="file-text"></span>
+                                        Logs
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                     </ul>
