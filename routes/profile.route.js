@@ -1,4 +1,6 @@
-router.get('/profile', async(req,res,next) => {
+const router = require('express').Router();
+
+router.get('/getprofile', async(req,res,next) => {
     console.log(req.user)
     const person = req.user
     // res.render('profile', {person});

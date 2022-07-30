@@ -43,7 +43,7 @@ require('./utils/passport.auth');
 
 app.use((req, res, next) => {
     res.locals.user = req.user;
-    console.log(res.locals.user)
+    // console.log(res.locals.user)
     next();
 })
 
@@ -58,14 +58,15 @@ app.use((req, res, next) => {
 app.use('/', require('./routes/config.route'));
 app.use('/v1/auth', require('./routes/auth.route'));
 
-app.use('/v1/profile', require('./routes/user.route'));
-app.use('/v1/admin', ensureAdmin, require('./routes/admin.route'));
+app.use('/v1/profile', require('./routes/profile.route'));
+app.use('/v1/admin', ensureLoggedIn({ redirectTo: '/auth/login' }), ensureAdmin, require('./routes/admin.route'));
 app.use('/v1/user', passport.authenticate('jwt', {session: false}), ensureAdmin, require('./routes/user.route'));
 
 app.use("/v1/status", require('./routes/api_health'));
 app.use("/v1/terminal", require('./routes/terminal'));
 app.use("/v1/config", require('./routes/config.route'));
 app.use('/v1/event', require('./routes/event.route'));
+app.use('/v1/logs', require('./routes/log.route'));
 app.use('/v1/instance', passport.authenticate('jwt', {session: false}), require('./routes/instance.route'));
 
 
