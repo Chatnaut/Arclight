@@ -95,10 +95,10 @@
                         <form action="/admin/update-role" method="post" class="manage-user-form">
                             <input type="hidden" name="id" value="<%= user.id %>">
                             <select name="role" id="role">
-                                <option value="ADMIN" <%=user.role==='ADMIN' ? 'selected' : '' %> >Admin</option>
-                                <option value="MODERATOR" <%=user.role==='MODERATOR' ? 'selected' : '' %>>Moderator
+                                <option value="Admin" <%=user.role==='Admin' ? 'selected' : '' %> >Admin</option>
+                                <option value="Moderator" <%=user.role==='Moderator' ? 'selected' : '' %>>Moderator
                                 </option>
-                                <option value="CLIENT" <%=user.role==='CLIENT' ? 'selected' : '' %>>Client</option>
+                                <option value="Client" <%=user.role==='Client' ? 'selected' : '' %>>Client</option>
                             </select>
                             <input type="submit" value="update">
                         </form>
