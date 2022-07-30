@@ -44,7 +44,7 @@ include_once('../config/config.php');
         <!-- <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"> -->
         <ul class="navbar-nav px-3">
             <li class="nav-item dropdown">
-                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre >
                     Manage<span class="caret"></span>
                 </a>
                 <div class="dropdown-menu position-absolute dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -77,7 +77,7 @@ include_once('../config/config.php');
                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                     Hi, <?php echo $_SESSION['username']; ?><span class="caret"></span>
                 </a>
-                <div class="dropdown-menu position-absolute dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <div class="dropdown-menu position-absolute dropdown-menu-right" aria-labelledby="navbarDropdown"  style="right: 0px;">
                     <a class="dropdown-item" href=""><?php echo $_SESSION['role']; ?></a>
                     <a class="dropdown-item" href="">Profile</a>
                     <a class="dropdown-item" href="../config/preferences.php">Preferences</a>
