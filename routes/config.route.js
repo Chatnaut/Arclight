@@ -14,7 +14,7 @@ router.post('/arc_config', async (req, res, next) => {
         }
 
         if (name === 'cert_path') {
-            const data = await ArclightConfig.findOneAndUpdate({ name: name, userid: userid }, { $set: { value: value } }, { new: true, upsert: true });
+            const data = await ArclightConfig.updateMany({ name: name}, { $set: { value: value } }, { new: true, upsert: true });
             res.status(200).json({
                 success: 1,
                 message: "Certificate path updated successfully",
@@ -23,7 +23,7 @@ router.post('/arc_config', async (req, res, next) => {
         }
         //if name is key_path find and update value where userid = req.user.id
         if (name === 'key_path') {
-            const data = await ArclightConfig.findOneAndUpdate({ name: name, userid: userid }, { $set: { value: value } }, { new: true, upsert: true });
+            const data = await ArclightConfig.updateMany({ name: name}, { $set: { value: value } }, { new: true, upsert: true });
             res.status(200).json({
                 success: 1,
                 message: "Key path updated successfully",
@@ -60,10 +60,14 @@ router.get('/arc_config/:userid', async (req, res, next) => {
             });
         }
         const data = await ArclightConfig.find({ userid: userid });
+        const certs = await ArclightConfig.find({ name: 'cert_path' });
+        const keys = await ArclightConfig.find({ name: 'key_path' });
         res.status(200).json({
             success: 1,
             message: "Arclight configs fetched successfully",
-            result: data
+            result: data,
+            certs: certs.length > 0 ? certs[0].value : '',
+            keys: keys.length > 0 ? keys[0].value : ''
         });
     } catch (error) {
         res.status(500).json({
@@ -74,11 +78,5 @@ router.get('/arc_config/:userid', async (req, res, next) => {
     }
 }
 );
-
-
-
-
-
-
 
 module.exports = router;
