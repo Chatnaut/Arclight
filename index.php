@@ -21,7 +21,7 @@ if (file_exists($envpath)) {
   $userid = $_SESSION['userid'];
 
 //find document 
-  $filter = ['userid' => $userid, 'name' => 'cert_path'];
+  $filter = ['name' => 'cert_path'];
   $read = new MongoDB\Driver\Query($filter);
   $result = $conn->executeQuery("arclight.arclight_configs", $read);
   $result = $result->toArray();
@@ -35,7 +35,7 @@ if (file_exists($envpath)) {
   }
 
   //find document 
-  $filter1 = ['userid' => $userid, 'name' => 'key_path'];
+  $filter1 = ['name' => 'key_path'];
   $read1 = new MongoDB\Driver\Query($filter1);
   $result1 = $conn->executeQuery("arclight.arclight_configs", $read1);
   $result1 = $result1->toArray();

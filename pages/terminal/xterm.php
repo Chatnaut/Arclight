@@ -20,7 +20,7 @@ $conn = $db->getConnection();
 $userid = $_SESSION['userid'];
 
 //Setting the SSL Certificate file path
-$filter = ['userid' => $userid, 'name' => 'cert_path'];
+$filter = ['name' => 'cert_path'];
 $option = [];
 $read = new MongoDB\Driver\Query($filter, $option);
 $result = $conn->executeQuery("arclight.arclight_configs", $read);
@@ -34,7 +34,7 @@ if ($cert_path != "") {
 }
 
 //Setting the SSL Certificate file path
-$filter = ['userid' => $userid, 'name' => 'key_path'];
+$filter = ['name' => 'key_path'];
 $option = [];
 $read = new MongoDB\Driver\Query($filter, $option);
 $result = $conn->executeQuery("arclight.arclight_configs", $read);
