@@ -64,7 +64,7 @@ app.use('/v1/user', passport.authenticate('jwt', {session: false}), ensureAdmin,
 
 app.use("/v1/status", require('./routes/api_health'));
 app.use("/v1/terminal", require('./routes/terminal'));
-app.use("/v1/config", require('./routes/config.route'));
+app.use("/v1/config",passport.authenticate('jwt', {session: false}), require('./routes/config.route'));
 app.use('/v1/event', require('./routes/event.route'));
 app.use('/v1/logs', require('./routes/log.route'));
 app.use('/v1/instance', passport.authenticate('jwt', {session: false}), require('./routes/instance.route'));
