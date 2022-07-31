@@ -206,6 +206,10 @@ unset($_SESSION['confirm_password']);
         name: 'cert_path',
         value: certpath.value,
         userid: userid
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       if (response.data.success == 1) {
         refresh_cert.classList.remove('fa-sync-alt');
@@ -226,6 +230,10 @@ unset($_SESSION['confirm_password']);
         name: 'key_path',
         value: keypath.value,
         userid: userid
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       if (response.data.success == 1) {
         refresh_key.classList.remove('fa-sync-alt');
@@ -247,6 +255,10 @@ unset($_SESSION['confirm_password']);
           name: 'theme_color',
           value: e.target.value,
           userid: userid
+        }, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
       } catch (error) {
         console.log(`Error: ${error}`);
@@ -261,16 +273,20 @@ unset($_SESSION['confirm_password']);
   const getConfig = async () => {
     try {
       apitoken.value = token;
-      const response = await axios.get(`/api/v1/config/arc_config/${userid}`);
+      const response = await axios.get(`/api/v1/config/arc_config/${userid}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       response.data.result.forEach(element => {
 
         switch (element.name) {
-          case 'cert_path':
-            certpath.value = element.value;
-            break;
-          case 'key_path':
-            keypath.value = element.value;
-            break;
+          // case 'cert_path':
+          //   certpath.value = element.value;
+          //   break;
+          // case 'key_path':
+          //   keypath.value = element.value;
+          //   break;
           case 'theme_color':
             if (element.value == 'dark-edition') {
               document.querySelector('input[value="dark-edition"]').setAttribute('checked', 'checked');
@@ -282,6 +298,8 @@ unset($_SESSION['confirm_password']);
             break;
         }
       });
+      certpath.value = response.data.certs;
+      keypath.value = response.data.keys;
     } catch (error) {
       console.log(error);
     }
