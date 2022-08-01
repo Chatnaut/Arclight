@@ -1,15 +1,21 @@
+const {User} = require('../models/user.model')
 const router = require('express').Router();
+const mongoose = require('mongoose');
 
-router.get('/getprofile', async(req,res,next) => {
-    console.log(req.user)
-    const person = req.user
-    // res.render('profile', {person});
-    res.status(200).json({
-        success: 1,
-        message: "Profile retrieved successfully",
-        result: person
-    });
-
+//user profiles
+router.get('/getprofile/:id', async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            req.flash('error', 'Invalid Id');
+            res.redirect('/admin/users');
+            return;
+        }
+        const person = await User.findById(id);
+        res.render('profile', { person })
+    } catch (error) {
+        next(error)
+    }
 })
 
 module.exports = router;
