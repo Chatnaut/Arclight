@@ -198,6 +198,8 @@
         axios.post('sessions.php', {
           userid: userid,
           username: username,
+          email: localStorage.getItem('email'),
+          role: localStorage.getItem('role'),
           theme_color: theme_color,
           language: language
         }).then(function(response) {
