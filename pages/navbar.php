@@ -50,7 +50,7 @@ include_once('../config/config.php');
                 <div class="dropdown-menu position-absolute dropdown-menu-right" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="">Account</a>
                     <a class="dropdown-item" href="">Billing</a>
-                    <a class="dropdown-item" href="">Access (IAM)</a>
+                    <a class="dropdown-item" href="/api/v1/admin/users">Access (IAM)</a>
 
                 </div>
             </li>
