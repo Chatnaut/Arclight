@@ -16,6 +16,9 @@ passport.use(
             if (!user) {
                 return done(null, false, { message: "Username/Email not registered" }) //error, usernameexists, message
             }
+            if(user.status === 'inactive') {
+                return done(null, false, { message: 'Only members are authorized to login' });
+            }
             //email exists let's verify the password and assign jwt token
             const isMatch = await user.isvalidPassword(password);
             if (isMatch) {

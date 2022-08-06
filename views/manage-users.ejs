@@ -1,110 +1,125 @@
-<style>
-    h1.table {
-        text-decoration: underline;
-        margin: 16px 0;
-    }
-
-    table {
-        margin-top: 32px;
-        min-width: 600px;
-        border: none;
-        border-spacing: 0;
-        border: 4px solid #d1d5db;
-        padding: 16px;
-        border-radius: 16px;
-    }
-
-    thead {
-        font-size: 1.25rem;
-        color: #fff;
-    }
-
-    thead tr {
-        border-radius: 8px;
-        background-color: #db2777;
-        overflow: hidden;
-    }
-
-    thead th {
-        padding: 8px 0;
-        text-align: left;
-        padding-left: 16px;
-    }
-
-    table th:first-child {
-        border-radius: 10px 0 0 10px;
-    }
-
-    table th:last-child {
-        border-radius: 0 10px 10px 0;
-    }
-
-    thead th:nth-child(1) {
-        max-width: 44px;
-    }
-
-    tbody tr:hover {
-        /* background-color: #fdf2f8; */
-    }
-
-    tbody tr td {
-        padding: 8px 0;
-        margin: 8px 0;
-    }
-
-    .manage-user-form input[type='submit'] {
-        background: transparent;
-        color: #db2777;
-        border: none;
-        outline: none;
-        padding: 8px 16px;
-        cursor: pointer;
-        border-radius: 8px;
-    }
-
-    .manage-user-form input[type='submit']:hover {
-        background-color: #fdf2f8;
-    }
-
-    .manage-user-form select {
-        border: none;
-        font-size: 1.05rem;
-        padding: 6px 12px;
-        border-radius: 8px;
-        border: 2px solid #f3f4f6;
-    }
-</style>
 <%- include('./layouts/header') %>
-    <h1 class="table">Manage users</h1>
-    <table class="table">
-        <thead>
-            <th>id</th>
-            <th>email</th>
-            <th>role</th>
-        </thead>
-        <tbody>
-            <% users.forEach(user=> { %>
+    <div class="w-full overflow-x-auto relative shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 manage-status">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
-                    <td>
-                        <%= user.id %>
-                    </td>
-                    <td><a href="/admin/user/<%= user.id %>">
-                            <%= user.email %>
-                        </a></td>
-                    <td>
-                        <form action="/admin/update-role" method="post" class="manage-user-form">
-                            <input type="hidden" name="id" value="<%= user.id %>">
-                            <select name="role" id="role">
-                                <option value="ADMIN" <%=user.role==='ADMIN' ? 'selected' : '' %> >Admin</option>
-                                <option value="MODERATOR" <%=user.role==='MODERATOR' ? 'selected' : '' %>>Moderator
-                                </option>
-                                <option value="CLIENT" <%=user.role==='CLIENT' ? 'selected' : '' %>>Client</option>
-                            </select>
-                            <input type="submit" value="update">
-                        </form>
-                    </td>
+                    <th scope="col" class="py-3 px-6">
+                        ID </th>
+                    <th scope="col" class="py-3 px-6">
+                        Email
+                    </th>
+                    <th scope="col" class="py-3 px-6">
+                        Role
+                    </th>
+                    <th scope="col" class="py-3 px-6">
+                        Status
+                    </th>
+                    <th scope="col" class="py-3 px-6">
+                        <span class="sr-only">Edit</span>
+                    </th>
                 </tr>
-                <% }) %>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <% users.forEach(user=> { %>
+                    <tr class="bg-white border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white manage-id">
+                            <%= user.id %>
+                        </th>
+                        <td class="py-4 px-6">
+                            <a href="/api/v1/profile/getprofile/<%= user.id %>">
+                                <%= user.email %>
+                            </a>
+                        </td>
+                        <td class="py-4 px-4">
+                            <form action="/api/v1/admin/update-role" method="post">
+                                <input type="hidden" name="id" value="<%= user.id %>">
+                                <select name="role" id="role"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <option value="Enterprise" <%=user.role==='Enterprise' ? 'selected' : '' %>
+                                        >Enterprise</option>
+                                    <option value="Admin" <%=user.role==='Admin' ? 'selected' : '' %> >Admin</option>
+                                    <option value="Moderator" <%=user.role==='Moderator' ? 'selected' : '' %>>Moderator
+                                    </option>
+                                    <option value="Client" <%=user.role==='Client' ? 'selected' : '' %>>Client</option>
+                                </select>
+                        </td>
+
+
+                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                            <% if (user.status==='active' ) { %>
+                                <span
+                                    class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full status active">active</span>
+                                <% } else {%>
+                                    <span
+                                        class="inline-flex px-2 text-xs font-semibold leading-5 text-red-800 bg-red-100 rounded-full status inactive">inactive</span>
+                                    <% } %>
+                        </td>
+                        <td class="py-4 px-6 text-right">
+                            <input type="submit" value="Edit"
+                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline"></input>
+                        </td>
+                        </form>
+                    </tr>
+                    <% }) %>
+            </tbody>
+        </table>
+    </div>
     <%- include('./layouts/footer') %>
+
+        <script>
+            const manageStatus = document.querySelectorAll('.manage-status');
+            manageStatus.forEach(user => {
+                user.addEventListener('click', (e) => {
+                    const id = e.target.parentElement.parentElement.children[0].innerText;
+                    let status = e.target.parentElement.querySelector('.status');
+
+                    axios.post('/api/v1/admin/update-status', {
+                        id: id,
+                        status: status.innerText
+                    }).then(res => {
+                    console.log(res);
+                            if (res.data.result === 'active') {
+                                status.innerText = 'active';
+                                status.classList.remove('text-red-800', 'bg-red-100');
+                                status.classList.add('text-green-800', 'bg-green-100');
+                            } else if(res.data.result === 'inactive') {
+                                status.innerText = 'inactive';
+                                status.classList.remove('text-green-800','bg-green-100');
+                                status.classList.add('text-red-800','bg-red-100');
+                            }
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });
+                });
+            });
+
+
+// //send axios request to update status
+//         status.addEventListener('click', (e) => {
+//             const id = e.target.parentElement.parentElement.firstElementChild.innerText;
+//             const status = e.target.innerText;
+//             console.log(id, status);
+//             axios.post('/api/v1/admin/update-status', {
+//                 id,
+//                 status
+//             })
+//                 .then(res => {
+//                     console.log(res);
+//                     if (res.data.result == 'active') {
+//                         e.target.innerText = 'active';
+//                         e.target.classList.remove('bg-red-100');
+//                         e.target.classList.add('bg-green-100');
+//                     } else if (res.data.result == 'inactive') {
+//                         e.target.innerText = 'inactive';
+//                         e.target.classList.remove('bg-green-100');
+//                         e.target.classList.add('bg-red-100');
+//                     }
+//                 })
+//                 .catch(err => {
+//                     console.log(err);
+//                 });
+//         });
+
+
+        </script>

@@ -44,13 +44,4 @@ router.get('/arcuser/:id', async (req, res, next) => {
     }
 })
 
-router.get('/profile', async (req, res, next) => {
-    // console.log(req.user)
-    const person = req.user
-    res.status(200).json({
-        success: 1,
-        message: "Profile retrieved successfully",
-        person
-    });
-})
 module.exports = router;
