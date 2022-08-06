@@ -1,4 +1,5 @@
 <?php include('auth_header.php'); ?>
+
 <body class="m-0 font-sans antialiased font-normal bg-white text-start text-size-base leading-default text-slate-500">
   <!-- Navbar -->
   <nav class="absolute top-0 z-30 flex flex-wrap items-center justify-between w-full px-4 py-2 mt-6 mb-4 shadow-none lg:flex-nowrap lg:justify-start">
@@ -149,9 +150,9 @@
       </div>
     </section>
   </main>
-    <!-- -------- START FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
-<?php include 'auth_footer.php'; ?>
-    <!-- -------- END FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
+  <!-- -------- START FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
+  <?php include 'auth_footer.php'; ?>
+  <!-- -------- END FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
 
   <script>
     const formDOM = document.querySelector('.form-signup');
@@ -200,19 +201,6 @@
           getFlashMessage(err.data.message);
         });
     });
-
-    function getFlashMessage(message) {
-      const messageArray = Object.keys(message).forEach((key) => {
-        message[key].forEach((value => {
-          flashMessages.innerHTML += `<li class="${key}">${value}</li><br>`;
-        }));
-      })
-      setTimeout(function() {
-      flashMessages.innerHTML = '';
-    }, 10000);
-    }
-
-
   </script>
 </body>
 <!-- plugin for scrollbar  -->

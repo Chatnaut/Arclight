@@ -229,19 +229,7 @@
       }
     }
 
-    function getFlashMessage(message) {
-      const messageArray = Object.keys(message).forEach((key) => {
-        message[key].forEach((value => {
-          flashMessages.innerHTML += `<li class="${key}">${value}</li><br>`;
-        }));
-      })
-      setTimeout(function() {
-        flashMessages.innerHTML = '';
-      }, 10000);
-    }
-
   </script>
 </body>
 <script src="../assets/js/plugins/perfect-scrollbar.min.js" async></script>
-
 </html>
