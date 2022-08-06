@@ -166,6 +166,6 @@ else
         service mongod start
     fi
 
-    echo "Bye!"
+    echo "Bye!!"
     exit 0
 fi
