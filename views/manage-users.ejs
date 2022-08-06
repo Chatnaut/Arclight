@@ -1,6 +1,6 @@
 <%- include('./layouts/header') %>
     <div class="w-full overflow-x-auto relative shadow-md sm:rounded-lg">
-        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 manage-status">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                     <th scope="col" class="py-3 px-6">
@@ -22,7 +22,7 @@
             <tbody>
                 <% users.forEach(user=> { %>
                     <tr class="bg-white border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white manage-id">
                             <%= user.id %>
                         </th>
                         <td class="py-4 px-6">
@@ -47,10 +47,12 @@
 
                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                             <% if (user.status==='active' ) { %>
-                                <span class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full status active l">active</span>
+                                <span
+                                    class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full status active">active</span>
                                 <% } else {%>
-                                    <span class="inline-flex px-2 text-xs font-semibold leading-5 text-yellow-800 bg-red-100 rounded-full status inactive l">inactive</span>
-                                    <% } %> 
+                                    <span
+                                        class="inline-flex px-2 text-xs font-semibold leading-5 text-red-800 bg-red-100 rounded-full status inactive">inactive</span>
+                                    <% } %>
                         </td>
                         <td class="py-4 px-6 text-right">
                             <input type="submit" value="Edit"
@@ -64,25 +66,35 @@
     </div>
     <%- include('./layouts/footer') %>
 
-    <script>
-        const status = document.querySelector('.status');
-        const active = document.querySelector('.active');
-        const inactive = document.querySelector('.inactive');
-                
-        //loop each user, and trigger addeventlistener if status is active, change status to inactive, vice versa
-        status.forEach(user => {
-            user.addEventListener('click', function() {
-                if (user.classList.contains('active')) {
-                    user.classList.remove('active');
-                    user.classList.add('inactive');
-                    user.innerHTML = 'inactive';
-                } else {
-                    user.classList.remove('inactive');
-                    user.classList.add('active');
-                    user.innerHTML = 'active';
-                }
+        <script>
+            const manageStatus = document.querySelectorAll('.manage-status');
+            manageStatus.forEach(user => {
+                user.addEventListener('click', (e) => {
+                    const id = e.target.parentElement.parentElement.children[0].innerText;
+                    let status = e.target.parentElement.querySelector('.status');
+
+                    axios.post('/api/v1/admin/update-status', {
+                        id: id,
+                        status: status.innerText
+                    }).then(res => {
+                    console.log(res);
+                            if (res.data.result === 'active') {
+                                status.innerText = 'active';
+                                status.classList.remove('text-red-800', 'bg-red-100');
+                                status.classList.add('text-green-800', 'bg-green-100');
+                            } else if(res.data.result === 'inactive') {
+                                status.innerText = 'inactive';
+                                status.classList.remove('text-green-800','bg-green-100');
+                                status.classList.add('text-red-800','bg-red-100');
+                            }
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });
+                });
             });
-        });
+
+
 // //send axios request to update status
 //         status.addEventListener('click', (e) => {
 //             const id = e.target.parentElement.parentElement.firstElementChild.innerText;
@@ -108,6 +120,6 @@
 //                     console.log(err);
 //                 });
 //         });
-   
 
-    </script>
+
+        </script>
