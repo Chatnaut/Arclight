@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const { roles } = require('../utils/constants');
 const UserSchema = new mongoose.Schema({
+    username: {
+        type: String,
+        required: true,
+    },
     email: {
         type: String,
         required: true,
@@ -16,8 +20,13 @@ const UserSchema = new mongoose.Schema({
         type: String,
         enum: [roles.admin, roles.moderator, roles.client],
         default: roles.client
+    },
+    status: {
+        type: String,
+        enum: ['active', 'inactive'],
+        default: 'inactive'
     }
-}  , { timestamps: true });
+}, { timestamps: true });
 // pre saving user
 UserSchema.pre('save', async function (next) { //cant use arrow function here (becoz of ||this||)
     try {
@@ -26,7 +35,8 @@ UserSchema.pre('save', async function (next) { //cant use arrow function here (b
             const hashedPassword = await bcrypt.hash(this.password, salt)
             this.password = hashedPassword; //overwriting the password with hased password
             if (this.email === process.env.ADMIN_EMAIL.toLowerCase()) {
-                this.role = roles.admin
+                this.role = roles.enterprise;
+                this.status = 'active';
             }
         }
         next();
@@ -59,7 +69,7 @@ const ArclightConfigSchema = new mongoose.Schema({
         type: String,
         required: true
     }
-}  , { timestamps: true });
+}, { timestamps: true });
 const ArclightConfig = mongoose.model('arclight_config', ArclightConfigSchema);
 
 //arclight_log schema------------------------------------------------------
@@ -71,13 +81,13 @@ const ArclightLogSchema = new mongoose.Schema({
     description: {
         type: String,
     },
-    host_uuid:{
+    host_uuid: {
         type: String,
     },
     domain_uuid: {
         type: String,
     }
-}   , { timestamps: true });
+}, { timestamps: true });
 const ArclightLog = mongoose.model('arclight_event', ArclightLogSchema);
 
 module.exports = {

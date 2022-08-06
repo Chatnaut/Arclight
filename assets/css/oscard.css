@@ -86,7 +86,7 @@ p {
   height: inherit;
   width: 4rem;
   box-shadow: inset 0px -20px 100px 10px rgba(0, 0, 0, 0.7);
-  background-position: bottom;
+  background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   overflow: hidden;

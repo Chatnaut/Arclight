@@ -21,7 +21,7 @@ app.use(express.static('public'));
 
 app.use(express.json());
 app.use(cors());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true })); //allow posting nested objects
 
 
 //init session
@@ -43,6 +43,7 @@ require('./utils/passport.auth');
 
 app.use((req, res, next) => {
     res.locals.user = req.user;
+    console.log(`OUPUT: ${res.locals.user}`)
     next();
 })
 
@@ -57,13 +58,15 @@ app.use((req, res, next) => {
 app.use('/', require('./routes/config.route'));
 app.use('/v1/auth', require('./routes/auth.route'));
 
-app.use('/v1/user',  passport.authenticate('jwt', {session: false}), require('./routes/user.route'));
+app.use('/v1/profile', require('./routes/profile.route'));
 app.use('/v1/admin', require('./routes/admin.route'));
+app.use('/v1/user', passport.authenticate('jwt', {session: false}), ensureAdmin, require('./routes/user.route'));
 
 app.use("/v1/status", require('./routes/api_health'));
 app.use("/v1/terminal", require('./routes/terminal'));
-app.use("/v1/config", require('./routes/config.route'));
+app.use("/v1/config",passport.authenticate('jwt', {session: false}), require('./routes/config.route'));
 app.use('/v1/event', require('./routes/event.route'));
+app.use('/v1/logs', require('./routes/log.route'));
 app.use('/v1/instance', passport.authenticate('jwt', {session: false}), require('./routes/instance.route'));
 
 
@@ -95,14 +98,14 @@ const start = async () => {
 //     }
 // };
 
-// function ensureAdmin(req, res, next) {
-//     if (req.user.role === roles.admin) {
-//         next()
-//     } else {
-//         req.flash('warning', 'You are not an authorised user to see this page')
-//         res.redirect('/')
-//     }
-// }
+function ensureAdmin(req, res, next) {
+    if (req.user.role === roles.admin || req.user.role === roles.enterprise) {
+        next()
+    } else {
+        req.flash('warning', 'You are not an authorised user to see this page')
+        res.redirect('/')
+    }
+}
 
 // function ensureModerator(req, res, next) {
 //     if (req.user.role === roles.moderator) {
