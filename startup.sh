@@ -108,9 +108,6 @@ fi
 
 pip install webssh
 
-curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-apt install nodejs
-
 #Configuring files and permissions
 echo -e "${green}Configuring files and permissions...${clear}"
 #Add user to libvirt group
@@ -125,13 +122,21 @@ mv Arclight-test arclight
 chown -R www-data:www-data /var/www/html
 
 #Setup PM2 process manager to keep your app running
-echo -e "${green}Configuring API...${clear}"
+echo -e "${green}Setting-up Arc API...${clear}"
+curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+apt install nodejs
 npm i pm2 -g
 #npm install
 pm2 start /var/www/html/arclight/app.js
 pm2 save
 # To make sure app starts when reboot
 pm2 startup
+
+echo -e "${green}Configuring Apache To Proxy Connections...${clear}"
+sudo a2enmod proxy
+sudo a2enmod proxy_http
+sudo a2enmod rewrite
+ln -s /usr/bin/python3 /usr/bin/python
 
 echo "You're good now :)"
 
@@ -166,6 +171,6 @@ else
         service mongod start
     fi
 
-    echo "Bye!!"
+    echo "Bye!"
     exit 0
 fi
