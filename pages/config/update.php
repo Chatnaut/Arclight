@@ -73,10 +73,11 @@ require('../navbar.php');
         </div>
         <div class="card-body">
           <h5>Installed version: <?php echo $arrayExisting[1]; ?></h5>
-          <br />
+          <input type="submit" name="update" value="Update Now" class="btn btn-warning" style="display: none;">
+          <br>
           <pre><?php echo $fetchOrigin; ?></pre>
           <pre><?php echo $resetOrigin; ?></pre>
-          <br />
+          <br>
 
           <?php
           //Display the changelog on the update page
@@ -109,11 +110,11 @@ require('../navbar.php');
       }else{
         document.querySelector('.badge').classList.add('badge-light');
       }
-      document.querySelector('p').insertAdjacentHTML('afterend', `<input type="submit" name="update" value="Update Now" class="btn btn-warning">`);
+      document.querySelector('input[type="submit"]').style.display = 'block';
     } else {
       sessionStorage.removeItem('update-available');
       sessionStorage.removeItem('update-version');
-      document.querySelector('p').insertAdjacentHTML('afterend', `<h5>Status: You are running the lastest version of arclight.</h5>`);
+      document.querySelector('h5').insertAdjacentHTML('afterend', `<h5>Status: You are running the lastest version of arclight.</h5>`);
     }
   })();
 </script>
