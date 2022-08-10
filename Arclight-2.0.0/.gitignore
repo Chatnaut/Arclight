@@ -1,0 +1,11 @@
+Thumbs.db
+*~
+*.DS_Store
+.vscode
+.idea/*
+web.config
+nvidia-devices.conf
+*.log
+.env
+#node_modules
+

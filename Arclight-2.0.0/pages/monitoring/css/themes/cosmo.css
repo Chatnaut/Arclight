@@ -1,0 +1,143 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700");
+
+/* Style Variables */
+:root{
+
+    /* Main Colours */
+    --bgColour: white;
+    --mainColour: #2780E3;
+
+    /* Progress bar & gauge colours */
+    --progressBarBGColour: #E9ECEF;
+    --progressBarColour: #2780E3;
+
+    /* Button Colours */
+    --buttonTextColour: white;
+    --buttonFontWeight: 400;
+
+    --buttonClickColour: white;
+    --buttonClickBG: #73ACED;
+
+    /* Misc */
+    --font: 'Open Sans', sans-serif;
+    --linkHoverStyle: underline;
+}
+
+
+/********************************************
+*********************************************/
+
+body{
+	font-family: var(--font);
+	background-color: var(--bgColour);
+}
+body a{
+	color: var(--mainColour);
+}
+body a:hover{
+	color: var(--mainColour);
+	text-decoration: var(--linkHoverStyle);
+}
+
+.btn-primary, .btn-primary:hover{
+	color: white;
+}
+
+.progress{
+	background-color: var(--progressBarBGColour);
+}
+
+.progress-bar{
+	background-color: var(--mainColour);
+}
+
+.btn {
+    padding: 8px 18px;
+    border: 0 none;
+    font-weight: var(--buttonFontWeight);
+}
+ 
+.btn:focus, .btn:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+ 
+.btn-primary {
+    background: var(--mainColour);
+    color: var(--buttonTextColour);
+}
+ 
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active {
+    background: var(--mainColour);
+}
+ 
+.btn-primary:active, .btn-primary.active {
+    background: var(--mainColour);
+    box-shadow: none;
+}
+
+.btn-primary:not(:disabled):not(.disabled).active,
+.btn-primary:not(:disabled):not(.disabled):active,
+.show>.btn-primary.dropdown-toggle {
+    color: var(--buttonClickColour);
+    background-color: var(--buttonClickBG);
+}
+
+input[type=text], textarea {
+  -webkit-transition: all 0.30s ease-in-out;
+  -moz-transition: all 0.30s ease-in-out;
+  -ms-transition: all 0.30s ease-in-out;
+  -o-transition: all 0.30s ease-in-out;
+  outline: none;
+  padding: 3px 0px 3px 3px;
+  margin: 5px 1px 3px 0px;
+}
+ 
+input[type=text]:focus, textarea:focus {
+  box-shadow: 0 0 5px var(--mainColour);
+  padding: 3px 0px 3px 3px;
+  margin: 5px 1px 3px 0px;
+  border: 1px solid var(--mainColour);
+}
+
+.material-switch > input[type="checkbox"] {
+    display: none;   
+}
+
+.material-switch > label {
+    cursor: pointer;
+    height: 0px;
+    position: relative; 
+    width: 40px;  
+}
+
+.material-switch > label::before {
+    background: var(--progressBarBGColour);
+    border-radius: 8px;
+    content: '';
+    height: 16px;
+    margin-top: -8px;
+    position:absolute;
+    transition: all 0.4s ease-in-out;
+    width: 40px;
+}
+.material-switch > label::after {
+    background: var(--buttonClickBG);
+    border-radius: 16px;
+    box-shadow: 0px 0px 0px var(--progressBarBGColour);
+    content: '';
+    height: 24px;
+    left: -4px;
+    margin-top: -8px;
+    position: absolute;
+    top: -4px;
+    transition: all 0.3s ease-in-out;
+    width: 24px;
+}
+.material-switch > input[type="checkbox"]:checked + label::before {
+    background: var(--progressBarBGColour);
+}
+.material-switch > input[type="checkbox"]:checked + label::after {
+    background: var(--progressBarColour);
+    left: 20px;
+}
