@@ -1,10 +1,10 @@
 <?php header('Location: index.php'); ?>
 <hr>
 <h4>Changelog</h4>
-[2.0.0] - 01.Aug.2022
+[2.0.0] - 10.Aug.2022
 *Official Stable release of the Arclight:
 Tested with Ubuntu 18.04 LTS on IBM Cloud bare metal https://cloud.ibm.com/gen1/infrastructure/provision/bm)
-Tested with Ubuntu 20.04 LTS on AWS C5n Bare Metal Instance
+Tested with Ubuntu 20.04 LTS on AWS C5 & C5n Bare Metal Instance
 
 *Now support Ubuntu major versions like 18.04 and 20.04
 *Added Bare Metal provisioning support
@@ -38,5 +38,5 @@ Tested with Ubuntu 20.04 LTS on AWS C5n Bare Metal Instance
 *The noVNC connection is loaded from an authenticated web page.
 *The tokens for the noVNC connection are now 100 character random strings, which change everytime a VM page is loaded (domain-single.php)
 *The console preview on the domain-single.php is now a live noVNC connection to the machine rather than a static image
-*
+
 

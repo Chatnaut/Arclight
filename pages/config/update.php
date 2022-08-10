@@ -103,11 +103,11 @@ require('../navbar.php');
 
       document.querySelector('h5').insertAdjacentHTML('afterend', `<h5 class="flag">Status: There is a <span class="badge">${flag}</span> update available!</h5>
       <p>The newest release is ${update}</p>`);
-      if(flag == 'major'){
+      if (flag == 'major') {
         document.querySelector('.badge').classList.add('badge-success');
-      }else if(flag == 'minor'){
+      } else if (flag == 'minor') {
         document.querySelector('.badge').classList.add('badge-dark');
-      }else{
+      } else {
         document.querySelector('.badge').classList.add('badge-light');
       }
       document.querySelector('input[type="submit"]').style.display = 'block';

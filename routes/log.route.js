@@ -13,7 +13,7 @@ router.get('/getlogs', async (req, res, next) => {
                 console.log(err);
                 return;
             }
-            fs.readFile(path[0], (err, data) => {
+            fs.readFile(path[0],(err, data) => {
                 if (err) {
                     vncLogs = `${err}`;
                 } else {
@@ -41,18 +41,18 @@ router.get('/getlogs', async (req, res, next) => {
         });
 
 
-        res.status(200).json({
-            success: 1,
-            message: "Logs retrieved successfully",
-            result: [vncLogs, terminalLogs]
-        });
+res.status(200).json({
+    success: 1,
+    message: "Logs retrieved successfully",
+    result: [vncLogs, terminalLogs]
+});
     } catch (error) {
-        res.status(500).json({
-            success: 0,
-            message: "Error retrieving logs",
-            result: error
-        });
-    }
+    res.status(500).json({
+        success: 0,
+        message: "Error retrieving logs",
+        result: error
+    });
+}
 }
 )
 

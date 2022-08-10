@@ -232,4 +232,5 @@
   </script>
 </body>
 <script src="../assets/js/plugins/perfect-scrollbar.min.js" async></script>
+
 </html>
