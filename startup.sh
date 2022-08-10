@@ -115,10 +115,10 @@ adduser www-data libvirt
 cd /var/www/html
 echo -e "${green}Getting the latest version of arclight...${clear}"
 sleep 4
-wget https://github.com/S4nfs/Arclight/archive/refs/tags/test.tar.gz
+wget https://github.com/S4nfs/Arclight/archive/refs/tags/v2.0.0.tar.gz
 echo -e "${green}Extracting the archive...${clear}"
-tar -xvzf test.tar.gz
-mv Arclight-test arclight
+tar -xzf v2.0.0.tar.gz
+mv Arclight-2.0.0 arclight
 chown -R www-data:www-data /var/www/html
 
 #Setup PM2 process manager to keep your app running
@@ -133,10 +133,10 @@ pm2 save
 pm2 startup
 
 echo -e "${green}Configuring Apache To Proxy Connections...${clear}"
-sudo a2enmod proxy
-sudo a2enmod proxy_http
-sudo a2enmod rewrite
-ln -s /usr/bin/python3 /usr/bin/python
+a2enmod proxy
+a2enmod proxy_http
+a2enmod rewrite
+#ln -s /usr/bin/python3 /usr/bin/python
 
 echo "You're good now :)"
 
