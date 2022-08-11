@@ -145,7 +145,7 @@ if ($action == "create-domain") {
       <memory unit='$memory_unit'>$memory</memory>
       <vcpu>$vcpu</vcpu>
       <os>
-      <type arch='x86_64' machine='pc-q35-5.1'>hvm</type>
+      <type>hvm</type>
       <boot dev='hd'/>
           <boot dev='cdrom'/>
           <boot dev='network'/>

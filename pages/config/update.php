@@ -31,8 +31,8 @@ if (isset($_SESSION['update'])) {
     //$tmp = shell_exec("cd .. && cd .. && $path pull 2>&1"); //run git at the web root directory. Use shell_exec to display all the output, not just last line. Redirect STDERR and STDOUT to variable
 
     $tmp = shell_exec("cd .. && cd .. && $path init 2>&1");
-    $tmp = shell_exec("cd .. && cd .. && $path remote add origin https://github.com/S4nfs/Arclight.git 2>&1");
-    // $setOrigin = shell_exec("cd .. && cd .. && $path remote set-url origin https://github.com/S4nfs/Arclight.git 2>&1");
+    $tmp = shell_exec("cd .. && cd .. && $path remote add origin https://github.com/Chatnaut/Arclight.git 2>&1");
+    // $setOrigin = shell_exec("cd .. && cd .. && $path remote set-url origin https://github.com/Chatnaut/Arclight.git 2>&1");
     $fetchOrigin = shell_exec("cd .. && cd .. && $path fetch origin develop 2>&1");
     $resetOrigin = shell_exec("cd .. && cd .. && $path reset --hard origin/develop 2>&1");
   }
