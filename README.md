@@ -77,12 +77,12 @@ Arclight is a server virtualization management solution based on KVM. It is desi
 ## 🏁 Getting Started
 
 - [Installation](#Installation)
-  - [Installation on Ubuntu Server](#Installation-on-Ubuntu-Server)
-  - [Installation on CentOS 7 Server](#Installation-on-CentOS-7-Server)
-- [Encrypt Arclight Console](#Encrypt-Arclight-Console)
-- [Encrypt Arclight console with self-signed cert](#Encrypt-Arclight-console-with-self-signed-cert)
-- [Add Custom Storage Pools](#Add-Custom-Storage-Pools)
-- [ISO images for KVM machines](#ISO-images-for-KVM-machines)
+  - [Installation on Ubuntu Server](https://docs.chatnaut.com/getting_started/ubuntu)
+  - [Installation on CentOS 8 Server](https://docs.chatnaut.com/getting_started/centos)
+- [Encrypt Arclight Console](https://docs.chatnaut.com/encrypt_arclight/cert)
+- [Encrypt Arclight console with self-signed cert](https://docs.chatnaut.com/encrypt_arclight/self-cert)
+- [Add Custom Storage Pools](https://docs.chatnaut.com/add-storage-pool)
+- [ISO images for KVM machines](https://docs.chatnaut.com/iso-images-for-kvm)
   </br></br>Arclight documentation <a href="https://docs.chatnaut.com/">lives here.</a></br>
   For More Information about its features visit arclight page at <a href="https://chatnaut.com">chatnaut.com</a>
   </br></br>
