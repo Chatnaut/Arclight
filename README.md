@@ -45,7 +45,7 @@ Arclight is a server virtualization management solution based on KVM. It is desi
 </h2></br>
 
 <h3 align="center">
- ?? ?? ??
+ 🎉 🚀 🐱
 </h3>
 
 <p align="center">
@@ -58,7 +58,7 @@ Arclight is a server virtualization management solution based on KVM. It is desi
 
 </br></br>
 
-## ? Arclight Features
+## ✨ Arclight Features
   - Simple and Minimalist UI 
   - Create virtual machines on bare-metal servers or in your home lab.
   - Nested virtualization including Bare-Metal provisioning (Vms inside Vms).
@@ -74,7 +74,7 @@ Arclight is a server virtualization management solution based on KVM. It is desi
     </br></br>
     </br></br>
 
-## ?? Getting Started
+## 🏁 Getting Started
 
 - [Installation](#Installation)
   - [Installation on Ubuntu Server](#Installation-on-Ubuntu-Server)
@@ -88,12 +88,12 @@ Arclight is a server virtualization management solution based on KVM. It is desi
   </br></br>
   </br></br>
 
-## ????? License
+## 👨‍💻 License
 
 Arclight is open-source, licensed as GPL v3. The client and component libraries are licensed as MPL.
 </br></br>
 </br></br>
 
-## ?? Contributing to Arclight
+## 👋 Contributing to Arclight
 
 From opening a bug report to creating a pull request: every contribution is appreciated and welcomed. If you're planning to implement a new feature or change the API please create an issue first. This way we can ensure your work is not in vain. Let's build this damn Cloud !
