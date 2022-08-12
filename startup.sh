@@ -108,9 +108,6 @@ fi
 
 pip install webssh
 
-curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-apt install nodejs
-
 #Configuring files and permissions
 echo -e "${green}Configuring files and permissions...${clear}"
 #Add user to libvirt group
@@ -118,20 +115,30 @@ adduser www-data libvirt
 cd /var/www/html
 echo -e "${green}Getting the latest version of arclight...${clear}"
 sleep 4
-wget https://github.com/S4nfs/Arclight/archive/refs/tags/test.tar.gz
+wget https://github.com/Chatnaut/Arclight/archive/refs/tags/v2.0.0.tar.gz
 echo -e "${green}Extracting the archive...${clear}"
-tar -xvzf test.tar.gz
-mv Arclight-test arclight
-chown -R www-data:www-data /var/www/html
+tar -xzf v2.0.0.tar.gz
+mv Arclight-2.0.0 arclight
+chown -R www-data:www-data /var/www/html/arclight
 
 #Setup PM2 process manager to keep your app running
-echo -e "${green}Configuring API...${clear}"
+echo -e "${green}Setting-up Arc API...${clear}"
+curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+apt install nodejs
 npm i pm2 -g
 #npm install
-pm2 start /var/www/html/arclight/app.js
+#pm2 start /var/www/html/arclight/app.js
+cd /var/www/html/arclight
+pm2 start npm --name "arc"  --log-date-format 'DD-MM HH:mm:ss.SSS' -- start
+
 pm2 save
 # To make sure app starts when reboot
 pm2 startup
+
+echo -e "${green}Configuring Apache To Proxy Connections...${clear}"
+a2enmod proxy
+a2enmod proxy_http
+a2enmod rewrite
 
 echo "You're good now :)"
 
@@ -160,10 +167,12 @@ else
     service apache2 restart
     if [ "$(lsb_release -a | grep -c 20.04)" -eq 2 ]; then
         service mongodb restart
+        ln -s /usr/bin/python3 /usr/bin/python
     elif [ "$(lsb_release -a | grep -c 18.04)" -eq 2 ]; then
         service mongodb restart
     elif [ "$(lsb_release -a | grep -c 22.04)" -eq 2 ]; then
         service mongod start
+        ln -s /usr/bin/python3 /usr/bin/python
     fi
 
     echo "Bye!"

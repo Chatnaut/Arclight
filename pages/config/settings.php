@@ -73,7 +73,7 @@ unset($_SESSION['confirm_password']);
         <div class="card-body">
           <!-- VNC Certificate -->
           <div class="row">
-            <label class="col-3 col-form-label text-right">SSL Certificate File Path (VNC): </label>
+            <label class="col-3 col-form-label text-right">SSL Certificate File Path (VNC & SSH): </label>
             <div class="col-6">
               <div class="form-group">
                 <div class="input-group">
@@ -86,7 +86,7 @@ unset($_SESSION['confirm_password']);
             </div>
           </div>
           <div class="row">
-            <label class="col-3 col-form-label text-right">SSL Key File Path (VNC): </label>
+            <label class="col-3 col-form-label text-right">SSL Key File Path (VNC & SSH): </label>
             <div class="col-6">
               <div class="input-group">
                 <input type="text" value="" class="form-control" name="key_path" id="keypath" />

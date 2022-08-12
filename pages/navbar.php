@@ -43,7 +43,7 @@ include_once('../config/config.php');
         <a class="navbar-brand navbar-dark col-sm-3 col-md-2 mr-0" href="../../index.php"><img src="../../assets/img/arclight-dark.svg" width="100px"> &ensp;</a>
         <!-- <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"> -->
         <ul class="navbar-nav px-3">
-            <li class="nav-item dropdown">
+            <!-- <li class="nav-item dropdown">
                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre >
                     Manage<span class="caret"></span>
                 </a>
@@ -53,15 +53,8 @@ include_once('../config/config.php');
                     <a class="dropdown-item" href="/api/v1/admin/users">Access (IAM)</a>
 
                 </div>
-            </li>
+            </li> -->
             <li class="nav-item">
-                <?php
-                // if ($_SESSION['update_available'] == true) {
-                //     echo "<a class=\"nav-link\" id=\"update-status\" style=\"color:orange;\" href=\"../config/update.php\">Update</a>";
-                // } else {
-                //     echo "<a class=\"nav-link\" id=\"update-status\"  href=\"../config/update.php\">Update</a>";
-                // }
-                ?>
                 <a class="nav-link" id="update-status" href="../config/update.php">Update</a>
             </li>
 
@@ -79,8 +72,8 @@ include_once('../config/config.php');
                 </a>
                 <div class="dropdown-menu position-absolute dropdown-menu-right" aria-labelledby="navbarDropdown"  style="right: 0px;">
                     <a class="dropdown-item" href="">Role [<?php echo $_SESSION['role']; ?>]</a>
-                    <a class="dropdown-item" href="">Profile</a>
-                    <a class="dropdown-item" href="../config/preferences.php">Preferences</a>
+                    <!-- <a class="dropdown-item" href="">Profile</a> -->
+                    <!-- <a class="dropdown-item" href="../config/preferences.php">Preferences</a> -->
                     <a class="dropdown-item" href="../config/settings.php">Settings</a>
                     <a class="dropdown-item" href="../../index.php?action=logout">Sign out</a>
 
@@ -147,16 +140,6 @@ include_once('../config/config.php');
                                     <a class="nav-link" target="blank" href="../monitoring/index.php">
                                         <span data-feather="activity"></span>
                                         Monitoring
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="../gpu/gpubinder.php">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gpu-card" viewBox="0 0 16 16">
-                                            <path d="M4 8a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Zm7.5-1.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z" />
-                                            <path d="M0 1.5A.5.5 0 0 1 .5 1h1a.5.5 0 0 1 .5.5V4h13.5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5H2v2.5a.5.5 0 0 1-1 0V2H.5a.5.5 0 0 1-.5-.5Zm5.5 4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5ZM9 8a2.5 2.5 0 1 0 5 0 2.5 2.5 0 0 0-5 0Z" />
-                                            <path d="M3 12.5h3.5v1a.5.5 0 0 1-.5.5H3.5a.5.5 0 0 1-.5-.5v-1Zm4 1v-1h4v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5Z" />
-                                        </svg>
-                                        GPU
                                     </a>
                                 </li>
                                 <li class="nav-item">

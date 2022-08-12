@@ -11,7 +11,7 @@
   </a>
   <!-- add shield badge for open issues -->
   <a href="https://github.com/Chatnaut/Arclight/issues">
-    <img alt="GitHub issues" src="https://img.shields.io/github/issues/Chatnaut/Arclight?style=flat-square">
+    <img alt="GitHub open issues" src="https://img.shields.io/bitbucket/issues/Chatnaut/Arclight?color=yellow&style=flat-square" />
   </a>
   <a href="https://twitter.com/intent/follow?screen_name=chatnaut">
     <img src="https://img.shields.io/twitter/follow/chatnaut?style=social" alt="Follow @chatnaut" >
@@ -45,20 +45,20 @@ Arclight is a server virtualization management solution based on KVM. It is desi
 </h2></br>
 
 <h3 align="center">
- 🤖 🎨 🚀
+ 🎉 🚀 🐱
 </h3>
 
 <p align="center">
-  <img alt="Arclight" src="https://i.imgur.com/mGdHb5A.png"></br></br>
-  <img alt="Arclight Create virtual machine" src="https://i.imgur.com/qNoYuoI.png"></br></br>
-  <img alt="Arclight Create Networks" src="https://i.imgur.com/dlIDheU.png"></br></br>
+  <img alt="Arclight Signin" src="https://i.imgur.com/76JHYwk.png"></br></br>
+  <img alt="Arclight Dashboard" src="https://i.imgur.com/9BpXSEN.png"></br></br>
+  <img alt="Upload AMIs" src="https://i.imgur.com/XLxOObI.png"></br></br>
   <img alt="Arclight Single Domain" src="https://i.imgur.com/HbCqa7n.jpg"></br></br>
   <img alt="Arclight Monitoring" src="https://i.imgur.com/HdcHU2V.png"></br></br>
 </p>
 
 </br></br>
 
-## Arclight Features
+## ✨ Arclight Features
   - Simple and Minimalist UI 
   - Create virtual machines on bare-metal servers or in your home lab.
   - Nested virtualization including Bare-Metal provisioning (Vms inside Vms).
@@ -79,21 +79,22 @@ Arclight is a server virtualization management solution based on KVM. It is desi
 - [Installation](#Installation)
   - [Installation on Ubuntu Server](#Installation-on-Ubuntu-Server)
   - [Installation on CentOS 7 Server](#Installation-on-CentOS-7-Server)
-- [Add Custom Storage Pools](#Add-Custom-Storage-Pools)
-- [ISO images for KVM machines](#ISO-images-for-KVM-machines)
 - [Encrypt Arclight Console](#Encrypt-Arclight-Console)
 - [Encrypt Arclight console with self-signed cert](#Encrypt-Arclight-console-with-self-signed-cert)
-  </br></br>Arclight documentation <a href="">lives here.</a></br>
+- [Add Custom Storage Pools](#Add-Custom-Storage-Pools)
+- [ISO images for KVM machines](#ISO-images-for-KVM-machines)
+  </br></br>Arclight documentation <a href="https://docs.chatnaut.com/">lives here.</a></br>
   For More Information about its features visit arclight page at <a href="https://chatnaut.com">chatnaut.com</a>
   </br></br>
   </br></br>
 
-## 📝 License
+## 👨‍💻 License
 
 Arclight is open-source, licensed as GPL v3. The client and component libraries are licensed as MPL.
 </br></br>
 </br></br>
 
-## 🙌 Contributing to Arclight
+## 👋 Contributing to Arclight
 
 From opening a bug report to creating a pull request: every contribution is appreciated and welcomed. If you're planning to implement a new feature or change the API please create an issue first. This way we can ensure your work is not in vain. Let's build this damn Cloud !
+

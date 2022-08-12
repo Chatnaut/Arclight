@@ -1,3 +1,4 @@
 {
-    "ext": "js css ejs"
+    "ext": "js css ejs",
+    "watch": "watch 'npm run build:css' ./views"
 }

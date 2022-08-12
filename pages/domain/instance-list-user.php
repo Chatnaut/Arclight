@@ -146,7 +146,7 @@ if ($action == "create-domain") {
       <vcpu>$vcpu</vcpu>
       <os>
       <type>hvm</type>
-          <boot dev='hd'/>
+      <boot dev='hd'/>
           <boot dev='cdrom'/>
           <boot dev='network'/>
       </os>
@@ -179,6 +179,9 @@ if ($action == "create-domain") {
           <memballoon model='virtio'>
               <stats period='10'/>
           </memballoon>
+          <tpm model='tpm-tis'>
+            <backend type='emulator' version='2.0'/>
+          </tpm>
       </devices>
       </domain>";
     }
@@ -260,11 +263,9 @@ if ($action == "create-domain") {
                 <boot dev='cdrom'/>
                 <boot dev='network'/>
             </os>
-            <devices>
             <tpm model='tpm-crb'>
                 <backend type='emulator' version='2.0'/>
             </tpm>
-            </devices>
         */
     }
 

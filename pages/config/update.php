@@ -29,7 +29,10 @@ if (isset($_SESSION['update'])) {
   //If git is not installed, then do not run the git commands
   if ($path != "") {
     //$tmp = shell_exec("cd .. && cd .. && $path pull 2>&1"); //run git at the web root directory. Use shell_exec to display all the output, not just last line. Redirect STDERR and STDOUT to variable
-    $setOrigin = shell_exec("cd .. && cd .. && $path remote set-url origin https://github.com/Chatnaut/Arclight.git 2>&1");
+
+    $tmp = shell_exec("cd .. && cd .. && $path init 2>&1");
+    $tmp = shell_exec("cd .. && cd .. && $path remote add origin https://github.com/Chatnaut/Arclight.git 2>&1");
+    // $setOrigin = shell_exec("cd .. && cd .. && $path remote set-url origin https://github.com/Chatnaut/Arclight.git 2>&1");
     $fetchOrigin = shell_exec("cd .. && cd .. && $path fetch origin develop 2>&1");
     $resetOrigin = shell_exec("cd .. && cd .. && $path reset --hard origin/develop 2>&1");
   }
@@ -70,10 +73,11 @@ require('../navbar.php');
         </div>
         <div class="card-body">
           <h5>Installed version: <?php echo $arrayExisting[1]; ?></h5>
-          <br />
+          <input type="submit" name="update" value="Update Now" class="btn btn-warning" style="display: none;">
+          <br>
           <pre><?php echo $fetchOrigin; ?></pre>
           <pre><?php echo $resetOrigin; ?></pre>
-          <br />
+          <br>
 
           <?php
           //Display the changelog on the update page
@@ -99,18 +103,18 @@ require('../navbar.php');
 
       document.querySelector('h5').insertAdjacentHTML('afterend', `<h5 class="flag">Status: There is a <span class="badge">${flag}</span> update available!</h5>
       <p>The newest release is ${update}</p>`);
-      if(flag == 'major'){
+      if (flag == 'major') {
         document.querySelector('.badge').classList.add('badge-success');
-      }else if(flag == 'minor'){
+      } else if (flag == 'minor') {
         document.querySelector('.badge').classList.add('badge-dark');
-      }else{
+      } else {
         document.querySelector('.badge').classList.add('badge-light');
       }
-      document.querySelector('p').insertAdjacentHTML('afterend', `<input type="submit" name="update" value="Update Now" class="btn btn-warning">`);
+      document.querySelector('input[type="submit"]').style.display = 'block';
     } else {
       sessionStorage.removeItem('update-available');
       sessionStorage.removeItem('update-version');
-      document.querySelector('p').insertAdjacentHTML('afterend', `<h5>Status: You are running the lastest version of arclight.</h5>`);
+      document.querySelector('h5').insertAdjacentHTML('afterend', `<h5>Status: You are running the lastest version of arclight.</h5>`);
     }
   })();
 </script>

@@ -6,7 +6,8 @@ const passport = require('passport');
 const { ensureLoggedIn, ensureLoggedOut } = require('connect-ensure-login');
 
 router.post('/login', function (req, res, next) {
-    passport.authenticate('local', { session: false }, (err, user, info) => {
+    passport.authenticate('local', { session: false,
+     }, (err, user, info) => {
         if (err || !user) {
             req.flash('error', info.message)
             return res.status(400).json({

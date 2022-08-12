@@ -55,7 +55,6 @@ router.post('/update-status', async (req, res, next) => {
     //finally update user
     if (status === 'active') {
         const user = await User.findByIdAndUpdate(id, { status: 'inactive' }, { new: true, runValidators: true });
-        req.flash('info', `Status updated for ${user.email} to ${user.status}`);
         res.status(200).json({
             success: 1,
             message: `Status updated for ${user.email} to ${user.status}`,
@@ -63,7 +62,6 @@ router.post('/update-status', async (req, res, next) => {
         });
     } else {
         const user = await User.findByIdAndUpdate(id, { status: 'active' }, { new: true, runValidators: true });
-        req.flash('info', `Status updated for ${user.email} to ${user.status}`);
         res.status(200).json({
             success: 1,
             message: `Status updated for ${user.email} to ${user.status}`,

@@ -44,3 +44,15 @@
   <!-- <script src="https://cdn.tailwindcss.com"></script> -->
   <!-- getting axios library  -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+        function getFlashMessage(message) {
+      const messageArray = Object.keys(message).forEach((key) => {
+        message[key].forEach((value => {
+          flashMessages.innerHTML += `<li class="${key}">${value}</li><br>`;
+        }));
+      })
+      setTimeout(function() {
+        flashMessages.innerHTML = '';
+      }, 10000);
+    }
+  </script>
