@@ -1,9 +1,14 @@
+
+
 <p align="center">
   <a href="https://www.chatnaut.com">
     <img alt="Chatnaut_Cloud_Solutions" src="https://i.imgur.com/3jnqQDr.png" width="300" />
   </a>
 </p>
-
+<p align="center">
+<a href="https://www.producthunt.com/posts/arclight?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-arclight" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=355724&theme=light" alt="Arclight - An&#0032;open&#0032;source&#0032;server&#0032;virtualization&#0032;management&#0032;solution | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" />
+</a>
+</p>
 <p align="center">
 <!-- add shield badge for arclight release -->
   <a href="https://github.com/Chatnaut/Arclight/releases">
@@ -79,8 +84,9 @@ Arclight is a server virtualization management solution based on KVM. It is desi
 - [Installation](#Installation)
   - [Installation on Ubuntu Server](https://docs.chatnaut.com/getting_started/ubuntu)
   - [Installation on CentOS 8 Server](https://docs.chatnaut.com/getting_started/centos)
-- [Encrypt Arclight Console](https://docs.chatnaut.com/encrypt_arclight/cert)
-- [Encrypt Arclight console with self-signed cert](https://docs.chatnaut.com/encrypt_arclight/self-cert)
+- [Add Reverse Proxy & Encrypt Arclight](https://docs.chatnaut.com/encrypt_arclight/)
+  - [Add Reverse Proxy & Encrypt Arclight with Let’s Encrypt](https://docs.chatnaut.com/encrypt_arclight/cert)
+  - [Add Reverse Proxy & Encrypt Encrypt Arclight with self-signed cert](https://docs.chatnaut.com/encrypt_arclight/self-cert)
 - [Add Custom Storage Pools](https://docs.chatnaut.com/add-storage-pool)
 - [ISO images for KVM machines](https://docs.chatnaut.com/iso-images-for-kvm)
   </br></br>Arclight documentation <a href="https://docs.chatnaut.com/">lives here.</a></br>
