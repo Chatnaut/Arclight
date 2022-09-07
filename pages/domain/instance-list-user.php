@@ -104,7 +104,7 @@ if ($action == "create-domain") {
         $vm_xml = "
         <domain type='$domain_type'>
         <name>$domain_name</name>
-        <description>Instance Type: $instance_type | OS: $os_platform | $description</description>
+        <description>Instance Type: $instance_type | OS: $os_platform | Codename: Orenji | $description</description>
         <memory unit='$memory_unit'>$memory</memory>
         <vcpu>$vcpu</vcpu>
         <os>
@@ -141,7 +141,7 @@ if ($action == "create-domain") {
         $vm_xml = "
       <domain type='$domain_type'>
       <name>$domain_name</name>
-      <description>Instance Type: $instance_type | OS: $os_platform | $description</description>
+      <description>Instance Type: $instance_type | OS: $os_platform | Codename: Mado | $description</description>
       <memory unit='$memory_unit'>$memory</memory>
       <vcpu>$vcpu</vcpu>
       <os>
@@ -179,9 +179,6 @@ if ($action == "create-domain") {
           <memballoon model='virtio'>
               <stats period='10'/>
           </memballoon>
-          <tpm model='tpm-tis'>
-            <backend type='emulator' version='2.0'/>
-          </tpm>
       </devices>
       </domain>";
     }
@@ -190,7 +187,7 @@ if ($action == "create-domain") {
         $vm_xml = "
     <domain type='$domain_type'>
     <name>$domain_name</name>
-    <description>Instance Type: $instance_type | OS: $os_platform | $description</description>
+    <description>Instance Type: $instance_type | OS: $os_platform | Codename: Boba | $description</description>
     <memory unit='$memory_unit'>$memory</memory>
     <vcpu>$vcpu</vcpu>
     <os>
@@ -228,32 +225,32 @@ if ($action == "create-domain") {
     </domain>";
     } else {
         $vm_xml = "
-      <domain type='$domain_type'>
-      <name>$domain_name</name>
-      <description>Instance Type: $instance_type | OS: $os_platform | $description</description>
-      <memory unit='$memory_unit'>$memory</memory>
-      <vcpu>$vcpu</vcpu>
-      <os>
-      <type>hvm</type>
-          <boot dev='hd'/>
-          <boot dev='cdrom'/>
-          <boot dev='network'/>
-      </os>
-      <features>
-        <acpi/>
-        <apic/>
-      </features>
-      <clock offset='localtime'/>
-      <devices>
-          <graphics type='vnc' port='-1' autoport='yes'/>
-          <video>
-            <model type='qxl'/>
-          </video>
-          <memballoon model='virtio'>
-              <stats period='10'/>
-          </memballoon>
-      </devices>
-      </domain> ";
+          <domain type='$domain_type'>
+          <name>$domain_name</name>
+          <description>Instance Type: $instance_type | OS: $os_platform | Codename: Shiro | $description</description>
+          <memory unit='$memory_unit'>$memory</memory>
+          <vcpu>$vcpu</vcpu>
+          <os>
+          <type>hvm</type>
+              <boot dev='hd'/>
+              <boot dev='cdrom'/>
+              <boot dev='network'/>
+          </os>
+          <features>
+            <acpi/>
+            <apic/>
+          </features>
+          <clock offset='localtime'/>
+          <devices>
+              <graphics type='vnc' port='-1' autoport='yes'/>
+              <video>
+                <model type='qxl'/>
+              </video>
+              <memballoon model='virtio'>
+                  <stats period='10'/>
+              </memballoon>
+          </devices>
+          </domain> ";
 
         /* winn 11 UEFI + tpm   
             <os>

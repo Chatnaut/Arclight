@@ -1,11 +1,17 @@
 <?php header('Location: index.php'); ?>
 <hr>
 <h4>Changelog</h4>
+[2.0.1] - 7.Sept.2022
+*Fixed XML provisioning of Bare Metal instances pointing to default VM configuration
+*Using the PM2 ecosystem file for Arc Api which provides the possibility to configure behavior, options, environment variables, and the log files of Lisk Service with PM2
+*Fixed terminal timeout error caused due to wrong port configuration.
+*Replaced in-line arc api args with PM2 file.
+*Fixed webssh api endpoint throwing buffered response.
+
 [2.0.0] - 10.Aug.2022
 *Official Stable release of the Arclight:
 Tested with Ubuntu 18.04 LTS on IBM Cloud bare metal https://cloud.ibm.com/gen1/infrastructure/provision/bm)
 Tested with Ubuntu 20.04 LTS on AWS C5 & C5n Bare Metal Instance
-
 *Now support Ubuntu major versions like 18.04 and 20.04
 *Added Bare Metal provisioning support
 *Users can now ssh host and other remote servers securely with arclight's in-built SSH client
@@ -38,5 +44,3 @@ Tested with Ubuntu 20.04 LTS on AWS C5 & C5n Bare Metal Instance
 *The noVNC connection is loaded from an authenticated web page.
 *The tokens for the noVNC connection are now 100 character random strings, which change everytime a VM page is loaded (domain-single.php)
 *The console preview on the domain-single.php is now a live noVNC connection to the machine rather than a static image
-
-
