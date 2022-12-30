@@ -131,7 +131,7 @@ pm2 save
 pm2 startup
 
 echo -e "${green}Configuring Apache To Proxy Connections...${clear}"
-a2enmod proxy proxy_http rewrite
+a2enmod proxy proxy_http rewrite ssl
 
 echo "You're good now :)"
 
