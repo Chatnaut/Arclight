@@ -16,10 +16,11 @@
   
 <div style="width: 100%; max-width: 200px; height:100%; max-height:59px; border-radius: 10px; background-color: black;">
   <p align="center">
-    <img src="./assets/img/nvidia-cloud-validated-lockup-rgb-wht-for-screen.png" alt="Arclight nvidia certified" style="width: 100%; height: auto;">
+    <img src="./assets/img/nvidia-cloud-validated-lockup-rgb-wht-for-screen.png" alt="Arclight nvidia certified" style="width: 200px; height: 100;"/>
   </p>
 </div>
 </div>
+
 
 
 <p align="center" style="margin-top: 20px;">
