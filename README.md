@@ -9,14 +9,14 @@
   <div style="width: 250px; height: 60px; background-color: transparent; border-radius:10px; align-items: center; margin-right: 20px;">
     <p align="center">
       <a href="https://www.producthunt.com/posts/arclight?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-arclight" target="_blank">
-        <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=355724&theme=light" alt="Arclight - An open source server virtualization management solution | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" />
+        <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=355724&theme=light" alt="Arclight - An open source server virtualization management solution | Product Hunt" style="width: 250px; height: 54px; width="250" height="54" />
       </a>
     </p>
   </div>
   
-<div style="width: 100%; max-width: 200px; height:100%; max-height:59px; border-radius: 10px; background-color: black;">
+<div style="background-color: black;">
   <p align="center">
-    <img src="./assets/img/nvidia-cloud-validated-lockup-rgb-wht-for-screen.png" alt="Arclight nvidia certified" style="width: 200px; height: 100;"/>
+    <img src="./assets/img/nvidia-cloud-validated-lockup-rgb-blk-for-screen.jpg" alt="Arclight nvidia certified" style="width: 200px; height: 100;"/>
   </p>
 </div>
 </div>
