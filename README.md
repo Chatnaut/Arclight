@@ -5,11 +5,24 @@
     <img alt="Chatnaut_Cloud_Solutions" src="https://i.imgur.com/3jnqQDr.png" width="300" />
   </a>
 </p>
-<p align="center">
-<a href="https://www.producthunt.com/posts/arclight?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-arclight" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=355724&theme=light" alt="Arclight - An&#0032;open&#0032;source&#0032;server&#0032;virtualization&#0032;management&#0032;solution | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" />
-</a>
-</p>
-<p align="center">
+<div style="display: flex; justify-content: center;">
+  <div style="width: 250px; height: 60px; background-color: transparent; border-radius:10px; align-items: center; margin-right: 20px;">
+    <p align="center">
+      <a href="https://www.producthunt.com/posts/arclight?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-arclight" target="_blank">
+        <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=355724&theme=light" alt="Arclight - An open source server virtualization management solution | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" />
+      </a>
+    </p>
+  </div>
+  
+<div style="width: 100%; max-width: 200px; height:100%; max-height:59px; border-radius: 10px; background-color: black;">
+  <p align="center">
+    <img src="./assets/img/nvidia-cloud-validated-lockup-rgb-wht-for-screen.png" alt="Arclight nvidia certified" style="width: 100%; height: auto;">
+  </p>
+</div>
+</div>
+
+
+<p align="center" style="margin-top: 20px;">
 <!-- add shield badge for arclight release -->
   <a href="https://github.com/Chatnaut/Arclight/releases">
     <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/Chatnaut/Arclight?color=success&style=flat-square" />
